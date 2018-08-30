@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="Dao.artistDao">
+  
+  <insert id="insertFollow" parameterType="String"></insert>
+  <select id="selectFollower" parameterType="String" resultType="String"></select>
+  <select id="selectFollowing" parameterType="String" resultType="String"></select>
+  <delete id="deleteFollow" parameterType="String"></delete>
+  <insert id="insertLikes" parameterType="likes"></insert>
+  <select id="selectLikesArt" parameterType="String" resultType="art"></select>
+  <select id="selectLikesLecture" parameterType="String" resultType="lecture"></select>
+  <delete id="deleteLikesArt" parameterType="java.util.HashMap"></delete>
+  <delete id="deleteLikesLecture" parameterType="java.util.HashMap"></delete>
+  <select id="selectGenreArtist" parameterType="String" resultType="String"></select>
+  
+   <select id="searchArtist" parameterType="java.util.HashMap" resultType="member">
+	select * from member where 1 = 0
+	<if test="nickname!=null">
+	or nickname like '%${searchWord}%'
+	</if>
+	<if test="name!=null">
+	or name like '%${searchWord}%'
+	</if>
+	<if test="id!=null">
+	or id like '%${searchWord}%'
+	</if>
+	<if test="type==0">or 1 = 1</if>	
+  	and isCheck = 2 order by joinDate desc limit ${skip}, 9
+  </select>
+
+  <select id="selectTopArtist" parameterType="String" resultType="java.util.HashMap">
+    select M.id, M.nickname, M.profile, count(no) from art A join likes L using(no) join member M on A.id=M.id 
+	where L.isCheck=0 and genre = #{genre}
+	group by nickname order by count(no) desc limit 6
+  </select>
+  
+  <select id="selectRecentArtist" parameterType="java.util.HashMap" resultType="member">
+  select * from member m join art using(id) where m.isCheck = 2 and genre = #{genre} group by id order by joinDate desc limit ${skip}, 9
+  </select>
+  
+  <select id="searchArtistCount" parameterType="java.util.HashMap" resultType="int">
+    select count(*) from member where 1 = 0
+	<if test="nickname!=null">
+	or nickname like '%${searchWord}%'
+	</if>
+	<if test="name!=null">
+	or name like '%${searchWord}%'
+	</if>
+	<if test="id!=null">
+	or id like '%${searchWord}%'
+	</if>
+	<if test="type==0">or 1 = 1</if>	
+	and isCheck = 2
+  </select>
+  
+  <select id="recentArtistCount" parameterType="String" resultType="int">
+  select count(distinct id, genre) from member m join art using(id) where m.isCheck = 2 and genre = #{genre}
+  </select>
+  
+  </mapper>
+  

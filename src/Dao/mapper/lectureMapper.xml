@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="Dao.lectureDao">
+
+	<insert parameterType="lecture" id="insertLecture"> 
+		INSERT INTO lecture (title, genre, startDate, endDate, numberPeople, guestID, artistID, place, content, file, state, maxPeople) 
+		VALUES (#{title}, #{genre}, #{startDate}, #{endDate}, 0, #{guestID}, 
+				#{artistID}, #{place}, #{content}, #{file}, #{state}, #{maxPeople});
+	</insert>
+	
+	<select id="selectRecentLectureA" resultType="lecture">
+	select * from lecture where guestID is null order by writeDate desc limit 5
+	</select>
+	
+	<select id="selectRecentLectureG" resultType="lecture">
+	select * from lecture where guestID is not null order by writeDate desc limit 5
+	</select>
+	
+	<select id="selectAllLectureA" parameterType="int" resultType="lecture">
+	select * from lecture where guestID is null order by writeDate desc limit #{skip}, 5
+	</select>
+	
+	<select id="selectAllLectureG" parameterType="int" resultType="lecture">
+	select * from lecture where guestID is not null order by writeDate desc limit #{skip}, 5
+	</select>
+	
+	<select id="selectAllLectureACount" resultType="int">
+	select count(*) from lecture where guestID is null 
+	</select>
+	
+	<select id="selectAllLectureGCount" resultType="int">
+	select count(*) from lecture where guestID is not null 
+	</select>
+	
+	<select id="searchLecture" parameterType="java.util.HashMap" resultType="lecture">
+	select * from lecture L join member M on L.artistID = M.id 
+	where M.isCheck = 2 and 1 = 0 
+	<if test="title!=null">
+	or title like '%${searchWord}%' 
+	</if>
+	<if test="content!=null">
+	or content like '%${searchWord}%' 
+	</if>
+	<if test="nickname!=null">
+	or nickname like '%${searchWord}%'
+	</if>	 
+	<if test="type==0">or 1 = 1</if>
+	<if test="genre!=''">
+	and genre = '${genre}'
+	</if>
+	order by writeDate desc limit ${skip}, ${qty}
+	</select>
+	
+	<select id="searchLectureCount" parameterType="java.util.HashMap" resultType="int">
+	select count(*) from lecture L join member M on L.artistID = M.id 
+	where M.isCheck = 2 and 1 = 0 
+	<if test="title!=null">
+	or title like '%${searchWord}%' 
+	</if>
+	<if test="content!=null">
+	or content like '%${searchWord}%' 
+	</if>
+	<if test="nickname!=null">
+	or nickname like '%${searchWord}%'
+	</if>	 
+	<if test="type==0">or 1 = 1</if>
+	<if test="genre!=''">
+	and genre = '${genre}'
+	</if>
+	</select>
+	
+
+</mapper>

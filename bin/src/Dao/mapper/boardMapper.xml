@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="Dao.boardDao">
+
+<!-- 	자유게시판 게시글 맵퍼 -->
+	<insert parameterType="board" id="insertBoard"> 
+		insert into board (title, id, content, file) 
+		values (#{title}, #{id}, #{content}, #{file});
+	</insert>
+
+<!-- 	QnA게시판 게시글 맵퍼 -->	
+		<insert parameterType="qna" id="insertQna"> 
+		insert into qna (title, id, content, file, pw) 
+		values (#{title}, #{id}, #{content}, #{file}, #{pw});
+	</insert>
+	
+	</mapper>

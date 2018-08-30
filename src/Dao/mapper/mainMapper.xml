@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Dao.mainDao">
+	<select id="containerOne" resultType="member">
+	
+	</select>
+	
+	<select id="containerTwo" resultType="member">
+	
+	</select>
+	
+	<select id="containerThree" resultType="art">
+	
+	</select>
+	
+	<select id="containerFour" resultType="art">
+	
+	</select>
+	
+	<select id="feed" parameterType="String" resultType="member">
+	
+	</select>
+	
+	<select id="selectFollowing" parameterType="String" resultType="String">
+	
+	</select>
+	
+	<insert id="sendMessage" parameterType="message">
+	
+	</insert>
+	
+	<select id="logMessage" parameterType="String" resultType="message">
+	
+	</select>
+	
+	<delete id="deleteMessage" parameterType="String">
+	
+	</delete>
+	
+	<insert id="insertAlarm" parameterType="java.util.HashMap">
+	insert into alarm values(#{type}, default, #{to}, #{from}, 0, 0);
+	</insert>
+	
+	<update id="updateAlarm" parameterType="int">
+	update alarm set readCheck = 1 where no = #{no}
+	</update>
+	
+	<delete id="deleteAlarm" parameterType="String">
+	
+	</delete>
+	
+	<select id="selectAlarm" parameterType="String" resultType="alarm">
+	select * from alarm where isFrom = #{from} and readCheck=0 order by time desc
+	</select>
+	
+	<select id="alarmCount" parameterType="String" resultType="int">
+	select count(*) from alarm where isFrom = #{from} and readCheck=0 
+	</select>
+	
+</mapper>
+
+  

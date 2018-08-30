@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="Dao.lectureDao">
+
+	<insert parameterType="lecture" id="insertLecture"> 
+		INSERT INTO lecture (title, genre, startDate, endDate, numberPeople, guestID, artistID, place, content, file, state, maxPeople) 
+		VALUES (#{title}, #{genre}, #{startDate}, #{endDate}, 0, #{guestID}, 
+				#{artistID}, #{place}, #{content}, #{file}, #{state}, #{maxPeople});
+	</insert>
+
+</mapper>

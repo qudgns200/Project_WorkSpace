@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="Dao.memberDao">
+	<select id="selectOneMember" parameterType="String" resultType="member">
+		select * from member where id = #{id}
+	</select>
+
+	<insert parameterType="member" id="insertMember">
+		insert into member
+		values
+		(#{id}, #{pw}, #{name}, #{phone}, #{addr}, #{email}, #{nickname},
+		#{birth}, 3, #{file}, default, 1, #{content}, #{profile});
+	</insert>
+	
+	<select id="searchMember" parameterType="java.util.HashMap" resultType="member">
+		select * from member 
+		where 1=1
+		<if test = "column != null">
+		#{column} like'%${text}%' 
+		</if>
+		<if test = "isCheck != null">
+		and isCheck=#{isCheck};
+		</if>
+	</select>
+
+	<select id="searchApproveArtist" parameterType="java.util.HashMap" resultType="member">
+		select * from member
+		where 1 = 0
+		<if test = "id != null">
+		or id like '%${id}%'
+		</if>
+		<if test = "name != null">
+		or name like '%${name}%'
+		</if>
+		<if test = "nickname != null">
+		or nickname like '%${nickname}%'
+		</if>
+		<if test = "searchType == null">
+		or 1 = 1
+		</if>
+		and content is not null
+		and (isCheck = 3 || isCheck = 4)
+		limit #{skip}, #{qty};
+	</select>
+	
+	<select id="selectAllMember" parameterType="java.util.HashMap" resultType="member"> <!-- 수정 -->
+		select * from member
+		where 1 = 0
+		<if test = "id != null">
+		or id like '%${id}%'
+		</if>
+		<if test = "name != null">
+		or name like '%${name}%'
+		</if>
+		<if test = "nickname != null">
+		or nickname like '%${nickname}%'
+		</if>
+		<if test = "searchType == null">
+		or 1 = 1
+		</if>
+		<if test = "isCheck != null">
+		and isCheck = #{isCheck}
+		</if>
+		limit #{skip}, #{qty};
+	</select>
+	
+	<delete id="deleteMember" parameterType="String">
+		delete from member where id={id};
+	</delete>
+
+	<update id="blackList" parameterType="String">
+		update member set state=0 where id=#{id};
+	</update>
+
+	<update id="updateApproveArtist" parameterType="String">
+		update member set isCheck=2 where id=#{id};
+	</update>
+
+	<update id="updateRefuseArtist" parameterType="String">
+		update member set isCheck=4 where id=#{id};
+	</update>
+
+	<update id="updateMember" parameterType="member">
+	
+	</update>
+	
+	<select id="selectMyAttendLec" parameterType="java.util.HashMap" resultType="lecture">
+		select * from lecture join attendants using(no) where id = #{id} limit ${skipA}, ${qty}
+	</select>
+	
+	<!-- 모집 중인 강의내역: 사용자와 아티스트 나누어 조건 쿼리 작성 -->
+	<select id="selectGatherLec" parameterType="java.util.HashMap" resultType="lecture">
+		<if test="guestID!=null">
+			select * from lecture where guestID=#{guestID} limit ${skipG}, ${qty}
+		</if>
+		<if test="artistID!=null">
+			select * from lecture where artistID=#{artistID} limit ${skipG}, ${qty}
+		</if>
+	</select>
+	
+	<select id="selectOnePay" parameterType="java.util.HashMap" resultType="pay">
+		select * from pay where id=#{id} limit ${skipBuy}, ${qty}
+	</select>
+	
+	<insert id="insertLecturePay" parameterType="pay">
+	
+	</insert>
+	
+	<insert id="insertArt" parameterType="art" >
+		insert into art(title, file, genre, content, sellCheck, price, isCheck, id)
+		values (#{title}, #{file}, #{genre}, #{content}, #{sellCheck},
+		#{price}, #{isCheck}, #{id});
+	</insert>
+
+	<select id="selectArtistArt" parameterType="String" resultType="art">
+		select * from art where id=#{id} order by artDate desc
+	</select>
+	
+	<update id="updateArt" parameterType="java.util.HashMap">
+	
+	</update>
+
+	<delete id="deleteArt" parameterType="java.util.HashMap">
+	
+	</delete>
+
+	<select id="selectRequestLec" parameterType="java.util.HashMap" resultType="lecture">
+		select * from lecture where artistID=#{id} and state=3 limit ${skipR},${qty}
+	</select>
+	
+	<select id="selectApproveLec" parameterType="java.util.HashMap" resultType="lecture">
+		select * from lecture where artistID=#{id} and state=4 limit ${skipAp},${qty}
+	</select>
+	
+	<select id="selectSellingArt" parameterType="java.util.HashMap" resultType="art">
+		select * from art where id=#{id} and sellCheck=1 and isCheck=1 limit ${skipSell}, ${qty}
+	</select>
+	
+	<select id="selectSoldArt" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+		select *, p.id as p_id from art a join pay p using(no) where a.sellCheck = 1
+		and p.isCheck =0 and a.id = #{id}
+		limit ${skipSold}, ${qty}
+	</select>
+	
+	<select id="selectBuyingArt" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+		select * from art join pay using(no) where pay.id = #{id} limit ${skipBuy},${qty}
+	</select>
+
+	<update id="updateDelivery" parameterType="java.util.HashMap">
+	
+	</update>
+	
+	<select id="selectOneNickname" parameterType="String" resultType="member">
+		select * from member where nickname = #{nickname};
+	</select>
+
+	<select id="getArtistCount" parameterType="java.util.HashMap" resultType="int">
+		select count(*) from member
+		where 1 = 0
+		<if test = "id != null">
+		or id like '%${id}%'
+		</if>
+		<if test = "name != null">
+		or name like '%${name}%'
+		</if>
+		<if test = "nickname != null">
+		or nickname like '%${nickname}%'
+		</if>
+		<if test = "searchType == null">
+		or 1 = 1
+		</if>
+		and content is not null
+		and (isCheck = 3 || isCheck = 4);
+	</select>
+
+	<select id="getCount" resultType="int" parameterType="java.util.HashMap"> <!-- 추가 -->
+		select count(*) from member
+		where 1 = 0
+		<if test = "id != null">
+		or id like '%${id}%'
+		</if>
+		<if test = "name != null">
+		or name like '%${name}%'
+		</if>
+		<if test = "nickname != null">
+		or nickname like '%${nickname}%'
+		</if>
+		<if test = "searchType == null">
+		or 1 = 1
+		</if>
+		<if test = "isCheck != null">
+		and isCheck = #{isCheck}
+		</if>
+	</select>
+
+	<select id="getAttendLecCount" parameterType="String"
+		resultType="int">
+		select count(*) from lecture join attendants using(no) where id = #{id}
+	</select>
+	
+	<!-- 모집 중인 강의 레코드 수: 사용자와 아티스트 나누어 조건 쿼리 작성 -->
+	<select id="getGatherLecCount" parameterType="java.util.HashMap"
+		resultType="int">
+		<if test="guestID!=null">
+			select count(*) from lecture where guestID=#{guestID}
+		</if>
+		<if test="artistID!=null">
+			select count(*) from lecture where artistID=#{artistID}
+		</if>
+	</select>
+
+
+	<select id="getRequestLecCount" parameterType="String"
+		resultType="int">
+		select count(*) from lecture where artistID=#{id} and state=3
+	</select>
+
+	<select id="getApproveLecCount" parameterType="String"
+		resultType="int">
+		select count(*) from lecture where artistID=#{id} and state=4
+	</select>
+
+	<select id="getBuyingArtCount" parameterType="String"
+		resultType="int">
+		select count(*) from art join pay using(no) where pay.id = #{id}
+	</select>
+
+	<select id="getSellingArtCount" parameterType="String"
+		resultType="int">
+		select count(*) from art where id=#{id} and sellCheck=1 and isCheck=1
+	</select>
+
+	<select id="getSoldArtCount" parameterType="String" resultType="int">
+		select count(*) from art a join pay p using(no) where a.sellCheck = 1
+		and p.isCheck =0 and a.id = #{id}
+	</select>
+
+	<select id="getOnePayCount" parameterType="String" resultType="int">
+		select count(*) from pay where id=#{id}
+	</select>
+
+</mapper>
+
+

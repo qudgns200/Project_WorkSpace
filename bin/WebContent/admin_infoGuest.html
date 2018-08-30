@@ -1,0 +1,340 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>관리자 회원관리페이지</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- CSS
+================================================== -->
+    <link href='http://fonts.googleapis.com/css?family=Oswald' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/bootstrap-responsive.css">
+<!--    <link rel="stylesheet" href="css/jquery.lightbox-0.5.css">-->
+    <link rel="stylesheet" href="css/custom-styles.css">
+    <!--Table-->
+    <!--    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">-->
+
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+
+    <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <link rel="stylesheet" href="css/style-ie.css"/>
+<![endif]-->
+
+    <!-- Favicons
+================================================== -->
+    <link rel="shortcut icon" href="img/favicon.ico">
+    <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="img/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="img/apple-touch-icon-114x114.png">
+
+    <!-- JS
+================================================== -->
+    <script src="http://code.jquery.com/jquery-1.8.3.min.js"></script>
+    <script src="js/bootstrap.js"></script>
+    <script src="js/jquery.custom.js"></script>
+
+    <!-- table
+================================================== -->
+    <script>
+        $(document).ready(function() {
+            $("#mytable #checkall").click(function() {
+                if ($("#mytable #checkall").is(':checked')) {
+                    $("#mytable input[type=checkbox]").each(function() {
+                        $(this).prop("checked", true);
+                    });
+
+                } else {
+                    $("#mytable input[type=checkbox]").each(function() {
+                        $(this).prop("checked", false);
+                    });
+                }
+            });
+
+            $("[data-toggle=tooltip]").tooltip();
+        });
+    </script>
+    <!-- table end-->
+
+</head>
+
+<body>
+    <div class="color-bar-1"></div>
+    <div class="color-bar-2 color-bg"></div>
+
+    <div class="container main-container">
+
+        <!-- 	header section -->
+        <%@include file="header.jsp"%>
+
+            <div class="row">
+
+                <div class="span12">
+                    <h2 class="title-bg">회원관리 페이지</h2>
+                </div>
+
+
+                <!-- Table Items ================================================== -->
+                <div class="span12">
+
+                    <ul id="filterOptions" class="gallery-cats clearfix; pull-right">
+                        <li class="active"><a href="admin_infoGuest.jsp" class="all">일반회원 관리페이지</a></li>
+                        <li><a href="admin_infoArtist.jsp" class="design">아티스트 관리페이지</a></li>
+                    </ul>
+
+
+                    <div class="row the-grid">
+                        <div class="span12 contact">
+                            <!--Begin page content column-->
+                            <div class="container">
+<!--                             <div class="row the-grid">-->
+                                <div class="col-md-12">
+                                    <h3>전체 회원목록 </h3>
+                                <div class="table-responsive">
+
+                                    <form class="form-inline">
+                                        <div class="input-prepend">
+                                            <span class="add-on"><i class="icon-th-list"></i></span>
+                                            <select class="form-control; span2" id="select" name="find">
+                                                    <option selected="">검색조건선택</option>
+                                                        <option value="id">아이디</option>
+                                                        <option value="name">이름</option>
+                                                        <option value="nickname">닉네임</option>
+                                                </select>
+                                            <input class="span3" id="appendedInputButtons" size="16" type="text">&nbsp;
+
+                                            <label class="checkbox">
+                                            <input type="checkbox"> Guest &nbsp;                                        
+                                          </label>
+                                            <label class="checkbox">
+                                            <input type="checkbox"> Artist &nbsp;                                     
+                                          </label>
+                                            <button type="submit" class="btn">검색</button>
+                                            <button type="submit" class="btn">전체조회</button>
+                                        </div>
+                                    </form>
+                                   <hr>
+
+
+                                    <div class="fixed-table-container">
+                                        <div class="fixed-table-body">
+                                            <!-- <div class="table-responsive">-->
+                                            <table id="mytable" class="table table-bordred table-striped">
+
+                                                <thead>
+
+                                                    <th><input type="checkbox" id="checkall" /></th>
+                                                    <th>No</th>
+                                                    <th>ID</th>
+                                                    <th>이름</th>
+                                                    <th>닉네임</th>
+                                                    <th>연락처</th>
+                                                    <th>주소</th>
+                                                    <th>이메일</th>                                                
+                                                    <th>생년월일</th>
+                                                    <th>아티스트 여부</th>
+                                                    <th>Edit</th>
+                                                    <th>Delete</th>
+                                                </thead>
+                                                <tbody>
+
+                                                    <tr>
+                                                        <td><input type="checkbox" class="checkthis" /></td>
+                                                        <td>1</td>
+                                                        <td>Mohsin</td>
+                                                        <td>Irshad</td>
+                                                        <td>Mohsin</td>
+                                                        <td>010-0000-0000</td>
+                                                        <td scope="col" width="250">서울시 서울구 서울동 111-11 서울아파트 A동 1201호</td>
+                                                        <td>isometric.mohsin@gmail.com</td>                                                       
+                                                        <td>1999-03-01</td>
+                                                        <td>Y</td>
+                                                        <td>
+                                                            <p data-placement="top" data-toggle="tooltip" title="Edit"><button class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal" data-target="#edit"><span class="icon-pencil"></span></button></p>
+                                                        </td>
+                                                        <td>
+                                                            <p data-placement="top" data-toggle="tooltip" title="Delete"><button class="btn btn-danger btn-xs" data-title="Delete" data-toggle="modal" data-target="#delete"><span class="icon-trash"></span></button></p>
+                                                        </td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td><input type="checkbox" class="checkthis" /></td>
+                                                        <td>1</td>
+                                                        <td>Mohsin</td>
+                                                        <td>Irshad</td>
+                                                        <td>Mohsin</td>
+                                                        <td>010-0000-0000</td>
+                                                        <td scope="col" width="250">서울시 서울구 서울동 111-11 서울아파트 A동 1201호</td>
+                                                        <td>isometric.mohsin@gmail.com</td>
+                                                        <td>1999-03-01</td>
+                                                        <td>Y</td>
+                                                        <td>
+                                                            <p data-placement="top" data-toggle="tooltip" title="Edit"><button class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal" data-target="#edit"><span class="icon-pencil"></span></button></p>
+                                                        </td>
+                                                        <td>
+                                                            <p data-placement="top" data-toggle="tooltip" title="Delete"><button class="btn btn-danger btn-xs" data-title="Delete" data-toggle="modal" data-target="#delete"><span class="icon-trash"></span></button></p>
+                                                        </td>
+                                                    </tr>
+
+
+                                                    <tr>
+                                                        <td><input type="checkbox" class="checkthis" /></td>
+                                                        <td>1</td>
+                                                        <td>Mohsin</td>
+                                                        <td>Irshad</td>
+                                                        <td>Mohsin</td>
+                                                        <td>010-0000-0000</td>
+                                                        <td scope="col" width="250">서울시 서울구 서울동 111-11 서울아파트 A동 1201호</td>
+                                                        <td>isometric.mohsin@gmail.com</td>
+                                                        <td>1999-03-01</td>
+                                                        <td>Y</td>
+                                                        <td>
+                                                            <p data-placement="top" data-toggle="tooltip" title="Edit"><button class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal" data-target="#edit"><span class="icon-pencil"></span></button></p>
+                                                        </td>
+                                                        <td>
+                                                            <p data-placement="top" data-toggle="tooltip" title="Delete"><button class="btn btn-danger btn-xs" data-title="Delete" data-toggle="modal" data-target="#delete"><span class="icon-trash"></span></button></p>
+                                                        </td>
+                                                    </tr>
+
+
+
+                                                    <tr>
+                                                        <td><input type="checkbox" class="checkthis" /></td>
+                                                        <td>1</td>
+                                                        <td>Mohsin</td>
+                                                        <td>Irshad</td>
+                                                        <td>Mohsin</td>
+                                                        <td>010-0000-0000</td>
+                                                        <td>서울시 서울구 서울동 111-11 서울아파트 A동 1201호</td>
+                                                        <td>isometric.mohsin@gmail.com</td>
+                                                        <td>1999-03-01</td>
+                                                        <td>Y</td>
+                                                        <td>
+                                                            <p data-placement="top" data-toggle="tooltip" title="Edit"><button class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal" data-target="#edit"><span class="icon-pencil"></span></button></p>
+                                                        </td>
+                                                        <td>
+                                                            <p data-placement="top" data-toggle="tooltip" title="Delete"><button class="btn btn-danger btn-xs" data-title="Delete" data-toggle="modal" data-target="#delete"><span class="icon-trash"></span></button></p>
+                                                        </td>
+                                                    </tr>
+
+
+                                                    <tr>
+                                                        <td><input type="checkbox" class="checkthis" /></td>
+                                                        <td>1</td>
+                                                        <td>Mohsin</td>
+                                                        <td>Irshad</td>
+                                                        <td>Mohsin</td>
+                                                        <td>010-0000-0000</td>
+                                                        <td>서울시 서울구 서울동 111-11 서울아파트 A동 1201호</td>
+                                                        <td>isometric.mohsin@gmail.com</td>
+                                                        <td>1999-03-01</td>
+                                                        <td>Y</td>
+                                                        <td>
+                                                            <p data-placement="top" data-toggle="tooltip" title="Edit"><button class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal" data-target="#edit"><span class="icon-pencil"></span></button></p>
+                                                        </td>
+                                                        <td>
+                                                            <p data-placement="top" data-toggle="tooltip" title="Delete"><button class="btn btn-danger btn-xs" data-title="Delete" data-toggle="modal" data-target="#delete"><span class="icon-trash"></span></button></p>
+                                                        </td>
+                                                    </tr>
+
+                                                </tbody>
+
+                                            </table>
+                                            <!--                                    </div>-->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                            <div class="modal fade" id="edit" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+                                            <h4 class="modal-title custom_align" id="Heading">Edit Your Detail</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="form-group">
+                                                <input class="form-control " type="text" placeholder="Mohsin">
+                                            </div>
+                                            <div class="form-group">
+
+                                                <input class="form-control " type="text" placeholder="Irshad">
+                                            </div>
+                                            <div class="form-group">
+                                                <textarea rows="2" class="form-control" placeholder="CB 106/107 Street # 11 Wah Cantt Islamabad Pakistan"></textarea>
+
+
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer ">
+                                            <button type="button" class="btn btn-warning btn-lg" style="width: 100%;"><span class="glyphicon glyphicon-ok-sign"></span> Update</button>
+                                        </div>
+                                    </div>
+                                    <!-- /.modal-content -->
+                                </div>
+                                <!-- /.modal-dialog -->
+                            </div>
+
+
+                            <div class="modal fade" id="delete" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="icon-remove" aria-hidden="true"></span></button>
+                                            <h4 class="modal-title custom_align" id="Heading">삭제 경고창</h4>
+                                        </div>
+                                        <div class="modal-body">
+
+                                            <div class="alert alert-danger"><span class="icon-warning-sign"></span>해당 회원을 삭제하시겠습니까?</div>
+
+                                        </div>
+                                        <div class="modal-footer ">
+                                            <button type="button" class="btn btn-success"><span class="icon-ok"></span> Yes</button>
+                                            <button type="button" class="btn btn-default" data-dismiss="modal"><span class="icon-remove"></span> No</button>
+                                        </div>
+                                    </div>
+                                    <!-- /.modal-content -->
+                                </div>
+                                <!-- /.modal-dialog -->
+                            </div>
+
+
+                            <!-- Pagination -->
+                            <div class="pagination">
+                                <ul>
+                                    <li class="active"><a href="#">Prev</a></li>
+                                    <li class="active"><a href="#">1</a></li>
+                                    <li><a href="#">2</a></li>
+                                    <li><a href="#">3</a></li>
+                                    <li><a href="#">4</a></li>
+                                    <li><a href="#">Next</a></li>
+                                </ul>
+                            </div>
+                            <!-- End gallery list-->
+
+                        </div>
+                        <!-- End Container -->
+
+
+                    </div>
+                    <!--End page content column-->
+
+                </div>
+                <!-- End container row -->
+
+            </div>
+            <!-- End Container -->
+
+            <!-- 	Footer section -->
+            <%@include file="footer.jsp"%>
+
+</body>
+
+</html>
