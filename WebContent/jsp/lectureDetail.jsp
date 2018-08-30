@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>​
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 
@@ -40,20 +42,6 @@
 <script src="js/jquery.prettyPhoto.js"></script>
 <script src="js/jquery.flexslider.js"></script>
 <script src="js/jquery.custom.js"></script>
-<script type="text/javascript">
-//         $(document).ready(function() {
-//         });
-//         $(window).load(function() {
-//             $('.flexslider').flexslider({
-//                 animation: "slide",
-//                 slideshow: true,
-//                 start: function(slider) {
-//                     $('body').removeClass('loading');
-//                 }
-//             });
-//         });
-</script>
-
 <style>
 #map img {
 	max-width: none;
@@ -68,35 +56,49 @@
 
 <body>
 	<div class="color-bar-1"></div>
-	<div class="color-bar-2 color-bg"></div>
+    <div class="color-bar-2 color-bg"></div>
+    <div class="container main-container">
+<!--     Header section -->
+<%@include file="header.jsp"%>
+     
+    <!-- Page Content
+    ================================================== --> 
+    <div class="row">
 
-	<div class="container main-container">
-
-		<%@include file="header.jsp"%>
-
-		<!-- Blog Content
-    ================================================== -->
-<!-- 		<div class="row"> -->
-
-			<!-- Blog Posts
-        ================================================== -->
-			<div class="span12 blog">
-
-		<div class="row">
+        <!-- Gallery Items
+        ================================================== --> 
+        <div class="span12 gallery-single">
+            <div class="row">
                 <div class="span6">
-                    <img src="img/user-avatar.jpg" style="width: 550px; height: 550px;">
+                    <img src="download.do?no=${lecture.no }&lecture=a" style="width: 550px; height: 550px;">
                 </div>
                 <div class="span6">
-                    <h2>"${art.title }"</h2> 		
+                    <h2>${lecture.title }</h2> 		<!-- 강의 제목 출력  -->
                     <p class="lead"></p>
-                    <p> "${art.content }"</p>
-													<!--강의 정보 출력 -->
+												<!-- 강의 정보 출력 -->
                     <ul class="project-info">
-                        <li><h6>Date :</h6> <fmt:formatDate pattern="yyyy-MM-dd" value="${art.artDate}"/></li>
-                        <li><h6>Price :</h6> "${art.price }"</li>
-                        <li><h6>Artist :</h6> "${art.id }"</li>
-                        <li><h6>Genre :</h6> "${art.genre }"</li>
-						<li><h6>Location :</h6></li>
+                        <li><h6>Date :</h6>
+                        <fmt:formatDate pattern="yyyy-MM-dd" value="${lecture.startDate}"/> ~ 
+                        <fmt:formatDate pattern="yyyy-MM-dd" value="${lecture.endDate}"/>
+                        </li>
+                        <li><h6>Price :</h6> ${lecture.price }</li>
+                        <li><h6>artist :</h6> ${lecture.artistID }</li>
+                        <li><h6>Genre :</h6> ${lecture.genre }</li>
+                        <li><h6>Location :</h6> ${lecture.place }</li>
+                    </ul>
+                </div>
+            </div>
+
+	<br>
+	<div class="span12">
+       <h5 class="title-bg" style="padding-bottom: 12px;">Content</h5>
+			 ${lecture.content }
+    </div>
+  
+</div><!-- End gallery-single-->
+</div><!-- End container row -->
+</div> <!-- End Container -->
+
 <!-- 지도api ==================================================-->
 <!-- 			<div class="row" id="map" style="width: 400px; height: 250px;"> -->
 <!-- 			<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script> -->
@@ -118,9 +120,7 @@
 <!--  						}); -->
 <!-- 			</script> -->
 <!-- 			</div> -->
-	  </ul>
-  	</div>
- </div>
+	 
 
 <!-- Post Comments================================================== -->
 				<section class="comments">
@@ -229,7 +229,6 @@
 						<li><a href="#">Next</a></li>
 					</ul>
 				</div>
-</div>
 
 <!--    Footer section -->
 <%@include file="footer.jsp"%>

@@ -1,5 +1,5 @@
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>​
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>​
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -65,9 +65,9 @@
 												<!-- 작품 정보 출력 -->
                     <ul class="project-info">
                         <li><h6>Date :</h6> <fmt:formatDate pattern="yyyy-MM-dd" value="${art.artDate}"/></li>
-                        <li><h6>Price :</h6> "${art.price }"</li>
-                        <li><h6>Artist :</h6> "${art.id }"</li>
-                        <li><h6>Genre :</h6> "${art.genre }"</li>
+                        <li><h6>Price :</h6> ${art.price }</li>
+                        <li><h6>Artist :</h6> ${art.id }</li>
+                        <li><h6>Genre :</h6> ${art.genre }</li>
                     </ul>
 					<!--  컨트롤러에서 받아 온 값을 결제 폼 페이지로 넘겨 주기 위한 히든 타입 태그 -->
 					<input type="hidden" name="no" value="${art.no }">
@@ -91,6 +91,7 @@
 </div><!-- End gallery-single-->
 </div><!-- End container row -->
 </div> <!-- End Container -->
+
 <!-- comment Area
         ================================================== -->
 <div class="container">

@@ -1,7 +1,6 @@
 package Service;
 
 import java.io.File;
-
 import java.io.IOException;
 import java.util.Date;
 import java.util.HashMap;
@@ -12,8 +11,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import Dao.artDao;
+import Dao.lectureDao;
 import Dao.memberDao;
 import Model.art;
+import Model.lecture;
 import Model.member;
 import Model.pay;
 
@@ -25,6 +26,9 @@ public class memberServiceImpl implements memberService {
 
 	@Autowired
 	private artDao artDao;
+	
+	@Autowired
+	private lectureDao lectureDao;
 	
 	@Autowired
 	private mainService mainService;
@@ -360,9 +364,15 @@ public class memberServiceImpl implements memberService {
 			}
 			path = "C:/Project/Project/image/";
 		}else {
+			if (params.get("lecture")!=null) {
+			lecture lecture = lectureDao.selectOneLecture((int)params.get("no"));
+			fileName = lecture.getFile();
+			path = "C:/Project/Project/WebContent/resources/Thumnail/lectureImage/";
+			}else {
 			art art = artDao.selectOneArt((int)params.get("no"));
 			fileName = art.getFile();
 			path = "C:/Project/Project/WebContent/resources/Thumnail/artImage/";
+			}
 		}
 		return new File(path + fileName);
 	}
