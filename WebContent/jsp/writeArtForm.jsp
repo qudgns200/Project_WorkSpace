@@ -55,6 +55,8 @@
 		$("#artSpan").click(function(){
 			$("#artBoard").show();
 			$("#freeBoard").hide();
+			$("#artSell").show();
+			$("#artOption").show();
 			$("#isCheck").val("1");
 		});
 		

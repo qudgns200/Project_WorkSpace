@@ -386,8 +386,14 @@ public class boardController {
 		return "redirect:myLectureFormA.do";
 	}
 
-	@RequestMapping("selectOneLecutre.do")
-	public void selectOneLecutre() {}
+	@RequestMapping("selectOneLecture.do")
+	public String selectOneLecture() {
+		
+		
+		
+		
+		return "lectureDetail";
+	}
 
 	@RequestMapping("lectureComment.do")
 	public void lectureComment() {}

@@ -42,10 +42,9 @@
 <body>
 	<div class="color-bar-1"></div>
     <div class="color-bar-2 color-bg"></div>
-    
     <div class="container main-container">
-    		<!--     Header section -->
-		<%@include file="header.jsp"%>
+<!--     Header section -->
+<%@include file="header.jsp"%>
      
     <!-- Page Content
     ================================================== --> 
@@ -58,46 +57,43 @@
 <form id="form" action="artPayForm.do">
             <div class="row">
                 <div class="span6">
-                    <img src="download.do?no=${art.no }" style="width: 600px; height: 600px;">
+                    <img src="download.do?no=${art.no }" style="width: 550px; height: 550px;">
                 </div>
                 <div class="span6">
-                    <h2>"${art.title }"</h2> 		<!-- 작품 제목 출력  -->
+                    <h2>${art.title }</h2> 		<!-- 작품 제목 출력  -->
                     <p class="lead"></p>
-                    <p> "${art.content }"</p>
-
-<!-- 						작품 정보 출력 -->
+												<!-- 작품 정보 출력 -->
                     <ul class="project-info">
                         <li><h6>Date :</h6> <fmt:formatDate pattern="yyyy-MM-dd" value="${art.artDate}"/></li>
                         <li><h6>Price :</h6> "${art.price }"</li>
                         <li><h6>Artist :</h6> "${art.id }"</li>
                         <li><h6>Genre :</h6> "${art.genre }"</li>
                     </ul>
-                    
-<!--                     컨트롤러에서 받아 온 값을 결제 폼 페이지로 넘겨 주기 위한 히든 타입 태그 -->
+					<!--  컨트롤러에서 받아 온 값을 결제 폼 페이지로 넘겨 주기 위한 히든 타입 태그 -->
 					<input type="hidden" name="no" value="${art.no }">
-					<input type="hidden" name="content" value="${art.content }">
 					<input type="hidden" name="artDate" value=<fmt:formatDate pattern="yyyy-MM-dd" value="${art.artDate}"/>>
 					<input type="hidden" name="price" value="${art.price }">
 					<input type="hidden" name="id" value="${art.id }">
 					<input type="hidden" name="genre" value="${art.genre }">
-
-<!-- 					결제 방법 선택 -->
+					<!--결제 방법 선택 -->
 					<input type="radio" name="payMethod" value="1">카드결제
 					<input type="radio" name="payMethod" value="2">카카오페이
-					
                     <input type="submit" id="deliveryValues" class="btn" value="결제하기">
                 </div>
             </div>
- </form>
-
-        </div><!-- End gallery-single-->
-
-    </div><!-- End container row -->
-    
-    </div> <!-- End Container -->
+</form>
+	<br>
+	<div class="span12">
+       <h5 class="title-bg" style="padding-bottom: 12px;">Content</h5>
+			 ${art.content }
+    </div>
+  
+</div><!-- End gallery-single-->
+</div><!-- End container row -->
+</div> <!-- End Container -->
 <!-- comment Area
         ================================================== -->
-    <div class="container">
+<div class="container">
 <form id="commentForm" name="commentForm" method="post">
     <br><br>
         <div>
