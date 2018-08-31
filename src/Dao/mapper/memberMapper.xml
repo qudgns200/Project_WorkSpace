@@ -145,9 +145,14 @@
 		and p.isCheck =0 and a.id = #{id}
 		limit ${skipSold}, ${qty}
 	</select>
-	
+<!-- 	수 정 -->
 	<select id="selectBuyingArt" parameterType="java.util.HashMap" resultType="java.util.HashMap">
-		select * from art join pay using(no) where pay.id = #{id} limit ${skipBuy},${qty}
+	select pay.no, pay.isCheck, art.title as 'artTitle', lecture.title as 'lecTitle',
+	art.id as 'artID', lecture.artistID as 'lecID', art.price as 'artPrice', lecture.price as 'lecPrice', totalPrice,
+	payMethod, pay.state, payDate
+	from pay join art join lecture 
+	on (pay.no=art.no and pay.isCheck=0) or (pay.no=lecture.no and pay.isCheck=1) 
+	where pay.id = #{id} group by pay.no limit ${skipBuy}, ${qty} 
 	</select>
 
 	<update id="updateDelivery" parameterType="java.util.HashMap">
@@ -223,10 +228,12 @@
 		resultType="int">
 		select count(*) from lecture where artistID=#{id} and state=4
 	</select>
-
+<!-- 	수 정 -->
 	<select id="getBuyingArtCount" parameterType="String"
 		resultType="int">
-		select count(*) from art join pay using(no) where pay.id = #{id}
+	select count(distinct pay.no) from pay join art join lecture 
+	on (pay.no=art.no and pay.isCheck=0) or (pay.no=lecture.no and pay.isCheck=1) 
+	where pay.id = #{id}
 	</select>
 
 	<select id="getSellingArtCount" parameterType="String"
