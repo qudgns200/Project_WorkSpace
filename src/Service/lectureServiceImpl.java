@@ -72,8 +72,7 @@ public class lectureServiceImpl implements lectureService{
 
 	@Override
 	public lecture selectOneLecture(int no) {
-		// TODO Auto-generated method stub
-		return null;
+		return lectureDao.selectOneLecture(no);
 	}
 
 	@Override

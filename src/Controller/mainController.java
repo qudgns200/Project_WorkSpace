@@ -387,7 +387,7 @@ public class mainController {
 	
 	@RequestMapping("download.do")
 	public View download(@RequestParam(required=false) String id, @RequestParam(required=false) Integer no, 
-			@RequestParam(required=false) String profile) {
+			@RequestParam(required=false) String profile, @RequestParam(required=false) String lecture) {
 		View view;
 		HashMap<String, Object> params = new HashMap<>();
 		if (id!=null) {
@@ -395,11 +395,13 @@ public class mainController {
 			if (profile!=null) {
 				params.put("profile", profile);
 			}
-			view = new DownloadView(memberService.getAttachFile(params));
 		}else {
 			params.put("no", no);
-			view = new DownloadView(memberService.getAttachFile(params));
+			if (lecture!=null) {
+			params.put("lecture", lecture);
+			}
 		}
+		view = new DownloadView(memberService.getAttachFile(params));
 		return view;
 	}
 	

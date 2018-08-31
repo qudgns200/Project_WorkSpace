@@ -405,8 +405,12 @@ public class boardController {
 		return "redirect:myLectureFormA.do";
 	}
 
-	@RequestMapping("selectOneLecutre.do")
-	public void selectOneLecutre() {}
+	@RequestMapping("selectOneLecture.do") // 강의 상세페이지로 이동
+	public String selectOneLecture(@RequestParam int no, Model model) {
+		lecture lecture = lectureService.selectOneLecture(no);
+		model.addAttribute(lecture);
+		return "lectureDetail";
+	}
 
 	@RequestMapping("lectureComment.do")
 	public void lectureComment() {}

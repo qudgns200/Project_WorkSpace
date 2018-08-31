@@ -21,7 +21,14 @@ public class lecture {
 	private int state;
 	private int maxPeople;
 	private MultipartFile uploadfile; //추가
+	private int price; //추가
 	
+	public int getPrice() {
+		return price;
+	}
+	public void setPrice(int price) {
+		this.price = price;
+	}
 	public MultipartFile getUploadfile() {
 		return uploadfile;
 	}
@@ -113,11 +120,15 @@ public class lecture {
 	public void setMaxPeople(int maxPeople) {
 		this.maxPeople = maxPeople;
 	}
+	
 	@Override
 	public String toString() {
 		return "lecture [no=" + no + ", title=" + title + ", genre=" + genre + ", startDate=" + startDate + ", endDate="
 				+ endDate + ", numberPeople=" + numberPeople + ", guestID=" + guestID + ", artistID=" + artistID
 				+ ", place=" + place + ", content=" + content + ", file=" + file + ", writeDate=" + writeDate
-				+ ", state=" + state + ", maxPeople=" + maxPeople + "]";
+				+ ", state=" + state + ", maxPeople=" + maxPeople + ", uploadfile=" + uploadfile + ", price=" + price
+				+ "]";
 	}
+	
+	
 }

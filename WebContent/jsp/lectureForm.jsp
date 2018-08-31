@@ -63,15 +63,15 @@
 				<h4 class="title-bg">Made by Artist<small>-최신순</small></h4><br>
 				<!-- 최근 아티스트가 등록한 강의 목록 5개-->
 				<c:forEach items="${recentLectureA }" var="lecture">
-				<article class="clearfix"> <a href="blog-single.htm"><img
-					src="img/gallery/gallery-img-8-4col.jpg" alt="Post Thumb"
-					class="align-left"></a>
+				<article class="clearfix"> <a href="selectOneLecture.do?no=${lecture.no }">
+				<img src="download.do?no=${lecture.no }&lecture=a" style="width: 270px; height: 220px;" class="align-left">
+				</a>
 				<h4 class="title-bg">
-					<a href="blog-single.htm">${lecture.title }</a>
+					<a href="selectOneLecture.do?no=${lecture.no }">${lecture.title }</a>
 				</h4>
 				<p>${lecture.content }
 				</p>
-				<button class="btn btn-mini btn-inverse" type="button">Read	more</button>
+				
 				<div class="post-summary-footer">
 					<ul class="post-data-3">
 						<li><i class="icon-calendar"></i>${lecture.writeDate }</li>
@@ -84,15 +84,15 @@
 				<h4 class="title-bg">Made by Guest<small>-최신순</small></h4><br>				
 				<!-- 최근 사용자가 등록한 강의 목록 5개-->				
 				<c:forEach items="${recentLectureG }" var="lecture">
-				<article class="clearfix"> <a href="blog-single.htm"><img
-					src="img/gallery/gallery-img-8-4col.jpg" alt="Post Thumb"
-					class="align-left"></a>
+				<article class="clearfix"> <a href="selectOneLecture.do?no=${lecture.no }">
+				<img src="download.do?no=${lecture.no }&lecture=a" style="width: 270px; height: 220px;" class="align-left">
+				</a>
 				<h4 class="title-bg">
-					<a href="blog-single.htm">${lecture.title }</a>
+					<a href="selectOneLecture.do?no=${lecture.no }">${lecture.title }</a>
 				</h4>
 				<p>${lecture.content }
 				</p>
-				<button class="btn btn-mini btn-inverse" type="button">Read more</button>
+				
 				<div class="post-summary-footer">
 					<ul class="post-data-3">
 						<li><i class="icon-calendar"></i>${lecture.writeDate }</li>
@@ -105,22 +105,21 @@
 	</c:if>
 <!--////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////-->
 	<c:if test="${viewChoice==2 }">
-     <h5 class="title-bg">검색 결과</h5>
-            <div class="row clearfix">
+     <h5 class="title-bg">강의 검색 결과</h5>
                 <ul class="blog-post-grid">
                 	<c:if test="${empty lectureList }">
                 	<h4 align="center">검색 결과 없음</h4>
                 	</c:if>
 				<c:forEach items="${lectureList }" var="lecture">
-					<article class="clearfix"> <a href="blog-single.htm"><img
-					src="img/gallery/gallery-img-8-4col.jpg" alt="Post Thumb"
-					class="align-left"></a>
+					<article class="clearfix"> <a href="selectOneLecture.do?no=${lecture.no }">
+					<img src="download.do?no=${lecture.no }&lecture=a" style="width: 270px; height: 220px;" class="align-left">
+					</a>
 				<h4 class="title-bg">
-					<a href="blog-single.htm">${lecture.title }</a>
+					<a href="selectOneLecture.do?no=${lecture.no }">${lecture.title }</a>
 				</h4>
 				<p>${lecture.content }
 				</p>
-				<button class="btn btn-mini btn-inverse" type="button">Read	more</button>
+				
 				<div class="post-summary-footer">
 					<ul class="post-data-3">
 						<li><i class="icon-calendar"></i>${lecture.writeDate }</li>
@@ -131,7 +130,6 @@
 				</article>
 			</c:forEach>
                 </ul>
-            </div>
         <div class="pagination">
                 <ul>
                 <c:if test="${start != 1 }">
@@ -177,18 +175,17 @@
 <!--////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////-->			
 	<c:if test="${viewChoice==3 }">
      <h5 class="title-bg">Made by ${who == 'A' ? 'Artist' : 'Guest'}</h5>
-            <div class="row clearfix">
                 <ul class="blog-post-grid">
 			<c:forEach items="${lectureList }" var="lecture">
-                    <article class="clearfix"> <a href="blog-single.htm"><img
-					src="img/gallery/gallery-img-8-4col.jpg" alt="Post Thumb"
-					class="align-left"></a>
+                    <article class="clearfix"> <a href="selectOneLecture.do?no=${lecture.no }">
+                    <img src="download.do?no=${lecture.no }&lecture=a" style="width: 270px; height: 220px;" class="align-left">
+                    </a>
 				<h4 class="title-bg">
-					<a href="blog-single.htm">${lecture.title }</a>
+					<a href="selectOneLecture.do?no=${lecture.no }">${lecture.title }</a>
 				</h4>
 				<p>${lecture.content }
 				</p>
-				<button class="btn btn-mini btn-inverse" type="button">Read	more</button>
+			
 				<div class="post-summary-footer">
 					<ul class="post-data-3">
 						<li><i class="icon-calendar"></i>${lecture.writeDate }</li>
@@ -199,7 +196,6 @@
 				</article>
 			</c:forEach>
                 </ul>
-            </div>
         <div class="pagination">
                 <ul>
                 <c:if test="${start != 1 }">

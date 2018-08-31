@@ -72,5 +72,9 @@
 	</if>
 	</select>
 	
+	<select id="selectOneLecture" resultType="lecture" parameterType="int">
+	select * from lecture where no=#{no}
+	</select>
+	
 
 </mapper>
