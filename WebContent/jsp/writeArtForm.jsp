@@ -38,9 +38,6 @@
 <!-- For NaverEditor
 ================================================== --> 
 <script src="resources/editor/js/HuskyEZCreator.js" charset="utf-8"></script>
-
-<!-- 네이버 에디터 사용
-================================================== -->
 <script type="text/javascript" src="js/naverEditor.js"></script>
 
 <!-- Thumbnail 
@@ -55,6 +52,8 @@
 		$("#artSpan").click(function(){
 			$("#artBoard").show();
 			$("#freeBoard").hide();
+			$("#artSell").show();
+			$("#artOption").show();
 			$("#isCheck").val("1");
 		});
 		

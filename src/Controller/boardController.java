@@ -2,6 +2,7 @@ package Controller;
 
 import java.io.IOException;
 
+
 import java.text.ParseException;
 
 import java.text.SimpleDateFormat;
@@ -369,16 +370,34 @@ public class boardController {
 	}
 
 	@RequestMapping("addLecture.do") //lecture 테이블에 insert 요청
-	public String addLecture(HttpServletRequest request, @RequestParam("ufile") MultipartFile ufile) throws ParseException {
+	public String addLecture(HttpServletRequest request, @RequestParam MultipartFile ufile, HttpSession session){
+		
+		String id = (String)session.getAttribute("id");
 		lecture lecture = new lecture();
+		if(request.getParameter("artistID")==null)
+			lecture.setState(1);
+		else {
+			lecture.setState(3);
+			lecture.setArtistID(request.getParameter("artistID"));
+		}
+			lecture.setGuestID(id);
+		lecture.setNumberPeople(0);
 		SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd"); //String으로 넘어오기 때문에 형 변환!
 		lecture.setTitle(request.getParameter("title"));
 		lecture.setPlace(request.getParameter("place"));
 		lecture.setGenre(request.getParameter("genre"));
-		Date date1 = dateformat.parse((request.getParameter("startDate"))); //String으로 넘어오기 때문에 형 변환!
-		lecture.setStartDate(date1);
-		Date date2 = dateformat.parse((request.getParameter("endDate"))); //String으로 넘어오기 때문에 형 변환!
-		lecture.setEndDate(date2);
+		try {
+			//String으로 넘어오기 때문에 형 변환!
+			Date date1;
+			date1 = dateformat.parse((request.getParameter("startDate")));
+			lecture.setStartDate(date1);
+			Date date2 = dateformat.parse((request.getParameter("endDate"))); //String으로 넘어오기 때문에 형 변환!
+			lecture.setEndDate(date2);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
+
 		int num = Integer.parseInt(request.getParameter("maxPeople")); //String으로 넘어오기 때문에 형 변환!
 		lecture.setMaxPeople(num);
 		lecture.setContent(request.getParameter("content"));
@@ -500,7 +519,8 @@ public class boardController {
 		int no = Integer.parseInt(request.getParameter("no"));
 
 		List array = new ArrayList<artComment>();
-		array = artService.selectArtComment(no);		
+		array = artService.selectArtComment(no);
+		
 		JSONArray jsonArray = JSONArray.fromObject(array);
 		
 		response.getWriter().println(jsonArray);

@@ -35,8 +35,7 @@
 <script src="js/jquery.prettyPhoto.js"></script>
 <script src="js/jquery.custom.js"></script>
 
-<script src="js/artComment.js"></script>
-
+   <script src="js/artComment.js?ver=0.1"></script>
 </head>
 
 <body>
@@ -55,7 +54,7 @@
         ================================================== --> 
         <div class="span12 gallery-single">
 
-<form id="form" action="artPayForm.do">
+		<form id="form" action="artPayForm.do">
             <div class="row">
                 <div class="span6">
                     <img src="download.do?no=${art.no }" style="width: 600px; height: 600px;">
@@ -131,6 +130,6 @@
 	<!-- Footer Area
         ================================================== -->
 	<%@include file="footer.jsp"%>
-   
+
 </body>
 </html>

@@ -1,12 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <%@ taglib prefix="c"   uri="http://java.sun.com/jsp/jstl/core" %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <title>강의 신청 페이지</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 
 <!-- CSS
 ================================================== -->
@@ -15,11 +16,6 @@
 <link rel="stylesheet" href="css/bootstrap-responsive.css">
 <!--<link rel="stylesheet" href="css/jquery.lightbox-0.5.css">-->
 <link rel="stylesheet" href="css/custom-styles.css">
-
-<!--[if lt IE 9]>
-    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-    <link rel="stylesheet" href="css/style-ie.css"/>
-<![endif]--> 
 
 <!-- Favicons
 ================================================== -->
@@ -30,18 +26,19 @@
 
 <!-- JS
 ================================================== -->
+<script src="http://code.jquery.com/jquery-1.8.3.min.js"></script>
+<script>
+	var cal = jQuery.noConflict();
+</script>
 <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
 <script src="js/bootstrap.js"></script>
+<script src="js/jquery.flexslider.js"></script>
 <script src="js/jquery.custom.js"></script>
-<script type="text/javascript" src="js/datePicker.js"></script>
 
 
 <!-- For NaverEditor
 ================================================== --> 
 <script src="resources/editor/js/HuskyEZCreator.js" charset="utf-8"></script>
-
-<!-- 네이버 에디터 사용
-================================================== -->
 <script type="text/javascript" src="js/naverEditor.js"></script>
 
 <!-- Thumbnail 
@@ -52,6 +49,10 @@
 ================================================== -->
 <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css"/>
 
+<!-- calendar
+================================================== -->
+<link rel="stylesheet" href="css/calendar.css"/>
+<script type="text/javascript" src="js/calendar.js?ver=0.1"></script>
 
 <!--  권한 체크하여 강사 선택 버튼 숨기기 -->
 <!-- ======================================================== -->
@@ -70,6 +71,21 @@ $(document).ready(function() {
     $(document).ready( function () {
     	$("#Tables").DataTable();
     } );
+    
+    $(document).ready(function () {             
+    	  $('.dataTables_filterinput[type="search"]').css(
+    	     {'width':'350px','display':'inline-block'}
+    	  );
+    	});
+</script>
+
+<!-- Modal에서 강사 클릭 시 강사명 삽입 -->
+<!-- ======================================================== -->
+<script type="text/javascript">
+function addArtist(name) {
+
+	 $("#selectedArtist").val(name);
+}
 </script>
 
 </head>
@@ -95,12 +111,16 @@ $(document).ready(function() {
 				<p class="lead">개설을 원하는 하는 강의를 직접 신청하세요.</p>			
 				<div class="alert alert-block">정확한 커리큘럼이 정해진 강의만 신청해주세요.</div>
         
-        
+               <input type="hidden" id="checkIsCheck" value="${isCheck}">
+                
 <!--         modal(모달) 사용하기!!! -->
         
-        <input type="hidden" id="checkIsCheck" value="${isCheck}">
         <div id="modalButton">
         	<a href="#myModal" role="button" class="btn btn-inverse" data-toggle="modal">강사 선택</a>
+        </div>
+        <div>
+         <input type="text" id='selectedArtist' name="artistID">
+         
         </div>
         </div>
         
@@ -119,7 +139,7 @@ $(document).ready(function() {
             	<tbody>
             		<c:forEach items="${artistList }" var="list">
             		<tr class="odd gradeX">
-                    	<td>${list.name }</td>
+                    	<td><a  data-dismiss="modal" onclick="addArtist('${list.name }')" >${list.name }</a></td>
                     </tr> 
                     </c:forEach>
             	</tbody>
@@ -127,18 +147,16 @@ $(document).ready(function() {
         </div>
         <div class="modal-footer">
             <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
-            <button class="btn btn-inverse">Save changes</button>
         </div>
  		</div>   	
 <!--     	모달 사용 끗!!! -->
-
-		
+       
 		
         <div class="span4 contact"><!--Begin page content column-->
 
 <!-- 			강의관련 내용 입력 부분 -->
            <div class="span8 container">
-            <form action="addLecture.do" id="contact-form">
+            <form action="addLecture.do" id="contact-form" enctype=multipart/form-data method="post">
                
                 <div class="input-prepend">
 				    <span class="add-on"><i class="icon-pencil"></i></span>
@@ -224,20 +242,19 @@ $(document).ready(function() {
                 <div class="input-prepend">
 						<span class="add-on"><i class="icon-th-list"></i></span> 
 						<select	class="form-control; span6" id="select" name="genre">
-							<option selected="">장르를 선택하세요.</option>
-                                <option value="Music">Music</option>
-                                <option value="Picture">Picture</option>
-                                <option value="Feature">Feature</option>
+							<option selected>장르를 선택하세요.</option>
+							<option>original</option>
+                    		<option>painting</option>
+                     		<option>sculpture</option>
 						</select>
 				</div><br>
                 
                 <div class="input-prepend">
                     <div class="input-group date">
                         <span class="add-on"><i class="icon-calendar"></i></span>
-                        <input type="text" class="form-control" name="datepicker1" id="datepicker1" name="startDate" style="height: 20px;" placeholder="개강일 선택">
-                        
+                        <input type="text" class="form-control date-picker1" name="startDate" style="height: 20px;" placeholder="개강일 선택">
                         <span class="add-on"><i class="icon-calendar"></i></span>
-                        <input type="text" class="form-control" name="datepicker2" id="datepicker2" name="endDate" style="height: 20px;" placeholder="종강일 선택">                         
+                        <input type="text" class="form-control date-picker2" name="endDate" style="height: 20px;" placeholder="종강일 선택">                         
                     </div>                    
                 </div>                        
                                 
@@ -248,24 +265,26 @@ $(document).ready(function() {
                 
                 <div class="input-prepend">
 					<span class="add-on"><i class="icon-pencil"></i>강의내용</span><br>						
-               		<textarea class="span7" id="content" name="content"	placeholder="작품내용을 입력하세요."></textarea>
+               		<textarea id="content" name="content" placeholder="작품내용을 입력하세요." style="width: 400px; height: 400px;"></textarea>
                 </div>
 				
+				
+				<div class="row">
+					<div class="span7">
 				<!-- 썸네일 이미지 업로드 부분 -->
 				<div class="filebox bs3-primary preview-image">
                    <input class="upload-name" value="대표이미지를 설정하세요!!" disabled="disabled" style="width: 200px;">
+                   
                     <label for="input_file">업로드</label> 
                     <input type="file" id="input_file" class="upload-hidden" name="ufile"> 
                 </div>
 				<!-- ====================================================== -->
 				
-				<div class="row">
-					<div class="span7">
-						<input type="button" class="btn btn-warning pull-right" value="취소">
-						<input type="submit" class="btn btn-success pull-right" value="전송">
-					</div>					
-				</div>
 				
+						<input type="button" class="btn btn-warning pull-right" value="취소">
+						<input type="submit" id="savebutton" class="btn btn-success pull-right" value="전송">				
+				</div>
+				</div>
             </form>
             
         </div> <!--End page content column-->
@@ -277,5 +296,6 @@ $(document).ready(function() {
     <!-- 	Footer section -->
 	<%@include file="footer.jsp" %>
         <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+
 </body>
 </html>

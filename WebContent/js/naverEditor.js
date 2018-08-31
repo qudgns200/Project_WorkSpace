@@ -20,7 +20,7 @@ $(function(){
      
     //전송버튼 클릭이벤트
     $("#savebutton").click(function(){
-        //id가 content인 textarea에 에디터에서 대입
+        //id가 content인 textarea의 에디터에서 대입
         obj.getById["content"].exec("UPDATE_CONTENTS_FIELD", []); 
         //폼 submit
        

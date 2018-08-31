@@ -42,16 +42,13 @@ function fn_comment(childNode, groupNo, commentNo){
  * 초기 페이지 로딩시 댓글 불러오기
  */
 $(function(){
-    
     getCommentList();
-    
 });
  
 /**
  * 댓글 불러오기(Ajax)
  */
 function getCommentList(){
-	
 	var skip = 10;
 	var max = 0;
     $.ajax({
@@ -65,9 +62,9 @@ function getCommentList(){
             var html = "";
             var cCnt = data.length;
             max = data.length;
-            
+            if(skip>max)
+            	skip=max;
             if(data.length > 0){
-                
                 for(i=0; i<skip; i++){
                 	
                 	if(data[i].childNode==0) {
@@ -79,29 +76,23 @@ function getCommentList(){
                     html += "<div><strong>"+data[i].id+ "/" + data[i].groupNo + "</strong>&nbsp";
                     html += "<a onclick='commentAorC(1, " + data[i].commentNo + ")'><font size='2px'><strong>답글</strong></font></a>&nbsp";
                     
-                    //댓글 취소///////////////
-                    html += "<a id='cancel' onclick='commentAorC(" + data[i].commentNo  + "'><font size='2px'><strong>취소</strong></font></a>&nbsp";
-                    /////////////////////////
-                    html += "<a onclick='modifyCommentForm(" + data[i].commentNo + ")'><font size='2px'><strong>수정</strong></font></a>&nbsp";
+
+                    html += "<a id='a" + data[i].commentNo + "' onclick='modifyForm(" + data[i].commentNo + ")'><font size='2px'><strong>수정</strong></font></a>&nbsp";
                     html += "<a onclick='deleteComment(" + data[i].commentNo + ")'><font size='2px'><strong>삭제</strong></font></a>&nbsp";
                     html += "<h6>" + data[i].content + "</h6>";
                     html += "<input type='hidden' id='" + data[i].commentNo + "' value='" + data[i].content +"'>";
                     html += "</div>";      
                     //답글 입력 폼////////////
-                    html +="<div id=recomment" + data[i].commentNo + ">" +
-                	html+="<textarea style='width: 500px' rows='3' cols='10' id='reComment' name='reComment' placeholder='댓글을 입력하세요'></textarea><br>";
-                	html+="<div><a href='#' onClick='fn_comment(1, " + data[i].groupNo + ")' class='btn pull-left btn-success'>답글 쓰기</a></div>"
-                    html+="</div></div>";
+                    html +="<div class='recommentDiv' id='recomment" + data[i].commentNo + "' style='display:none'>";
+                	html +="<textarea style='width: 500px' rows='3' cols='10' id='reComment' name='reComment' placeholder='댓글을 입력하세요'></textarea><br>";
+                	html +="<div><a href='#' onClick='fn_comment(1, " + data[i].groupNo + ")' class='btn pull-left btn-success'>답글 쓰기</a></div>"
+                    html +="</div>";
                     /////////////////////////
-                    html += "</div>";
-                    
-                    
-                    
+                    html += "</div><br><br><br>";
+                       
                 }
                 html += "<div><button id='more' onclick='moreComment()'>댓글 더보기</button></a></div>"
-                	
-                	
-                
+ 
             } else {
                 
                 html += "<div>";
@@ -120,6 +111,16 @@ function getCommentList(){
        }
         
     });
+}
+
+function modifyForm(commentNoStr) {
+	var no = "#recomment" + commentNoStr;
+	var aNo = "#a" + commentNoStr
+	
+	console.log($(aNo).html());
+	
+	$(no).toggle();
+	$(aNo).text($(aNo).text()=="수정"?"취소":"수정");
 }
 
 function moreComment() {
