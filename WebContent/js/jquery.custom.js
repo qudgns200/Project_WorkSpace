@@ -98,10 +98,10 @@ $(document).ready(function () {
             $(this).attr('rel', $(this).data('rel'));
         });
 
-        $("a[rel^='prettyPhoto']").prettyPhoto({
-            social_tools: false,
-            deeplinking: false
-        });
+//        $("a[rel^='prettyPhoto']").prettyPhoto({
+//            social_tools: false,
+//            deeplinking: false
+//        });
     }
 
     ////////// Back to Top //////////

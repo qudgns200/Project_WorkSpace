@@ -40,8 +40,7 @@
 <!-- JS -->
 
 <script type="text/javascript">
-window.onload = function(){
-	alert('document');
+$(document).ready(function(){
 	alarmCount();
 	$('#alarm').click(function(){
 		selectAlarm();
@@ -51,7 +50,7 @@ window.onload = function(){
 		$('#alarmData').remove();
 		$('#alarmList').attr('data-tooltip-text','알림');
 	});
-};
+});
 
 var selectAlarm = function(){
 	$.ajax({

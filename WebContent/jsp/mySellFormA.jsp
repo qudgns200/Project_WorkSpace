@@ -38,12 +38,9 @@
 <script src="js/bootstrap.js"></script>
 <script src="js/jquery.custom.js"></script>
 <script type="text/javascript">
-// var preOnload = window.onload;
-// window.onload = function(){
-// // 	preOnload();
-// 	alert('onload');
-// 	mySellFormA();	
-// };
+$(document).ready(function(){
+	mySellFormA();	
+});
 
 var buyingPagingLog;
 var sellingPagingLog;
