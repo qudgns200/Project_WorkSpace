@@ -245,10 +245,10 @@ var mySellFormA = function(){
 <!-- 					read this important alert message.</div> -->
 				<div>===============================================================</div>
 				<h4>주문 내역</h4>
-				<table class="table table-bordered">
-					<thead>
+				<table class="table table-striped">
+					<thead class="thead-dark">
 						<tr>
-							<th scope="col">구분</th>
+							<th scope="col" class="text-center">구분</th>
 							<th scope="col">No</th>
 							<th scope="col" colspan="2">강의/작품명</th>
 							<th scope="col">아티스트</th>
