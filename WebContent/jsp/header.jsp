@@ -54,7 +54,6 @@ $(document).ready(function(){
 		$('#alarmData').remove();
 		$('#alarmList').attr('data-tooltip-text','알림');
 	});
-
 });
 
 var messageList = function(){

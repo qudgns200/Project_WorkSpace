@@ -31,21 +31,6 @@
 <script src="js/bootstrap.js"></script>
 <script src="js/jquery.flexslider.js"></script>
 <script src="js/jquery.custom.js"></script>
-
-<script type="text/javascript">
-     $(window).load(function(){
-
-    $('.flexslider').flexslider({
-        animation: "slide",
-        slideshow: true,
-        start: function(slider){
-          $('body').removeClass('loading');
-        }
-    });  
-});
-</script>
-
-
 </head>
 
 <body>
@@ -64,11 +49,11 @@
             <!-- Carousel
             ================================================== -->
             <div class="row">
-                <div class="span6">
-                <img src="img/gallery/slider-img-1.jpg">
+                <div class="span4">
+                <img src="download.do?id=${id }&profile=a" style="width: 300px; height: 250px;">
                 </div>
 
-                <div class="span6">
+                <div class="span5">
                     <h5>name : ${name }</h5>
                     <h5>nickname : ${nickname }</h5>
 					<br>
