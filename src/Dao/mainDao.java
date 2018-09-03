@@ -19,8 +19,9 @@ public interface mainDao {
 	public List<member>	searchID(String id);
 	public List<String>	selectFollowing(String id);
 	public int sendMessage(message message);
-	public List<message> logMessage(String to, String from);
-	public int	deleteMessage(String to, String from);
+	public List<message> messageList(String to); // 추가
+	public List<message> logMessage(message message); // 파라미터 수정
+	public int	deleteMessage(message message); // 파라미터 수정
 	public int	insertAlarm(HashMap<String, Object>params);		// 수정
 	public int	updateAlarm(int no);
 	public int	deleteAlarm(String from);

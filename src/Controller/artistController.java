@@ -225,15 +225,6 @@ public class artistController {
 	@RequestMapping("searchID.do") 
 	public void searchID() {}
 	
-	@RequestMapping("sendMessage.do") 
-	public void sendMessage() {}
-	
-	@RequestMapping("logMessage.do") 
-	public void logMessage() {}
-
-	@RequestMapping("deleteMessage.do") 
-	public void deleteMessage() {}
-
   //아티스트 개인 페이지 이동 (사용자용)
   		@RequestMapping("artistPage.do")
   		public ModelAndView artistPage(String id) {

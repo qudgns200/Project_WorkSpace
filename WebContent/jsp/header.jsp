@@ -42,6 +42,10 @@
 <script type="text/javascript">
 $(document).ready(function(){
 	alarmCount();
+	$('#message').click(function(){
+		messageList();
+		$('#messageList').removeAttr('data-tooltip-text');
+	});
 	$('#alarm').click(function(){
 		selectAlarm();
 		$('#alarmList').removeAttr('data-tooltip-text');
@@ -52,6 +56,39 @@ $(document).ready(function(){
 	});
 
 });
+
+var messageList = function(){
+	$.ajax({
+		type: "get",
+		url: "messageList.do",
+		dataType: "json",
+		success: function(data){
+			$('#messageData').remove();
+			var str = '<ul class="dropdown-menu" id="messageData" style="height:330px; width:250px">'+
+			'<div><h6 style="text-align:center; color:yellow">새 메시지</h6></div>';
+			$.each(data.messageList, function(index, message){
+// 				alert(message.isTo);
+// 				alert(message.isFrom);
+				str += '<li>' + message.isTo + '</li>';
+				str += '<li>' + message.isFrom + '</li>';
+				str += '<li>' + message.content + '</li>';
+				str += '<li>' + message.time + '</li>';
+				str += '<li>' + message.file + '</li>';
+// 				var msg = '';
+// 				if(alarmList.type=="writeArt"){msg='작품을 등록했습니다.';}
+				
+// 				if(index < 6){
+// 				str += '<li><a>' + message.to + '님이 ' + msg + 
+// 				'&emsp;&emsp; <button onclick="updateAlarm('+ alarmList.no + ')" id="updateAlarm">check</button></a></li>';
+// 				}
+// 				else return false;
+			}) // each의 끝
+// 			str += '<div><a style="text-align:center; color:white" href="messagePage.do">더 보기</a></div>'+'</ul>';
+			str += '</ul>';
+			$('#messageList').append(str);
+		}	// success의 끝
+	}) // ajax의 끝
+} //selectMessage 함수의 끝 
 
 var selectAlarm = function(){
 	$.ajax({
@@ -180,10 +217,16 @@ var updateAlarm = function(no){
 			                    <li><a href="#">회원 탈퇴</a></li>
 			                </ul>
 			            </li>	
+			            <li class="dropdown" id="message">
+						<a href="#" data-tooltip-text="메시지" id="messageList" style="font-weight: bold">메시지 
+						<span id="messageCount" style="color:Fuchsia; font-weight: bold">0</span> 개</a>
+						</li>
 						<li class="dropdown" id="alarm">
 						<a href="#" data-tooltip-text="알림" id="alarmList" style="font-weight: bold">알림 
 						<span id="alarmCount" style="color:Fuchsia; font-weight: bold">0</span> 개</a>
 						</li>
+						<li><a href="messageList.do">메시지 테스트</a></li>
+						<li><a href="http://localhost:3000/client?id=<%=session.getAttribute("id")%>">공개 채팅</a></li>
 				   </ul>
 			 </div>
 			

@@ -79,19 +79,25 @@ public class mainServiceImpl implements mainService{
 	@Override
 	public int sendMessage(message message) {
 		// TODO Auto-generated method stub
-		return 0;
+		return mainDao.sendMessage(message);
 	}
 
 	@Override
-	public List<message> logMessage(String to, String from) {
+	public List<message> messageList(String to) {
 		// TODO Auto-generated method stub
-		return null;
+		return mainDao.messageList(to);
+	}
+	
+	@Override
+	public List<message> logMessage(message message) {
+		// TODO Auto-generated method stub
+		return mainDao.logMessage(message);
 	}
 
 	@Override
-	public int deleteMessage(String to, String from) {
+	public int deleteMessage(message message) {
 		// TODO Auto-generated method stub
-		return 0;
+		return mainDao.deleteMessage(message);
 	}
 
 	@Override
@@ -231,9 +237,4 @@ public class mainServiceImpl implements mainService{
 	public int getAlarmCount(String id) {
 		return mainDao.alarmCount(id);
 	}
-	
-	
-	
-
-
 }
