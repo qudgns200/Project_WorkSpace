@@ -232,6 +232,7 @@ public class artistController {
   			List<art> list = memberService.selectArtistArt(id);
   			mav.addObject("artCount", list.size());
   			mav.addObject("artList", list);
+  			mav.addObject("artistID", id);
   			mav.addObject("name", memberService.selectOneMember(id).getName());
   			mav.addObject("nickname", memberService.selectOneMember(id).getNickname());
   			mav.addObject("content", memberService.selectOneMember(id).getContent());
