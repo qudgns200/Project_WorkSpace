@@ -42,7 +42,8 @@ public interface memberService {
 
 	public	int	updateArt	(int no, String file, String title, String content);
 	public	int	deleteArt	(int no, String id);
-	public	int	updateDelivery	(int no, String id, int state);
+	public	int	updateDelivery	(String orderNumber, int state);
 	
 	public File getAttachFile(HashMap<String, Object> params); // 추가 + 수정
+	public Integer updateApproveLec(int no, int state);		// 추가
 }

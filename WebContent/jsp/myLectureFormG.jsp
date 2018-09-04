@@ -37,9 +37,9 @@
 <script src="js/bootstrap.js"></script>
 <script src="js/jquery.custom.js"></script>
 <script type="text/javascript">
-window.onload = function(){
+$(document).ready(function(){
 myLectureFormG();	
-}
+});
 
 var attendPagingLog;
 var gatherPagingLog;
@@ -58,9 +58,19 @@ var myLectureFormG = function(){ // 강의 내역 페이지 요청 함수
 			
 			var str1 = "<tr>";
 			$.each(data.attendList, function(index, attendList){ 	// 강의신청 목록
-				str1 += '<td>' + attendList.genre + '</td><td>' + attendList.title + '</td><td>' +
-						attendList.artistID + '</td><td>' + attendList.startDate + '</td><td>' +
-						attendList.place + '</td>';
+				
+				var imageUrl =  '<img src="download.do?no=' + attendList.no + '&lecture=a" width=50 height=50>';
+				var aTag = '<a href="selectOneLecture.do?no=' + attendList.no + '">';
+				var pay = '인원 모집 중<br>(결제전)';
+				if(attendList.numberPeople == attendList.maxPeople){
+					pay = '<button>결제하기</button>'
+				}
+				
+				str1 += '<td>' + attendList.genre + 
+						'</td><td><span>' + aTag + imageUrl + '</a></span> &nbsp; <span>' +
+						aTag + attendList.title + '</a></span></td><td>' +
+						attendList.artistID + '</td><td>' + attendList.startDate + ' ~ ' + attendList.endDate + '</td><td>' +
+						attendList.place + '</td><td>' + pay + '</td>';
 				str1 += '</tr>';
 			}); // each
 			$('#attendList').append(str1); // 강의신청 목록- 테이블에 붙이기
@@ -94,12 +104,26 @@ var myLectureFormG = function(){ // 강의 내역 페이지 요청 함수
 			} // else 끝
 			
 			$('#attendPaging').append(str1Paging); // 강의신청 목록 페이징 처리- 테이블에 붙이기
-			
+// =====================================================================================================================
+	
 			var str2 = "<tr>";
 			$.each(data.gatherList, function(index, gatherList){ 		// 모집 중인 강의 목록
-				str2 += '<td>' + gatherList.genre + '</td><td>' + gatherList.title + '</td><td>' +
-						gatherList.artistID + '</td><td>' + gatherList.startGDate + '</td><td>' +
-						gatherList.place + '</td><td>' + gatherList.state + '</td>';
+				
+				var imageUrl =  '<img src="download.do?no=' + gatherList.no + '&lecture=a" width=50 height=50>';
+				var aTag = '<a href="selectOneLecture.do?no=' + gatherList.no + '">';
+				var state;
+				if(gatherList.state==1){state = '인원 모집 중';}
+				if(gatherList.state==2){state = '모집완료';}
+				if(gatherList.state==3){state = '승인전';}
+				if(gatherList.state==4){state = '승인완료';}
+				if(gatherList.state==5){state = '승인거절';}
+				if(gatherList.state==6){state = '결제완료';}
+				
+				str2 += '<td>' + gatherList.genre +
+						'</td><td><span>' + aTag + imageUrl + '</a></span> &nbsp; <span>' +
+						aTag + gatherList.title + '</a></span></td><td>' +
+						gatherList.artistID + '</td><td>' +gatherList.startDate + ' ~ ' + gatherList.endDate+ '</td><td>' +
+						gatherList.place + '</td><td>' + state + '</td>';
 				str2 += '</tr>';
 			}); // each
 			$('#gatherList').append(str2); // 모집 중인 강의- 테이블에 붙이기
@@ -174,13 +198,10 @@ var myLectureFormG = function(){ // 강의 내역 페이지 요청 함수
 			<div class="span8 contact">
 				<!--Begin page content column-->
 
-				<h2>강의 내역 조회</h2>
-
-				<div class="alert alert-success">Well done! You successfully
-					read this important alert message.</div>
-
+			<h3 class="title-bg" style="margin-top: 0px;">강의 내역 조회</h3>
 				<h4>신청한 강의</h4>
-				<table class="table table-bordered">
+				<hr style="display: block; margin-top: 0.5em; margin-bottom: 0.5em; border-style: inset; border-width: 1px;">
+				<table class="table table-striped">
 					<thead>
 						<tr>
 							<th scope="col">장르</th>
@@ -188,6 +209,7 @@ var myLectureFormG = function(){ // 강의 내역 페이지 요청 함수
 							<th scope="col">아티스트</th>
 							<th scope="col">강의기간</th>
 							<th scope="col">장소</th>
+							<th scope="col">결제</th>
 						</tr>
 					</thead>
 					<tbody id="attendList">
@@ -197,8 +219,9 @@ var myLectureFormG = function(){ // 강의 내역 페이지 요청 함수
 					</tr>
 				</table>
 
-				<h4>모집 중인 강의</h4>
-				<table class="table table-bordered">
+				<h4>인원 모집 중인 강의</h4>
+				<hr style="display: block; margin-top: 0.5em; margin-bottom: 0.5em; border-style: inset; border-width: 1px;">
+				<table class="table table-striped">
 					<thead>
 						<tr>
 							<th scope="col">장르</th>

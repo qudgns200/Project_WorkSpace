@@ -225,7 +225,7 @@ var updateAlarm = function(no){
 						<span id="alarmCount" style="color:Fuchsia; font-weight: bold">0</span> 개</a>
 						</li>
 						<li><a href="messageList.do">메시지 테스트</a></li>
-						<li><a href="http://localhost:3000/client?id=<%=session.getAttribute("id")%>">공개 채팅</a></li>
+						<li><a href="http://10.10.10.71:3000/client?id=<%=session.getAttribute("id")%>">공개 채팅</a></li>
 				   </ul>
 			 </div>
 			

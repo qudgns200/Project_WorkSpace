@@ -266,9 +266,11 @@ public class memberServiceImpl implements memberService {
 	}
 
 	@Override
-	public int updateDelivery(int no, String id, int state) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int updateDelivery(String orderNumber, int state) {
+		pay pay = new pay();
+		pay.setOrderNumber(orderNumber);
+		pay.setState(state);
+		return memberDao.updateDelivery(pay);
 	}
 
 	@Override
@@ -375,6 +377,14 @@ public class memberServiceImpl implements memberService {
 			}
 		}
 		return new File(path + fileName);
+	}
+
+	@Override
+	public Integer updateApproveLec(int no, int state) {
+		lecture lecture = new lecture();
+		lecture.setNo(no);
+		lecture.setState(state);
+		return memberDao.updateApproveLec(lecture);
 	}
 	
 	

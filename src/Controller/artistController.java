@@ -1,8 +1,6 @@
 package Controller;
 
 import java.io.IOException;
-
-
 import java.io.PrintWriter;
 import java.rmi.ServerException;
 import java.util.HashMap;
@@ -21,9 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-
 import Model.art;
-import Model.member;
 import Service.mainService;
 import Service.memberService;
 
@@ -141,11 +137,13 @@ public class artistController {
 		jsonObj.put("endSold", resultSold.get("endSold"));
 		jsonObj.put("lastSold", resultSold.get("lastSold"));
 		pw.println(jsonObj); 
-//		System.out.println(jsonObj);
     }
     
     @RequestMapping("updateDelivery.do") 
-	public void updateDelivery() {}
+	public String updateDelivery(String orderNumber, int state) {
+    	memberService.updateDelivery(orderNumber, state);
+    	return "redirect:mySellFormA0.do";
+    }
 	
     @RequestMapping("myOrderFormA.do") 
 	public void myOrderFormA() {}
@@ -260,13 +258,14 @@ public class artistController {
 				return "myLectureFormG";
 			}
 	    }
+  	  
+  	  @RequestMapping("updateApproveLec.do")
+  	  public String updateApproveLec(int no, int state) {
+  		memberService.updateApproveLec(no, state); 
+  		return "redirect:myLectureFormA0.do";
+  	  }
 
-//상세 페이지에서 그림 로드 기능 - 추후 사용해야함
-//  		@RequestMapping("download.do")
-//  		public View download(int num) {
-//  			View view = new DownloadView(memberService.getAttachFile(num));
-//  			return view;
-//  		}
+  	  
   	    
 }		// public class의 끝
 

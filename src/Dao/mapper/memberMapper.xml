@@ -88,17 +88,18 @@
 	
 	</update>
 	
-	<select id="selectMyAttendLec" parameterType="java.util.HashMap" resultType="lecture">
+	<select id="selectMyAttendLec" parameterType="java.util.HashMap" resultType="java.util.HashMap">
 		select * from lecture join attendants using(no) where id = #{id} limit ${skipA}, ${qty}
 	</select>
 	
 	<!-- 모집 중인 강의내역: 사용자와 아티스트 나누어 조건 쿼리 작성 -->
-	<select id="selectGatherLec" parameterType="java.util.HashMap" resultType="lecture">
+	<select id="selectGatherLec" parameterType="java.util.HashMap" resultType="java.util.HashMap">
 		<if test="guestID!=null">
 			select * from lecture where guestID=#{guestID} limit ${skipG}, ${qty}
 		</if>
 		<if test="artistID!=null">
-			select * from lecture where artistID=#{artistID} limit ${skipG}, ${qty}
+			select * from lecture where artistID=#{artistID} and (state = 1 or state = 2 or state = 6) 
+			limit ${skipG}, ${qty}
 		</if>
 	</select>
 	
@@ -128,11 +129,11 @@
 	
 	</delete>
 
-	<select id="selectRequestLec" parameterType="java.util.HashMap" resultType="lecture">
-		select * from lecture where artistID=#{id} and state=3 limit ${skipR},${qty}
+	<select id="selectRequestLec" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+		select * from lecture where artistID=#{id} and (state=3 or state=5) order by state limit ${skipR},${qty}
 	</select>
 	
-	<select id="selectApproveLec" parameterType="java.util.HashMap" resultType="lecture">
+	<select id="selectApproveLec" parameterType="java.util.HashMap" resultType="java.util.HashMap">
 		select * from lecture where artistID=#{id} and state=4 limit ${skipAp},${qty}
 	</select>
 	
@@ -141,22 +142,22 @@
 	</select>
 	
 	<select id="selectSoldArt" parameterType="java.util.HashMap" resultType="java.util.HashMap">
-		select *, p.id as p_id from art a join pay p using(no) where a.sellCheck = 1
-		and p.isCheck =0 and a.id = #{id}
+		select *, p.id as p_id, p.state as p_state from art a join pay p using(no) where a.sellCheck = 1
+		and p.isCheck =0 and a.id = #{id} order by payDate desc
 		limit ${skipSold}, ${qty}
 	</select>
 <!-- 	수 정 -->
 	<select id="selectBuyingArt" parameterType="java.util.HashMap" resultType="java.util.HashMap">
 	select pay.no, pay.isCheck, art.title as 'artTitle', lecture.title as 'lecTitle',
 	art.id as 'artID', lecture.artistID as 'lecID', art.price as 'artPrice', lecture.price as 'lecPrice', totalPrice,
-	payMethod, pay.state, payDate
+	payMethod, pay.state, payDate, orderNumber
 	from pay join art join lecture 
 	on (pay.no=art.no and pay.isCheck=0) or (pay.no=lecture.no and pay.isCheck=1) 
-	where pay.id = #{id} group by pay.no limit ${skipBuy}, ${qty} 
+	where pay.id = #{id} group by pay.no order by payDate desc limit ${skipBuy}, ${qty} 
 	</select>
 
-	<update id="updateDelivery" parameterType="java.util.HashMap">
-	
+	<update id="updateDelivery" parameterType="pay">
+	update pay set state = #{state} where orderNumber = #{orderNumber};
 	</update>
 	
 	<select id="selectOneNickname" parameterType="String" resultType="member">
@@ -214,14 +215,13 @@
 			select count(*) from lecture where guestID=#{guestID}
 		</if>
 		<if test="artistID!=null">
-			select count(*) from lecture where artistID=#{artistID}
+		select count(*) from lecture where artistID=#{artistID} and (state = 1 or state = 2 or state = 6) 
 		</if>
 	</select>
 
-
 	<select id="getRequestLecCount" parameterType="String"
 		resultType="int">
-		select count(*) from lecture where artistID=#{id} and state=3
+		select count(*) from lecture where artistID=#{id} and (state=3 or state=5)
 	</select>
 
 	<select id="getApproveLecCount" parameterType="String"
@@ -248,6 +248,11 @@
 
 	<select id="getOnePayCount" parameterType="String" resultType="int">
 		select count(*) from pay where id=#{id}
+	</select>
+	
+<!-- 강의 승인시 update 쿼리 추가 -->
+	<select id="updateApproveLec" parameterType="lecture">
+	update lecture set state = #{state} where no = #{no};
 	</select>
 
 </mapper>
