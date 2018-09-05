@@ -20,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import Model.art;
+import Service.artistService;
 import Service.mainService;
 import Service.memberService;
 
@@ -31,6 +32,9 @@ public class artistController {
 	
 	@Autowired
 	mainService mainService; //추가
+	
+	@Autowired
+	artistService artistService; //추가
 		
 	//아티스트 개인 페이지 이동 (아티스트용)
 	@RequestMapping("artistMyPage.do") 
@@ -185,8 +189,12 @@ public class artistController {
 		memberService.insertArt(art, ufile);
 
 		//		 알림 소스 추가
-		mainService.insertAlarm("writeArt", id, id);
+		List<String> followerList = artistService.selectFollower(id);
+		for (String str : followerList) {			// following하는 아티스트가 글 작성시, follower들에게 알림 보내기
+			mainService.insertAlarm("writeArt", str, id);
+		}
 		// 알림 소스
+		
 		return "redirect:artistMyPage.do";
 	}
 	

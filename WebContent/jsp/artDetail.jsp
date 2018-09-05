@@ -56,7 +56,7 @@
 		<form id="form" action="artPayForm.do">
             <div class="row">
                 <div class="span6">
-                    <img src="download.do?no=${art.no }" style="width: 550px; height: 550px;">
+<img src="download.do?no=${art.no }" style="width: 500px; height: 530px; margin-left: 50px; margin-top: 30px;">
                 </div>
                 <div class="span6">
                     <h2>${art.title }</h2> 		<!-- 작품 제목 출력  -->

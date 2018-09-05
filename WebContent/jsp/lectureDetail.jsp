@@ -69,9 +69,9 @@
         ================================================== --> 
         <div class="span12 gallery-single">
             <div class="row">
-                <div class="span6">
-                    <img src="download.do?no=${lecture.no }&lecture=a" style="width: 550px; height: 550px;">
-                </div>
+            <div class="span6">
+<img src="download.do?no=${lecture.no }&lecture=a" style="width: 500px; height: 530px; margin-left: 50px; margin-top: 30px;">
+            </div>
                 <div class="span6">
                     <h2>${lecture.title }</h2> 		<!-- 강의 제목 출력  -->
                     <p class="lead"></p>
@@ -85,6 +85,35 @@
                         <li><h6>artist :</h6> ${lecture.artistID }</li>
                         <li><h6>Genre :</h6> ${lecture.genre }</li>
                         <li><h6>Location :</h6> ${lecture.place }</li>
+<!-- 지도 API ==================================================-->
+<li>
+	<div class="row" id="map" style="width: 400px; height: 250px; margin-left: auto; margin-right: auto;
+	margin-bottom: auto;">
+	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=df63ab88c6f092a4b29b7f555f1a82dc&libraries=services"></script>
+		<script>
+ 						var geocoder = new daum.maps.services.Geocoder();
+
+ 	  					var callback = function(result, status) {
+ 	  					    if (status === daum.maps.services.Status.OK) {
+ 	  					    	var container = document.getElementById('map'); // 지도를 표시할 div 
+ 	  		  					var options = { 
+ 	  									center : new daum.maps.LatLng(result[0].y, result[0].x), // 지도의 중심좌표 
+ 	  									level : 5 	// 지도의 확대 레벨 
+ 	  		  							}; 
+ 	  		 						// 지도를 생성한다 
+ 	  		  						var map = new daum.maps.Map(container, options); 
+ 	  		  						// 지도에 마커를 생성하고 표시한다 
+ 	  		 						var marker = new daum.maps.Marker({ 
+ 	  		  						position : new daum.maps.LatLng(result[0].y, result[0].x), // 마커의 좌표 
+ 	  		  						map : map 
+ 	  		  						// 마커를 표시할 지도 객체 
+ 	  		  						}); 
+ 	  					    }
+ 	  					};
+ 	  					geocoder.addressSearch('${lecture.place}', callback);
+ 		</script> 
+	</div>
+</li>
                     </ul>
                 </div>
             </div>
@@ -99,27 +128,6 @@
 </div><!-- End container row -->
 </div> <!-- End Container -->
 
-<!-- 지도api ==================================================-->
-<!-- 			<div class="row" id="map" style="width: 400px; height: 250px;"> -->
-<!-- 			<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script> -->
-<!-- 			<script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=df63ab88c6f092a4b29b7f555f1a82dc"></script> -->
-<!-- 			<script> -->
-<!--  					var container = document.getElementById('map'); // 지도를 표시할 div -->
-<!--  					var options = { -->
-<!-- 							center : new daum.maps.LatLng(37.5706073, 126.9853092), // 지도의 중심좌표 -->
-<!--  							level : 5 -->
-<!--  									// 지도의 확대 레벨 -->
-<!--  							}; -->
-<!--  						// 지도를 생성한다  -->
-<!--  						var map = new daum.maps.Map(container, options); -->
-<!--  						// 지도에 마커를 생성하고 표시한다 -->
-<!--  						var marker = new daum.maps.Marker({ -->
-<!--  						position : new daum.maps.LatLng(37.57053, 126.98531), // 마커의 좌표 -->
-<!--  						map : map -->
-<!--  						// 마커를 표시할 지도 객체 -->
-<!--  						}); -->
-<!-- 			</script> -->
-<!-- 			</div> -->
 	 
 
 <!-- Post Comments================================================== -->

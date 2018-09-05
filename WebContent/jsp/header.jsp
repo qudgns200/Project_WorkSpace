@@ -96,14 +96,14 @@ var selectAlarm = function(){
 		dataType: "json",
 		success: function(data){
 			$('#alarmData').remove();
-			var str = '<ul class="dropdown-menu" id="alarmData" style="height:330px; width:250px">'+
+			var str = '<ul class="dropdown-menu" id="alarmData" style="height:330px; width:300px">'+
 			'<div><h6 style="text-align:center; color:yellow">새로운 알림</h6></div>';
 			$.each(data.alarmList, function(index, alarmList){
 				var msg = '';
-				if(alarmList.type=="writeArt"){msg='작품을 등록했습니다.';}
+				if(alarmList.type=="writeArt"){msg='새 게시물을 작성했습니다.';}
 				
 				if(index < 6){
-				str += '<li><a>' + alarmList.to + '님이 ' + msg + 
+				str += '<li><a>' + alarmList.isFrom + '님이 ' + msg + 
 				'&emsp;&emsp; <button onclick="updateAlarm('+ alarmList.no + ')" id="updateAlarm">check</button></a></li>';
 				}
 				else return false;

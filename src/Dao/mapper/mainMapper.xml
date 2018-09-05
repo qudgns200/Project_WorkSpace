@@ -58,11 +58,11 @@
 	</delete>
 	
 	<select id="selectAlarm" parameterType="String" resultType="alarm">
-	select * from alarm where isFrom = #{from} and readCheck=0 order by time desc
+	select * from alarm where isTo = #{isTo} and readCheck=0 order by time desc
 	</select>
 	
 	<select id="alarmCount" parameterType="String" resultType="int">
-	select count(*) from alarm where isFrom = #{from} and readCheck=0 
+	select count(*) from alarm where isTo = #{isTo} and readCheck=0 
 	</select>
 	
 </mapper>
