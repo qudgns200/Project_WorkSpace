@@ -30,15 +30,19 @@
 	</select>
 	
 	<insert id="sendMessage" parameterType="message">
-	
+		insert into message values(#{isTo},#{isFrom},#{content},default,#{file});
 	</insert>
 	
-	<select id="logMessage" parameterType="String" resultType="message">
-	
+	<select id="messageList" parameterType="String" resultType="message">
+		select distinct isFrom from message where isTo=#{isTo} order by time desc;
 	</select>
 	
-	<delete id="deleteMessage" parameterType="String">
+	<select id="logMessage" parameterType="message" resultType="message">
+		select * from message where (isTo=#{isTo} and isFrom=#{isFrom}) or (isTo=#{isFrom} and isFrom=#{isTo}) order by time;
+	</select>
 	
+	<delete id="deleteMessage" parameterType="message">
+		delete from message where (isTo=#{isTo} and isFrom=#{isFrom}) or (isTo=#{isFrom} and isFrom=#{isTo});
 	</delete>
 	
 	<insert id="insertAlarm" parameterType="java.util.HashMap">

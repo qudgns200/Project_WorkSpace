@@ -23,6 +23,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.View;
 
 import Model.member;
+import Model.message;
 import Service.mainService;
 import Service.memberService;
 
@@ -385,7 +386,7 @@ public class mainController {
 		return "myLectureFormG";
 	}
 	
-	@RequestMapping("download.do")
+	@RequestMapping("download.do") // 추가
 	public View download(@RequestParam(required=false) String id, @RequestParam(required=false) Integer no, 
 			@RequestParam(required=false) String profile, @RequestParam(required=false) String lecture) {
 		View view;
@@ -426,7 +427,97 @@ public class mainController {
 				pw.println(jsonObj);
 			}
 	}
+	
+	@RequestMapping("sendMessage.do")
+	public void sendMessage(HttpServletRequest req, HttpServletResponse resp, HttpSession session) throws IOException {
+		String isTo = (String) session.getAttribute("id");
+		String isFrom = req.getParameter("isFrom");
+		String content = req.getParameter("content");
+		JSONObject jsonObject = new JSONObject();
+		boolean result;
 		
+		message message = new message();
+		message.setIsTo(isTo);
+		message.setIsFrom(isFrom);
+		message.setContent(content);
+		
+		if(mainService.sendMessage(message) == 1) {
+			result = true;
+		} else {
+			result = false;
+		}
+		
+		jsonObject.put("result", result);
+		jsonObject.put("logMessage", mainService.logMessage(message));
+		
+		resp.setContentType("text/html; charset=UTF-8");
+		PrintWriter pw = resp.getWriter();
+		pw.println(jsonObject);
+	}
+	
+//	@RequestMapping("messageList.do")
+//	public void messageList(HttpSession session, HttpServletResponse resp) throws IOException {
+//		String id = (String) session.getAttribute("id");
+//		JSONObject jsonObject = new JSONObject();
+//		
+//		jsonObject.put("messageList", mainService.messageList(id));
+//		
+//		resp.setContentType("text/html; charset=UTF-8");
+//		PrintWriter pw = resp.getWriter();
+//		pw.println(jsonObject);
+//		System.out.println(jsonObject);
+//	}
+	
+	@RequestMapping("messageList.do")
+	public ModelAndView messageList(HttpSession session) {
+		String id = (String) session.getAttribute("id");
+		ModelAndView mav = new ModelAndView();
+		
+		mav.addObject("messageList", mainService.messageList(id));
+		mav.setViewName("messageList");
+		
+		return mav;
+	}
+	
+	@RequestMapping("logMessage.do")
+	public ModelAndView logMessage(HttpSession session, String isFrom) {
+		String isTo = (String) session.getAttribute("id");
+		ModelAndView mav = new ModelAndView();
+		message message = new message();
+		
+		message.setIsTo(isTo);
+		message.setIsFrom(isFrom);
+		
+		mav.addObject("isFrom", isFrom);
+		mav.addObject("logMessage", mainService.logMessage(message));
+		mav.setViewName("logMessage");
+		
+		return mav;
+	}
+	
+	@RequestMapping("deleteMessage.do")
+	public void deleteMessage(HttpServletRequest req, HttpServletResponse resp, HttpSession session) throws IOException {
+		String isTo = (String) session.getAttribute("id");
+		String isFrom = req.getParameter("isFrom");
+		JSONObject jsonObject = new JSONObject();
+		boolean result;
+		
+		message message = new message();
+		message.setIsTo(isTo);
+		message.setIsFrom(isFrom);
+		
+		if(mainService.deleteMessage(message) == 0) {
+			result = false;
+		} else {
+			result = true;
+		}
+		
+		jsonObject.put("result", result);
+		
+		resp.setContentType("text/html; charset=UTF-8");
+		PrintWriter pw = resp.getWriter();
+		pw.println(jsonObject);
+	}
 	
 } // public class의 끝.
 

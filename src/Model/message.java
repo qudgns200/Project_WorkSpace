@@ -4,23 +4,23 @@ import java.util.Date;
 
 public class message {
 
-	private String to;
-	private String from;
+	private String isTo;
+	private String isFrom;
 	private String content;
 	private Date time;
 	private String file;
-	
-	public String getTo() {
-		return to;
+
+	public String getIsTo() {
+		return isTo;
 	}
-	public void setTo(String to) {
-		this.to = to;
+	public void setIsTo(String isTo) {
+		this.isTo = isTo;
 	}
-	public String getFrom() {
-		return from;
+	public String getIsFrom() {
+		return isFrom;
 	}
-	public void setFrom(String from) {
-		this.from = from;
+	public void setIsFrom(String isFrom) {
+		this.isFrom = isFrom;
 	}
 	public String getContent() {
 		return content;
@@ -42,10 +42,7 @@ public class message {
 	}
 	@Override
 	public String toString() {
-		return "message [to=" + to + ", from=" + from + ", content=" + content + ", time=" + time + ", file=" + file
+		return "message [isTo=" + isTo + ", isFrom=" + isFrom + ", content=" + content + ", time=" + time + ", file=" + file
 				+ "]";
 	}
-	
-	
-	
 }

@@ -223,15 +223,6 @@ public class artistController {
 	@RequestMapping("searchID.do") 
 	public void searchID() {}
 	
-	@RequestMapping("sendMessage.do") 
-	public void sendMessage() {}
-	
-	@RequestMapping("logMessage.do") 
-	public void logMessage() {}
-
-	@RequestMapping("deleteMessage.do") 
-	public void deleteMessage() {}
-
   //아티스트 개인 페이지 이동 (사용자용)
   		@RequestMapping("artistPage.do")
   		public ModelAndView artistPage(String id) {
@@ -239,6 +230,7 @@ public class artistController {
   			List<art> list = memberService.selectArtistArt(id);
   			mav.addObject("artCount", list.size());
   			mav.addObject("artList", list);
+  			mav.addObject("artistID", id);
   			mav.addObject("name", memberService.selectOneMember(id).getName());
   			mav.addObject("nickname", memberService.selectOneMember(id).getNickname());
   			mav.addObject("content", memberService.selectOneMember(id).getContent());

@@ -18,8 +18,9 @@ public interface mainService {
 	public	List<member>	searchID	(String id);
 	public	List<String>	selectFollowing	(String id);
 	public	int	sendMessage	(message message);
-	public	List<message>	logMessage	(String to, String from);
-	public	int	deleteMessage	(String to, String from);
+	public	List<message>	messageList	(String to);
+	public	List<message>	logMessage	(message message);
+	public	int	deleteMessage	(message message);
 	public	int	insertAlarm	(String type, String to, String from);
 	public	int	updateAlarm	(int no);
 	public	int	deleteAlarm	(String from);
