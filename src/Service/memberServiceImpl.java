@@ -338,8 +338,6 @@ public class memberServiceImpl implements memberService {
 		
 		String fileName=new Date().getTime() + "_" + file.getOriginalFilename();
 		
-		System.out.println("패스 : " + path + fileName);
-		
 		File attachFile = new File(path + fileName);
 		try {
 			file.transferTo(attachFile);

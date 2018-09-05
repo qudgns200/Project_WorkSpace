@@ -19,8 +19,7 @@ public class art {
 	private int state;
 	private int totalCount;
 	private String file;
-	private MultipartFile uploadfile; //추가
-	private String imageUrl;//추가
+	
 	public int getNo() {
 		return no;
 	}
@@ -93,24 +92,10 @@ public class art {
 	public void setFile(String file) {
 		this.file = file;
 	}
-	public MultipartFile getUploadfile() {
-		return uploadfile;
-	}
-	public void setUploadfile(MultipartFile uploadfile) {
-		this.uploadfile = uploadfile;
-	}
-	public String getImageUrl() {
-		return imageUrl;
-	}
-	public void setImageUrl(String imageUrl) {
-		this.imageUrl = imageUrl;
-	}
 	@Override
 	public String toString() {
 		return "art [no=" + no + ", title=" + title + ", genre=" + genre + ", content=" + content + ", sellCheck="
 				+ sellCheck + ", price=" + price + ", isCheck=" + isCheck + ", id=" + id + ", artDate=" + artDate
-				+ ", state=" + state + ", totalCount=" + totalCount + ", file=" + file + ", uploadfile=" + uploadfile
-				+ ", imageUrl=" + imageUrl + "]";
+				+ ", state=" + state + ", totalCount=" + totalCount + ", file=" + file + "]";
 	}
-	
 }

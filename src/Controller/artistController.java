@@ -181,8 +181,6 @@ public class artistController {
 				art.setState(state);
 			}
 		}
-
-		System.out.println(art);
 		
 		memberService.insertArt(art, ufile);
 

@@ -70,22 +70,17 @@ public class artServiceImpl implements artService{
 		return artDao.insertArtComment(artComment);
 	}
 
+
 	@Override
-	public int insertArtRecomment(int commentNo) {
+	public List<artComment> selectArtComment(HashMap<String, Object>params) {
 		// TODO Auto-generated method stub
-		return 0;
+		return artDao.selectArtComment(params);
 	}
 
 	@Override
-	public List<artComment> selectArtComment(int no) {
+	public artComment selectArtLatestcomment() {
 		// TODO Auto-generated method stub
-		return artDao.selectArtComment(no);
-	}
-
-	@Override
-	public List<artRecomment> selectArtRecomment(int commentNo) {
-		// TODO Auto-generated method stub
-		return null;
+		return artDao.selectArtLatestcomment();
 	}
 
 	//추가
@@ -106,6 +101,21 @@ public class artServiceImpl implements artService{
 		return artDao.updateComment(artComment);
 	}
 
+	@Override
+	public int selectGroupNo(artComment artComment) {
+		// TODO Auto-generated method stub
+		return artDao.selectGroupNo(artComment);
+	}
+
+	@Override
+	public int maxGroupOrder(int groupNo) {
+		// TODO Auto-generated method stub
+		return artDao.maxGroupOrder(groupNo);
+	}
 	
+	@Override
+	public int updateGroupOrder(artComment artComment) {
+		return artDao.updateComment(artComment);
+	}
 	
 }

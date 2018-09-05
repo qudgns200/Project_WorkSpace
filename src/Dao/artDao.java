@@ -16,9 +16,9 @@ public interface artDao {
 	public art	selectOneArt(int no);
 	public int	insertArtPay(pay pay);
 	public int	insertArtComment(artComment artComment);
-	public int	insertArtRecomment(artRecomment artRecomment);
-	public List<artComment>	selectArtComment(int no);
-	public List<artRecomment>	selectArtRecomment(int commentNo);
+
+	public List<artComment>	selectArtComment(HashMap<String, Object>params);
+	public artComment selectArtLatestcomment();
 
 	public int searchArtCount(HashMap<String, Object>params); //추가
 	public int selectRecentArtCount(String genre); //추가
@@ -27,4 +27,8 @@ public interface artDao {
 	public int getMaxGroupNo(int no);
 	public int deleteComment(artComment artComment);
 	public int updateComment(artComment artComment);
+	
+	public int selectGroupNo(artComment artComment);
+	public int maxGroupOrder(int groupNo);
+	public int updateGroupOrder(artComment artComment);
 }

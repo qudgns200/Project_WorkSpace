@@ -8,9 +8,10 @@ public class artComment {
 	private String id;
 	private String content;
 	private Date time;
-	private int commentNo;
-	private int groupNo;
-	private int childNode;
+	private int commentNo; //댓글 고유 번호
+	private int groupNo; //댓글 묶음 번호
+	private int childNode; //댓글, 답글 깊이 여부
+	private int groupOrder; //댓글 묶음 내 순서
 	
 	public int getNo() {
 		return no;
@@ -54,9 +55,17 @@ public class artComment {
 	public void setChildNode(int childNode) {
 		this.childNode = childNode;
 	}
+	public int getGroupOrder() {
+		return groupOrder;
+	}
+	public void setGroupOrder(int groupOrder) {
+		this.groupOrder = groupOrder;
+	}
+	
 	@Override
 	public String toString() {
-		return "test [no=" + no + ", id=" + id + ", content=" + content + ", time=" + time + ", commentNo=" + commentNo
-				+ ", groupNo=" + groupNo + ", childNode=" + childNode + "]";
+		return "artComment [no=" + no + ", id=" + id + ", content=" + content + ", time=" + time + ", commentNo="
+				+ commentNo + ", groupNo=" + groupNo + ", childNode=" + childNode + ", groupOrder=" + groupOrder + "]";
 	}
+	
 }

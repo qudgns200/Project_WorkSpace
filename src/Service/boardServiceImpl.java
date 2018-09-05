@@ -54,13 +54,13 @@ public class boardServiceImpl implements boardService{
 	@Override
 	public List<board> selectBoard() {
 		// TODO Auto-generated method stub
-		return null;
+		return boardDao.selectBoard();
 	}
 
 	@Override
 	public board selectOneBoard(int no) {
 		// TODO Auto-generated method stub
-		return null;
+		return boardDao.selectOneBoard(no);
 	}
 
 	@Override
@@ -114,13 +114,13 @@ public class boardServiceImpl implements boardService{
 	@Override
 	public List<qna> selectQna() {
 		// TODO Auto-generated method stub
-		return null;
+		return boardDao.selectQna();
 	}
 
 	@Override
 	public qna selectOneQna(int no) {
 		// TODO Auto-generated method stub
-		return null;
+		return boardDao.selectOneQna(no);
 	}
 
 	@Override

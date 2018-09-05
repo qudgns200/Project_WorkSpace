@@ -11,10 +11,26 @@
 		values (#{title}, #{id}, #{content}, #{file});
 	</insert>
 
+	<select id="selectBoard" resultType="board">
+		select * from board;
+	</select>
+	
+	<select id="selectOneBoard" resultType="board" parameterType="int">
+		select * form board where no=#{no};
+	</select>
+
 <!-- 	QnA게시판 게시글 맵퍼 -->	
-		<insert parameterType="qna" id="insertQna"> 
+	<insert parameterType="qna" id="insertQna"> 
 		insert into qna (title, id, content, file, pw) 
 		values (#{title}, #{id}, #{content}, #{file}, #{pw});
 	</insert>
+	
+	<select id="selectQna" resultType="qna">
+		select * from qna;
+	</select>
+	
+	<select id="selectOneQna" resultType="qna" parameterType="int">
+		select * from qna where no=#{no};
+	</select>
 	
 	</mapper>
