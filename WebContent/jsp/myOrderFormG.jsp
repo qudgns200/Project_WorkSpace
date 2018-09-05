@@ -37,9 +37,9 @@
 <script src="js/bootstrap.js"></script>
 <script src="js/jquery.custom.js"></script>
 <script type="text/javascript">
-window.onload = function(){
+$(document).ready(function(){
 myOrderFormG();	
-}
+});
 
 var buyingPagingLog;
 
@@ -55,15 +55,41 @@ var myOrderFormG = function(){
 			var str1 = "<tr>";
 			$.each(data.buyingList, function(index, buyingList){ 	// 구매 목록
 				var isCheck;
+				var title;
+				var artistID;
+				var payDate = buyingList.payDate;
+				var payDateFmt = payDate.substring(0, 10);
+				var imageUrl;
+				var aTag;
+				var payMethod;
+				var state;
+				if(buyingList.payMethod==1){payMethod = '카드결제';}
+				else{payMethod = '카카오페이';}
+				if(buyingList.state==0){state = '미결제';}
+				if(buyingList.state==1){state = '배송 준비중';}
+				if(buyingList.state==3){state = '배송중';}
+				if(buyingList.state==4){
+				state = '<a href="updateDelivery.do?state=5&orderNumber='+ buyingList.orderNumber +'">구매 확정</a>';
+				}
+				if(buyingList.state==5){state = '구매 확정 완료';}
 				if (buyingList.isCheck==1) {
 					isCheck = '강의';
+					title = buyingList.lecTitle;
+					artistID = buyingList.lecID;
+					imageUrl = '<img src="download.do?no=' + buyingList.no + '&lecture=a" width=50 height=50>';
+					aTag = '<a href="selectOneLecture.do?no=' + buyingList.no + '">'; 
 				}else{
 					isCheck = '작품';
+					title = buyingList.artTitle;
+					artistID = buyingList.artID;
+					imageUrl = '<img src="download.do?no=' + buyingList.no + '" width=50 height=50>';
+					aTag = '<a href="selectOneArt.do?no=' + buyingList.no + '">';
 				}
-				str1 += '<td>' + isCheck + '</td><td>' + buyingList.no + '</td><td>' + 
-						buyingList.title + '</td><td>' + buyingList.id + '</td><td>' +  
-						buyingList.totalPrice + '</td><td>' + buyingList.payMethod + '</td><td>' +
-						buyingList.state + '</td><td>' + buyingList.payDate + '</td>';
+				str1 += '<td>' + buyingList.orderNumber + '</td><td>' +  isCheck + '</td><td><span>' + aTag + 
+				imageUrl + '</a></span> &nbsp; <span>' + aTag + title + '</a></span></td><td>' +
+				artistID + '</td><td>' +  
+				buyingList.totalPrice + '</td><td>' + payMethod + '</td><td>' +
+				state + '</td><td>' + payDateFmt + '</td>';
 				str1 += '</tr>';
 			}); // each
 			$('#buyingList').append(str1); // 구매 목록- 테이블에 붙이기
@@ -137,22 +163,17 @@ var myOrderFormG = function(){
 			<div class="span8 contact">
 				<!--Begin page content column-->
 
-				<h2>주문 및 판매관리</h2>
-
-				<div class="alert alert-success">Well done! You successfully
-					read this important alert message.</div>
-
-				<h4>주문 내역</h4>
-				<table class="table table-bordered">
-					<thead>
+				<h3 class="title-bg" style="margin-top: 0px;">주문 내역</h3>
+				<table class="table table-striped">
+					<thead class="thead-dark">
 						<tr>
+							<th scope="col">주문번호</th>
 							<th scope="col">구분</th>
-							<th scope="col">강의/작품번호</th>
 							<th scope="col">강의/작품명</th>
 							<th scope="col">아티스트</th>
 							<th scope="col">가격</th>
 							<th scope="col">결제방식</th>
-							<th scope="col">결제상태</th>
+							<th scope="col">진행상태</th>
 							<th scope="col">결제일</th>
 						</tr>
 					</thead>

@@ -28,8 +28,7 @@ public class artistServiceImpl implements artistService{
 
 	@Override
 	public List<String> selectFollower(String id) {
-		// TODO Auto-generated method stub
-		return null;
+		return artistDao.selectFollower(id);
 	}
 
 	@Override

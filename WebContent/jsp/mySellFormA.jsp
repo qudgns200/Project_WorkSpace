@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -65,10 +64,19 @@ var mySellFormA = function(){
 				var isCheck;
 				var title;
 				var artistID;
-				var payDate = buyingList.payDate;
-				var payDateFmt = payDate.substring(0, 10);
 				var imageUrl;
 				var aTag;
+				var payMethod;
+				var state;
+				if(buyingList.payMethod==1){payMethod = '카드결제';}
+				else{payMethod = '카카오페이';}
+				if(buyingList.state==0){state = '미결제';}
+				if(buyingList.state==1){state = '배송 준비중';}
+				if(buyingList.state==3){state = '배송중';}
+				if(buyingList.state==4){
+				state = '<a href="updateDelivery.do?state=5&orderNumber='+ buyingList.orderNumber +'">구매 확정</a>';
+				}
+				if(buyingList.state==5){state = '구매 확정 완료';}
 				if (buyingList.isCheck==1) {
 					isCheck = '강의';
 					title = buyingList.lecTitle;
@@ -83,11 +91,11 @@ var mySellFormA = function(){
 					aTag = '<a href="selectOneArt.do?no=' + buyingList.no + '">';
 				}
 				
-				str1 += '<td>' + isCheck + '</td><td>' + buyingList.no + '</td><td>' + aTag + 
-				imageUrl + '</a></td><td>' + aTag + title + 
-				'</a></td><td>' + artistID + '</td><td>' +  
-				buyingList.totalPrice + '</td><td>' + buyingList.payMethod + '</td><td>' +
-				buyingList.state + '</td><td>' + payDateFmt + '</td>';
+				str1 += '<td>' + buyingList.orderNumber + '</td><td>' +  isCheck + '</td><td><span>' + aTag + 
+				imageUrl + '</a></span> &nbsp; <span>' + aTag + title + '</a></span></td><td>' +
+				artistID + '</td><td>' +  
+				buyingList.totalPrice + '</td><td>' + payMethod + '</td><td>' +
+				state + '</td><td>' + buyingList.payDate.substring(0, 10) + '</td>';
 				str1 += '</tr>';
 				
 			}); // each
@@ -126,10 +134,19 @@ var mySellFormA = function(){
 				
 				var str2 = "<tr>";
 				$.each(data.sellingList, function(index, sellingList) { // 판매 중인 작품 목록
-					str2 += '<td>' + sellingList.no + '</td><td>' + sellingList.title + '</td><td>' +
-						sellingList.price + '</td><td>' + sellingList.totalCount + '</td><td>' + sellingList.genre + '</td>';
+
+					var sellingImg;
+					sellingImg = '<img src="download.do?no=' + sellingList.no + '" width=50 height=50>';
+					var sellingTag;
+					sellingTag = '<a href="selectOneArt.do?no=' + sellingList.no + '">';
+					
+					str2 += '<td>' + sellingList.no + '</td><td><span>' + sellingTag + 
+					sellingImg + '</a></span> &nbsp; <span>' + sellingTag + sellingList.title + 
+					'</a></span></td><td>' + sellingList.price + '</td><td>' + 
+					sellingList.totalCount + '</td><td>' + sellingList.genre + '</td>';
 					str2 += '</tr>';
 				}); // each
+				
 				$('#sellingList').append(str2); // 판매 중인 작품- 테이블에 붙이기
 
 				var str2Paging = "";
@@ -165,9 +182,31 @@ var mySellFormA = function(){
 
 				var str3 = "<tr>";
 				$.each(data.soldList, function(index, soldList) { // 판매된 작품목록
-					str3 += '<td>' + soldList.no + '</td><td>' + soldList.title + '</td><td>' +
+					
+					var soldState;
+					if(soldList.p_state == 0){soldState = '미결제';}
+					else{soldState = '결제완료';}
+					var soldImg;
+					soldImg = '<img src="download.do?no=' + soldList.no + '" width=50 height=50>';
+					var soldTag;
+					soldTag = '<a href="selectOneArt.do?no=' + soldList.no + '">';
+					var stateButton = '';
+					if(soldList.p_state == 1){
+			stateButton = '<a href="updateDelivery.do?state=3&orderNumber='+ soldList.orderNumber +'">배송중으로 설정</a>';
+					}if(soldList.p_state == 3){
+						stateButton = '배송중';
+					}if(soldList.p_state == 4){
+						stateButton = '배송완료';
+					}if(soldList.p_state == 5){
+						stateButton = '구매확정';
+					}
+					
+					str3 += '<td>' + soldList.no + '</td><td><span>' + soldTag + 
+						soldImg + '</a></span> &nbsp; <span>' + soldTag + soldList.title + 
+						'</a></span></td><td>' +
 						soldList.totalPrice + '</td><td>' + soldList.p_id + '</td><td>' +
-						soldList.genre + '</td>';
+						soldState + '</td><td>' + soldList.payDate.substring(0, 10) +
+						'</td><td>' + stateButton + '</td>';
 					str3 += '</tr>';
 				}); // each
 				$('#soldList').append(str3); // 판매된 작품목록- 테이블에 붙이기
@@ -239,18 +278,19 @@ var mySellFormA = function(){
 			<div class="span8 contact">
 				<!--Begin page content column-->
 
-				<h2>주문 및 판매관리</h2>
-
+				<h3 class="title-bg" style="margin-top: 0px;">주문 및 판매관리</h3>
+				
 <!-- 				<div class="alert alert-success">Well done! You successfully -->
 <!-- 					read this important alert message.</div> -->
-				<div>===============================================================</div>
+
 				<h4>주문 내역</h4>
+	<hr style="display: block; margin-top: 0.5em; margin-bottom: 0.5em; border-style: inset; border-width: 1px;">
 				<table class="table table-striped">
 					<thead class="thead-dark">
 						<tr>
-							<th scope="col" class="text-center">구분</th>
-							<th scope="col">No</th>
-							<th scope="col" colspan="2">강의/작품명</th>
+							<th scope="col">주문번호</th>
+							<th scope="col">구분</th>
+							<th scope="col">강의/작품명</th>
 							<th scope="col">아티스트</th>
 							<th scope="col">가격</th>
 							<th scope="col">결제방식</th>
@@ -264,10 +304,10 @@ var mySellFormA = function(){
 						<td id="buyingPaging" colspan="8"></td>
 					</tr>
 				</table>
-
 				<h4>판매 중인 작품</h4>
-				<table class="table table-bordered">
-					<thead>
+	<hr style="display: block; margin-top: 0.5em; margin-bottom: 0.5em; border-style: inset; border-width: 1px;">			
+				<table class="table table-striped">
+					<thead class="thead-dark">
 						<tr>
 							<th scope="col">작품번호</th>
 							<th scope="col">작품명</th>
@@ -282,16 +322,18 @@ var mySellFormA = function(){
 						<td id="sellingPaging" colspan="5" align="center"></td>
 					</tr>
 				</table>
-
 				<h4>판매된 작품</h4>
-				<table class="table table-bordered">
-					<thead>
+	<hr style="display: block; margin-top: 0.5em; margin-bottom: 0.5em; border-style: inset; border-width: 1px;">			
+				<table class="table table-striped">
+					<thead class="thead-dark">
 						<tr>
 						    <th scope="col">작품번호</th>
 							<th scope="col">작품명</th>
 							<th scope="col">가격</th>
 							<th scope="col">구매자</th>
-							<th scope="col">장르</th>
+							<th scope="col">결제상태</th>
+							<th scope="col">결제일</th>
+							<th scope="col">배송상태 및 설정</th>
 						</tr>
 					</thead>
 					<tbody id="soldList" align="center">

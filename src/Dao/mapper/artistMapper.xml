@@ -6,7 +6,9 @@
   <mapper namespace="Dao.artistDao">
   
   <insert id="insertFollow" parameterType="String"></insert>
-  <select id="selectFollower" parameterType="String" resultType="String"></select>
+  <select id="selectFollower" parameterType="String" resultType="String">
+  select follower from follow where following=#{id}
+  </select>
   <select id="selectFollowing" parameterType="String" resultType="String"></select>
   <delete id="deleteFollow" parameterType="String"></delete>
   <insert id="insertLikes" parameterType="likes"></insert>
