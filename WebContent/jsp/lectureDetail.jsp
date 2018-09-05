@@ -111,10 +111,32 @@
  	  					    }
  	  					};
  	  					geocoder.addressSearch('${lecture.place}', callback);
- 		</script> 
+ 		</script>
 	</div>
 </li>
                     </ul>
+ <!--  modal(모달) 사용하기!!! -->
+        <div id="modalButton">
+        	<a href="#myModal" role="button" class="btn btn-inverse" data-toggle="modal">강의 신청</a>
+        </div>
+        <div class="modal hide fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+        <div class="modal-header">
+        </div>
+        <div class="modal-body">
+            <table class="display" id="Tables">
+            	<thead>
+            		<tr>
+            			<th style="background-color: #eeeeee; text-align: center;">강의를 신청하시겠습니까?</th>
+            		</tr>
+            	</thead>
+            </table>
+        </div>
+        <div class="modal-footer">
+       		<button class="btn" data-dismiss="modal" aria-hidden="true" onclick="location.href='lectureAttend.do?no=${lecture.no}'">신청</button>
+            <button class="btn" data-dismiss="modal" aria-hidden="true">취소</button>
+        </div>
+ 		</div>   	
+<!--  모달 사용 끗!!! -->
                 </div>
             </div>
 

@@ -76,5 +76,19 @@
 	select * from lecture where no=#{no}
 	</select>
 	
+	<update id="updateLecture" parameterType="lecture">
+	update lecture set title=#{title},genre=#{genre},startDate=#{startDate},
+	endDate=#{endDate}, numberPeople=#{numberPeople}, place=#{place},content=#{content},file=#{file}, 
+	writeDate=default, state=#{state}, maxPeople=#{maxPeople}, price=#{price} where no=#{no};
+	</update>
+	
+	<update id="updateLecturePeople" parameterType="lecture">
+	update lecture set numberPeople = #{numberPeople} where no=#{no}
+	</update>
+	
+	<insert id="insertAttendants" parameterType="attendants">
+	insert into attendants values(#{no}, #{id}, default)
+	</insert>
+	
 
 </mapper>

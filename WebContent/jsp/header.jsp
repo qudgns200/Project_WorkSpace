@@ -101,9 +101,10 @@ var selectAlarm = function(){
 			$.each(data.alarmList, function(index, alarmList){
 				var msg = '';
 				if(alarmList.type=="writeArt"){msg='새 게시물을 작성했습니다.';}
-				
+				if(alarmList.type=="writeLecture"){msg='새 강의를 개설했습니다.';}
+				if(alarmList.type=="artComment"){msg='댓글을 달았습니다.';}
 				if(index < 6){
-				str += '<li><a>' + alarmList.isFrom + '님이 ' + msg + 
+				str += '<li><a style="color:white;">' + alarmList.isFrom + '님이 ' + msg + 
 				'&emsp;&emsp; <button onclick="updateAlarm('+ alarmList.no + ')" id="updateAlarm">check</button></a></li>';
 				}
 				else return false;

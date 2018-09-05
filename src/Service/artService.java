@@ -5,7 +5,6 @@ import java.util.List;
 
 import Model.art;
 import Model.artComment;
-import Model.artRecomment;
 import Model.pay;
 
 public interface artService {

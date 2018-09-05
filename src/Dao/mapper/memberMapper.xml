@@ -89,17 +89,17 @@
 	</update>
 	
 	<select id="selectMyAttendLec" parameterType="java.util.HashMap" resultType="java.util.HashMap">
-		select * from lecture join attendants using(no) where id = #{id} limit ${skipA}, ${qty}
+		select * from lecture join attendants using(no) where id = #{id} order by attendDate desc limit ${skipA}, ${qty}
 	</select>
 	
 	<!-- 모집 중인 강의내역: 사용자와 아티스트 나누어 조건 쿼리 작성 -->
 	<select id="selectGatherLec" parameterType="java.util.HashMap" resultType="java.util.HashMap">
 		<if test="guestID!=null">
-			select * from lecture where guestID=#{guestID} limit ${skipG}, ${qty}
+			select * from lecture where guestID=#{guestID} order by writeDate desc limit ${skipG}, ${qty}
 		</if>
 		<if test="artistID!=null">
 			select * from lecture where artistID=#{artistID} and (state = 1 or state = 2 or state = 6) 
-			limit ${skipG}, ${qty}
+			order by writeDate desc limit ${skipG}, ${qty}
 		</if>
 	</select>
 	

@@ -298,9 +298,9 @@ var myLectureFormA = function(){ // 강의 내역 페이지 요청 함수
 			<div class="span8 contact">
 				<!--Begin page content column-->
 
-				<h3 class="title-bg" style="margin-top: 0px;">강의 내역 조회</h3>
-				<h4>신청한 강의</h4>
-				<hr style="display: block; margin-top: 0.5em; margin-bottom: 0.5em; border-style: inset; border-width: 1px;">
+	<h3 class="title-bg" style="margin-top: 0px;">강의 내역 조회</h3>
+	<h4>신청한 강의</h4>
+	<hr style="display: block; margin-top: 0.5em; margin-bottom: 0.5em; border-style: inset; border-width: 1px;">
 				<table class="table table-striped">
 					<thead>
 						<tr>

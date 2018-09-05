@@ -11,9 +11,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import Dao.lectureDao;
+import Model.attendants;
 import Model.lecture;
 import Model.lectureComment;
-import Model.lectureRecomment;
 
 @Service
 public class lectureServiceImpl implements lectureService{
@@ -77,8 +77,10 @@ public class lectureServiceImpl implements lectureService{
 
 	@Override
 	public int insertAttendants(int no, String id) {
-		// TODO Auto-generated method stub
-		return 0;
+		attendants attendants = new attendants();
+		attendants.setNo(no);
+		attendants.setId(id);
+		return lectureDao.insertAttendants(attendants);
 	}
 
 	@Override
@@ -132,8 +134,13 @@ public class lectureServiceImpl implements lectureService{
 	}
 
 	@Override
-	public List<lectureRecomment> selectLectureRecomment(int commentNo) {
-		// TODO Auto-generated method stub
-		return null;
+	public int updateLecturePeople(int no) {
+		int currentPeople = lectureDao.selectOneLecture(no).getNumberPeople();
+		lecture lecture = new lecture();
+		lecture.setNumberPeople(currentPeople + 1);
+		lecture.setNo(no);
+		return lectureDao.updateLecturePeople(lecture);
 	}
+
+	
 }

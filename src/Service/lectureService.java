@@ -7,7 +7,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import Model.lecture;
 import Model.lectureComment;
-import Model.lectureRecomment;
 
 public interface lectureService {
 
@@ -27,7 +26,7 @@ public interface lectureService {
 	public	int	insertLectureComment	(int no);
 	public	int	insertLectureRecomment	(int commentNo);
 	public	List<lectureComment>	selectLectureComment (int no);
-	public	List<lectureRecomment>	selectLectureRecomment	(int commentNo);
+	public int updateLecturePeople (int no); // 추가 (강의 신청인원 증가)
 
 	
 }

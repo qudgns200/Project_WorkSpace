@@ -33,6 +33,7 @@ import Service.artService;
 import Service.artistService;
 import Service.boardService;
 import Service.lectureService;
+import Service.mainService;
 import Service.memberService;
 import net.sf.json.JSONArray;
 import Model.artComment;
@@ -55,6 +56,9 @@ public class boardController {
 	@Autowired
 	private memberService memberService;
 
+	@Autowired
+	private mainService mainService;
+	
 	@RequestMapping("artistForm.do")
 	public ModelAndView artistForm() {
 		ModelAndView mav = new ModelAndView();
@@ -214,6 +218,10 @@ public class boardController {
 		JSONArray jsonArray = JSONArray.fromObject(artComment1);
 		
 		response.getWriter().print(jsonArray);
+		
+		// 알림 소스 추가
+		String writerID = artService.selectOneArt(no).getId();
+		mainService.insertAlarm("artComment", writerID, id);
 		
 	}	
 
@@ -400,7 +408,15 @@ public class boardController {
 		lecture.setMaxPeople(num);
 		lecture.setContent(request.getParameter("content"));
 		lectureService.insertLecture(lecture, ufile);
-		return "redirect:myLectureFormA.do";
+		
+		//		 알림 소스 추가
+		List<String> followerList = artistService.selectFollower(id);
+		for (String str : followerList) {			// following하는 아티스트가 강의 개설시, follower들에게 알림 보내기
+			mainService.insertAlarm("writeLecture", str, id);
+		}
+		// 알림 소스
+		
+		return "redirect:myLectureFormA0.do";
 	}
 
 	@RequestMapping("selectOneLecture.do") // 강의 상세페이지로 이동
@@ -435,7 +451,11 @@ public class boardController {
 	}
 
 	@RequestMapping("lectureAttend.do")
-	public void lectureAttend() {
+	public String lectureAttend(int no, HttpSession session) {
+		String id = (String)session.getAttribute("id");
+		lectureService.updateLecturePeople(no);
+		lectureService.insertAttendants(no, id);
+		return "redirect:selectOneLecture.do?no=" + no ;
 	}
 
 	@RequestMapping("boardForm.do") // 자유게시판 이동

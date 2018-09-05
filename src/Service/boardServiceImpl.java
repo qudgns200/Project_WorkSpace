@@ -1,20 +1,15 @@
 package Service;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 import Dao.boardDao;
 import Model.board;
 import Model.boardComment;
-import Model.boardRecomment;
 import Model.qna;
 import Model.qnaComment;
-import Model.qnaRecomment;
 
 @Service
 public class boardServiceImpl implements boardService{
@@ -82,12 +77,6 @@ public class boardServiceImpl implements boardService{
 	}
 
 	@Override
-	public List<boardRecomment> selectBoardRecomment(int commentNo) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public List<qna> searchQna(String id) {
 		// TODO Auto-generated method stub
 		return null;
@@ -130,21 +119,10 @@ public class boardServiceImpl implements boardService{
 	}
 
 	@Override
-	public int insertQnaRecomment(qnaRecomment qnaRecomment) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
 	public List<qnaComment> selectQnaComment(int no) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
-	public List<qnaRecomment> selectQnaRecomment(int commentNo) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 }
