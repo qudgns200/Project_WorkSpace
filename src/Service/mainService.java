@@ -24,7 +24,7 @@ public interface mainService {
 	public	int	insertAlarm	(String type, String to, String from);
 	public	int	updateAlarm	(int no);
 	public	int	deleteAlarm	(String from);
-	public	List<alarm>	selectAlarm	(String isTo);
+	public	List<alarm>	selectAlarm	(alarm alarm);
 	
 	public int getStartPage(int page);
 	public int getEndPage(int page);

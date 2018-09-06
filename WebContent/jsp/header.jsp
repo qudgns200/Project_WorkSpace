@@ -93,6 +93,7 @@ var selectAlarm = function(){
 	$.ajax({
 		type: "get",
 		url: "selectAlarm.do",
+		data: {"readCheck" : 1},
 		dataType: "json",
 		success: function(data){
 			$('#alarmData').remove();
