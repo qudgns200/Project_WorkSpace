@@ -316,17 +316,8 @@ public class memberServiceImpl implements memberService {
 	}
 
 	@Override
-	public HashMap<String, Object> selectOnePay(String id, int page, HashMap<String, Object> params) {
-		HashMap<String, Object> result = new HashMap<>();
-		params.put("skipBuy", mainService.getSkip(page, 5));
-		params.put("qty", 5);
-		params.put("id", id);
-		result.put("currentBuy", page);
-		result.put("startBuy", mainService.getStartPage(page));
-		result.put("endBuy", mainService.getEndPage(page));
-		result.put("lastBuy", mainService.getOnePayLastPage(id));
-		result.put("buyingList", memberDao.selectOnePay(params));
-		return result;
+	public pay selectOnePay(String orderNumber) {
+		return memberDao.selectOnePay(orderNumber);
 	}
 
 	@Override

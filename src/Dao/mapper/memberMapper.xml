@@ -103,8 +103,8 @@
 		</if>
 	</select>
 	
-	<select id="selectOnePay" parameterType="java.util.HashMap" resultType="pay">
-		select * from pay where id=#{id} limit ${skipBuy}, ${qty}
+	<select id="selectOnePay" parameterType="String" resultType="pay">
+	select * from pay where orderNumber = #{orderNumber}
 	</select>
 	
 	<insert id="insertLecturePay" parameterType="pay">

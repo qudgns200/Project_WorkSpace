@@ -66,6 +66,7 @@ var mySellFormA = function(){
 				var artistID;
 				var imageUrl;
 				var aTag;
+				var aTagPay;
 				var payMethod;
 				var state;
 				if(buyingList.payMethod==1){payMethod = '카드결제';}
@@ -83,15 +84,16 @@ var mySellFormA = function(){
 					artistID = buyingList.lecID;
 					imageUrl = '<img src="download.do?no=' + buyingList.no + '&lecture=a" width=50 height=50>';
 					aTag = '<a href="selectOneLecture.do?no=' + buyingList.no + '">'; 
+					aTagPay = '<a href="payResult.do?no=' + buyingList.no + '&orderNumber=' + buyingList.orderNumber + '&dif=2">';
 				}else{
 					isCheck = '작품';
 					title = buyingList.artTitle;
 					artistID = buyingList.artID;
 					imageUrl = '<img src="download.do?no=' + buyingList.no + '" width=50 height=50>';
 					aTag = '<a href="selectOneArt.do?no=' + buyingList.no + '">';
+					aTagPay = '<a href="payResult.do?no=' + buyingList.no + '&orderNumber=' + buyingList.orderNumber + '&dif=1">';
 				}
-				
-				str1 += '<td>' + buyingList.orderNumber + '</td><td>' +  isCheck + '</td><td><span>' + aTag + 
+				str1 += '<td>'+ aTagPay + buyingList.orderNumber + '</a></td><td>' +  isCheck + '</td><td><span>' + aTag + 
 				imageUrl + '</a></span> &nbsp; <span>' + aTag + title + '</a></span></td><td>' +
 				artistID + '</td><td>' +  
 				buyingList.totalPrice + '</td><td>' + payMethod + '</td><td>' +

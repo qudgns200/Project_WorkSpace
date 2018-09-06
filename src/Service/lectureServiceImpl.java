@@ -132,11 +132,20 @@ public class lectureServiceImpl implements lectureService{
 		// TODO Auto-generated method stub
 		return null;
 	}
-
+	// 강의 모집인원 숫자 변경 함수 // 추가
 	@Override
 	public int updateLecturePeople(int no) {
-		int currentPeople = lectureDao.selectOneLecture(no).getNumberPeople();
+		lecture originLec = lectureDao.selectOneLecture(no);
+		int currentPeople = originLec.getNumberPeople();
 		lecture lecture = new lecture();
+		if (currentPeople + 1 == originLec.getMaxPeople()) {
+			lecture.setState(2);
+			// 알림 소스
+			mainService.insertAlarm("maxPeople", originLec.getArtistID(), originLec.getTitle());		// 모집 완료 알림: 아티스트에게 전송
+			if (originLec.getGuestID()!=null) {
+				mainService.insertAlarm("maxPeople", originLec.getGuestID(), originLec.getTitle());  // // 모집 완료 알림: 개설한 사용자에게 전송
+			}
+		}
 		lecture.setNumberPeople(currentPeople + 1);
 		lecture.setNo(no);
 		return lectureDao.updateLecturePeople(lecture);

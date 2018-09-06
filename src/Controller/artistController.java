@@ -149,9 +149,6 @@ public class artistController {
     	return "redirect:mySellFormA0.do";
     }
 	
-    @RequestMapping("myOrderFormA.do") 
-	public void myOrderFormA() {}
-    
 	//작품 등록 글 폼 요청
 	@RequestMapping("writeArtForm.do") 
 	public void writeArtForm() {}

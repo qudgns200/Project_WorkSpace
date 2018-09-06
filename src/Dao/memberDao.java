@@ -25,7 +25,7 @@ public interface memberDao {
 	public List<HashMap<String, Object>>	selectGatherLec(HashMap<String, Object>params);		//수정
 	
 	//params : 스킵할 레코드의 갯수와 조회할 레코드의 갯수
-	public List<pay> selectOnePay(HashMap<String, Object>params);
+	public pay selectOnePay(String orderNumber);
 	public int	insertLecturePay(pay pay);
 	public int	insertArt(art art);
 	public List<art>	selectArtistArt(String id);

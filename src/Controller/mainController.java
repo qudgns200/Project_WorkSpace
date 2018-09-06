@@ -30,6 +30,7 @@ import Service.memberService;
 
 @Controller
 public class mainController {
+	
 	@Autowired
 	private memberService memberService;
 	

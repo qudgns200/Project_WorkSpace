@@ -1,9 +1,7 @@
 package Controller;
 
 import java.io.IOException;
-
 import java.text.ParseException;
-
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -24,6 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import Model.art;
+import Model.artComment;
 import Model.board;
 import Model.lecture;
 import Model.member;
@@ -36,7 +35,6 @@ import Service.lectureService;
 import Service.mainService;
 import Service.memberService;
 import net.sf.json.JSONArray;
-import Model.artComment;
 
 @Controller
 public class boardController {
@@ -626,4 +624,20 @@ public class boardController {
 
 		response.getWriter().println("success");
 	}
+	
+	@RequestMapping("payResult.do")
+	public ModelAndView payResult(int no, String orderNumber, int dif) {
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("pay", memberService.selectOnePay(orderNumber));
+		if (dif==1) { 										// art정보 요청시
+		mav.addObject("art", artService.selectOneArt(no));	
+		}if (dif==2) {										// lecture정보 요청시
+		mav.addObject("lecture", lectureService.selectOneLecture(no));	
+		}
+		mav.addObject("dif", dif);
+		mav.setViewName("payResult");
+		return mav;
+	}
+	
+	
 }// public class의 끝.

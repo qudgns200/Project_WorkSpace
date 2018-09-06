@@ -114,8 +114,9 @@
  		</script>
 	</div>
 </li>
-                    </ul>
- <!--  modal(모달) 사용하기!!! -->
+     </ul>
+		<!-- 모집 중일 때만 신청 버튼 생성 -->
+     <c:if test="${lecture.state == 1 }"> 
         <div id="modalButton">
         	<a href="#myModal" role="button" class="btn btn-inverse" data-toggle="modal">강의 신청</a>
         </div>
@@ -137,6 +138,7 @@
         </div>
  		</div>   	
 <!--  모달 사용 끗!!! -->
+     </c:if>
                 </div>
             </div>
 

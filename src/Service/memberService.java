@@ -32,7 +32,7 @@ public interface memberService {
 	public	HashMap<String, Object>	selectBuyingArt	(String id, int page, HashMap<String, Object> params);
 	public	HashMap<String, Object>	selectSellingArt(String id, int page, HashMap<String, Object> params);
 	public	HashMap<String, Object>	selectSoldArt	(String id, int page, HashMap<String, Object> params);
-	public	HashMap<String, Object>	selectOnePay	(String id, int page, HashMap<String, Object> params);
+	public	pay	selectOnePay	(String orderNumber);
 	
 	public	List<art>	selectArtistArt	(String id);
 

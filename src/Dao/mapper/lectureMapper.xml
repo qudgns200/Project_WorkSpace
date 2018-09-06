@@ -83,7 +83,10 @@
 	</update>
 	
 	<update id="updateLecturePeople" parameterType="lecture">
-	update lecture set numberPeople = #{numberPeople} where no=#{no}
+	update lecture set
+	<if test="state!=null">state = #{state},</if>
+	numberPeople = #{numberPeople}
+	where no=#{no}
 	</update>
 	
 	<insert id="insertAttendants" parameterType="attendants">

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>	
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <head>
@@ -74,7 +75,7 @@
 				
 				<div class="post-summary-footer">
 					<ul class="post-data-3">
-						<li><i class="icon-calendar"></i>${lecture.writeDate }</li>
+						<li><i class="icon-calendar"></i><fmt:formatDate pattern="yyyy-MM-dd" value="${lecture.writeDate }"/></li>
 						<li><i class="icon-user"></i> <a href="artistPage.do?id=${lecture.artistID }">${lecture.artistID }</a></li>
 						<li><i class="icon-comment"></i> <a href="#">댓글 수</a></li>
 					</ul>
