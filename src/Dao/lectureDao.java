@@ -24,14 +24,9 @@ public interface lectureDao {
 	public List<lecture>	selectAllLectureG(int skip); //수정
 
 	public int	insertLectureComment(lectureComment lectureComment);
-<<<<<<< HEAD
-	public List<lectureComment>	selectLectureComment(int no);
-
-=======
 	public List<lectureComment>	selectLectureComment(HashMap<String, Object> params);
 	public lectureComment selectLectureLatestcomment();
 	
->>>>>>> origin/master
 	public int selectAllLectureACount(); //추가
 	public int selectAllLectureGCount(); //추가
 	public int searchLectureCount(HashMap<String, Object> params); //추가

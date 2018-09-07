@@ -24,16 +24,10 @@ public interface lectureService {
 	public	HashMap<String, Object>	selectAllLectureA(int page); // 수정
 	public	HashMap<String, Object>	selectAllLectureG(int page); // 수정
 	
-<<<<<<< HEAD
-	public	int	insertLectureComment	(int no);
-	public	int	insertLectureRecomment	(int commentNo);
-	public	List<lectureComment>	selectLectureComment (int no);
 	public int updateLecturePeople (int no); // 추가 (강의 신청인원 증가)
-=======
 	public	int	insertLectureComment	(lectureComment lectureComment);
 	public	List<lectureComment>	selectLectureComment (HashMap<String, Object> params);
 	public	lectureComment	selectLectureLatestcomment();
->>>>>>> origin/master
 
 	
 }

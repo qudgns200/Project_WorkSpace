@@ -1,12 +1,6 @@
 package Controller;
 
 import java.io.IOException;
-<<<<<<< HEAD
-=======
-
-
-
->>>>>>> origin/master
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -30,10 +24,13 @@ import org.springframework.web.servlet.ModelAndView;
 import Model.art;
 import Model.artComment;
 import Model.board;
+import Model.boardComment;
 import Model.lecture;
+import Model.lectureComment;
 import Model.member;
 import Model.pay;
 import Model.qna;
+import Model.qnaComment;
 import Service.artService;
 import Service.artistService;
 import Service.boardService;
@@ -41,13 +38,6 @@ import Service.lectureService;
 import Service.mainService;
 import Service.memberService;
 import net.sf.json.JSONArray;
-<<<<<<< HEAD
-=======
-import Model.artComment;
-import Model.lectureComment;
-import Model.boardComment;
-import Model.qnaComment;
->>>>>>> origin/master
 
 @Controller
 public class boardController {
@@ -238,17 +228,14 @@ public class boardController {
 		JSONArray jsonArray = JSONArray.fromObject(artComment1);
 
 		response.getWriter().print(jsonArray);
-<<<<<<< HEAD
 		
 		// 알림 소스 추가
 		String writerID = artService.selectOneArt(no).getId();
 		mainService.insertAlarm("artComment", writerID, id);
 		
 	}	
-=======
 
 	}
->>>>>>> origin/master
 
 	@RequestMapping("artPayForm.do") // 결제 폼 요청
 	public String artPayForm(HttpServletRequest request, HttpSession session, Model model) throws ParseException {
@@ -501,7 +488,6 @@ public class boardController {
 		lecture.setMaxPeople(num);
 		lecture.setContent(request.getParameter("content"));
 		lectureService.insertLecture(lecture, ufile);
-<<<<<<< HEAD
 		
 		//		 알림 소스 추가
 		List<String> followerList = artistService.selectFollower(id);
@@ -510,8 +496,6 @@ public class boardController {
 		}
 		// 알림 소스
 		
-=======
->>>>>>> origin/master
 		return "redirect:myLectureFormA0.do";
 	}
 

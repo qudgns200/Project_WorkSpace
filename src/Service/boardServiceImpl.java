@@ -1,12 +1,6 @@
 package Service;
 
-<<<<<<< HEAD
-=======
-import java.io.File;
-
-import java.io.IOException;
 import java.util.HashMap;
->>>>>>> origin/master
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -73,19 +67,9 @@ public class boardServiceImpl implements boardService{
 
 	@Override
 	public List<boardComment> selectBoardComment(HashMap<String, Object>params) {
-		// TODO Auto-generated method stub
-<<<<<<< HEAD
-		return 0;
+		return boardDao.selectBoardComment(params);
 	}
 
-	@Override
-	public List<boardComment> selectBoardComment(int no) {
-		// TODO Auto-generated method stub
-		return null;
-=======
-		return boardDao.selectBoardComment(params);
->>>>>>> origin/master
-	}
 
 	@Override
 	public List<qna> searchQna(String id) {
@@ -130,9 +114,6 @@ public class boardServiceImpl implements boardService{
 	}
 
 	@Override
-<<<<<<< HEAD
-	public List<qnaComment> selectQnaComment(int no) {
-=======
 	public List<qnaComment> selectQnaComment(HashMap<String, Object>params) {
 		// TODO Auto-generated method stub
 		return boardDao.selectQnaComment(params);
@@ -140,13 +121,10 @@ public class boardServiceImpl implements boardService{
 
 	@Override
 	public boardComment selectBoardLatestcomment() {
->>>>>>> origin/master
 		// TODO Auto-generated method stub
 		return boardDao.selectBoardLatestcomment();
 	}
 
-<<<<<<< HEAD
-=======
 	@Override
 	public qnaComment selectQnaLatestcomment() {
 		// TODO Auto-generated method stub
@@ -158,6 +136,5 @@ public class boardServiceImpl implements boardService{
 		// TODO Auto-generated method stub
 		return boardDao.selectOneById(params);
 	}
->>>>>>> origin/master
 
 }

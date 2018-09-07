@@ -17,14 +17,8 @@ public interface boardService {
 	public	List<board>	selectNotice();
 	public	List<board>	selectBoard();
 	public	board	selectOneBoard	(int no);
-<<<<<<< HEAD
-	public	int	insertBoardComment	(int no);
-	public	int	insertBoardRecomment	(int commentNo);
-	public	List<boardComment>	selectBoardComment	(int no);
-=======
 	public	int	insertBoardComment	(boardComment boardComment);
 	public	List<boardComment>	selectBoardComment	(HashMap<String, Object>params);
->>>>>>> origin/master
 	public	List<qna>	searchQna	(String id);
 	public	int	insertQna	(qna qna);
 	public	int	updateQna	(qna qna);
@@ -32,12 +26,7 @@ public interface boardService {
 	public	List<qna>	selectQna();
 	public	qna	selectOneQna	(int no);
 	public	int	insertQnaComment	(qnaComment qnaComment); 
-<<<<<<< HEAD
-	public	List<qnaComment>	selectQnaComment	(int no);
-
-=======
 	public	List<qnaComment> selectQnaComment(HashMap<String, Object>params);
->>>>>>> origin/master
 	
 	//추가
 	public boardComment selectBoardLatestcomment();
