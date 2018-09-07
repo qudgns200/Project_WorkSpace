@@ -61,7 +61,7 @@
 				<button class="btn" type="button"
 						onclick="location.href='addLectureForm.do'">강의개설</button>
 				</div><br>
-				<h4 class="title-bg">Made by Artist<small>-최신순</small></h4><br>
+				<h4 class="title-bg">Made by Artist<small>&nbsp;&nbsp;&nbsp;from the latest 5</small></h4><br>
 				<!-- 최근 아티스트가 등록한 강의 목록 5개-->
 				<c:forEach items="${recentLectureA }" var="lecture">
 				<article class="clearfix"> <a href="selectOneLecture.do?no=${lecture.no }">
@@ -70,9 +70,11 @@
 				<h4 class="title-bg">
 					<a href="selectOneLecture.do?no=${lecture.no }">${lecture.title }</a>
 				</h4>
-				<p>${lecture.content }
+				<p style="font-size: 13px">
+				genre : ${lecture.genre } <br><br>
+				date : <fmt:formatDate pattern="yyyy-MM-dd" value="${lecture.startDate }"/> ~ <fmt:formatDate pattern="yyyy-MM-dd" value="${lecture.endDate }"/><br><br>
+				location : ${lecture.place }
 				</p>
-				
 				<div class="post-summary-footer">
 					<ul class="post-data-3">
 						<li><i class="icon-calendar"></i><fmt:formatDate pattern="yyyy-MM-dd" value="${lecture.writeDate }"/></li>
@@ -82,7 +84,7 @@
 				</div>
 				</article>
 				</c:forEach>
-				<h4 class="title-bg">Made by Guest<small>-최신순</small></h4><br>				
+				<h4 class="title-bg">Made by Guest<small>&nbsp;&nbsp;&nbsp;from the latest 5</small></h4><br>				
 				<!-- 최근 사용자가 등록한 강의 목록 5개-->				
 				<c:forEach items="${recentLectureG }" var="lecture">
 				<article class="clearfix"> <a href="selectOneLecture.do?no=${lecture.no }">
@@ -91,9 +93,11 @@
 				<h4 class="title-bg">
 					<a href="selectOneLecture.do?no=${lecture.no }">${lecture.title }</a>
 				</h4>
-				<p>${lecture.content }
+				<p style="font-size: 13px">
+				genre : ${lecture.genre } <br><br>
+				date : <fmt:formatDate pattern="yyyy-MM-dd" value="${lecture.startDate }"/> ~ <fmt:formatDate pattern="yyyy-MM-dd" value="${lecture.endDate }"/><br><br>
+				location : ${lecture.place }
 				</p>
-				
 				<div class="post-summary-footer">
 					<ul class="post-data-3">
 						<li><i class="icon-calendar"></i>${lecture.writeDate }</li>
@@ -118,9 +122,11 @@
 				<h4 class="title-bg">
 					<a href="selectOneLecture.do?no=${lecture.no }">${lecture.title }</a>
 				</h4>
-				<p>${lecture.content }
+				<p style="font-size: 13px">
+				genre : ${lecture.genre } <br><br>
+				date : <fmt:formatDate pattern="yyyy-MM-dd" value="${lecture.startDate }"/> ~ <fmt:formatDate pattern="yyyy-MM-dd" value="${lecture.endDate }"/><br><br>
+				location : ${lecture.place }
 				</p>
-				
 				<div class="post-summary-footer">
 					<ul class="post-data-3">
 						<li><i class="icon-calendar"></i>${lecture.writeDate }</li>
@@ -184,9 +190,11 @@
 				<h4 class="title-bg">
 					<a href="selectOneLecture.do?no=${lecture.no }">${lecture.title }</a>
 				</h4>
-				<p>${lecture.content }
+				<p style="font-size: 13px">
+				genre : ${lecture.genre } <br><br>
+				date : <fmt:formatDate pattern="yyyy-MM-dd" value="${lecture.startDate }"/> ~ <fmt:formatDate pattern="yyyy-MM-dd" value="${lecture.endDate }"/><br><br>
+				location : ${lecture.place }
 				</p>
-			
 				<div class="post-summary-footer">
 					<ul class="post-data-3">
 						<li><i class="icon-calendar"></i>${lecture.writeDate }</li>

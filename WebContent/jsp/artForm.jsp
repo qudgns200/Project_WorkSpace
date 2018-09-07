@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -57,10 +58,19 @@
             <div class="row clearfix">
                 <ul class="blog-post-grid">
 					<c:forEach items="${originalList }" var="original">
-                    <li class="span3 blog-post-item">                        
-                        <a href="selectOneArt.do?no=${original.no }">
-                        <img src="download.do?no=${original.no }" style="width: 250px; height: 250px;"><br>
-                        	${original.title }</a>
+                    <li class="span3 blog-post-item">
+                     <div class="blog-post-hover hidden-phone hidden-tablet">
+                   <p><a href="selectOneArt.do?no=${original.no }" class="clearfix">${original.title }</a>
+                   posted on <fmt:formatDate pattern="dd/MM/yyyy" value="${original.artDate}"/>
+                   <br> genre : ${original.genre } <br> 
+                   <c:choose>
+                   <c:when test="${original.sellCheck==1 }">available for purchase</c:when>
+                   <c:otherwise>display only</c:otherwise>
+                   </c:choose>
+                   </p>
+                   </div>
+                   <a href="selectOneArt.do?no=${original.no }">
+                   <img src="download.do?no=${original.no }" style="width: 270px; height: 220px;"></a>
                     </li>
 					</c:forEach>
                 </ul>
@@ -70,10 +80,19 @@
              <div class="row clearfix">
                 <ul class="blog-post-grid">
                     <c:forEach items="${paintingList }" var="painting">
-                    <li class="span3 blog-post-item">                        
-                        <a href="selectOneArt.do?no=${painting.no }">
-                        <img src="download.do?no=${painting.no }" style="width: 250px; height: 250px;"><br>
-                        	${painting.title }</a>
+                    <li class="span3 blog-post-item">        
+                    <div class="blog-post-hover hidden-phone hidden-tablet">
+                   <p><a href="selectOneArt.do?no=${painting.no }" class="clearfix">${painting.title }</a>
+                   posted on <fmt:formatDate pattern="dd/MM/yyyy" value="${painting.artDate}"/>
+                   <br> genre : ${painting.genre } <br> 
+                   <c:choose>
+                   <c:when test="${painting.sellCheck==1 }">available for purchase</c:when>
+                   <c:otherwise>display only</c:otherwise>
+                   </c:choose>
+                   </p>
+                   </div>
+                   <a href="selectOneArt.do?no=${painting.no }">
+                   <img src="download.do?no=${painting.no }" style="width: 270px; height: 220px;"></a>
                     </li>
 					</c:forEach>
                 </ul>
@@ -83,10 +102,19 @@
              <div class="row clearfix">
                 <ul class="blog-post-grid">
                     <c:forEach items="${sculptureList }" var="sculpture">
-                    <li class="span3 blog-post-item">                        
-                        <a href="selectOneArt.do?no=${sculpture.no }">
-                        <img src="download.do?no=${sculpture.no }" style="width: 250px; height: 250px;"><br>
-                        	${sculpture.title }</a>
+                    <li class="span3 blog-post-item">        
+                    <div class="blog-post-hover hidden-phone hidden-tablet">
+                   <p><a href="selectOneArt.do?no=${sculpture.no }" class="clearfix">${sculpture.title }</a>
+                   posted on <fmt:formatDate pattern="dd/MM/yyyy" value="${sculpture.artDate}"/>
+                   <br> genre : ${sculpture.genre } <br> 
+                   <c:choose>
+                   <c:when test="${sculpture.sellCheck==1 }">available for purchase</c:when>
+                   <c:otherwise>display only</c:otherwise>
+                   </c:choose>
+                   </p>
+                   </div>
+                   <a href="selectOneArt.do?no=${sculpture.no }">
+                   <img src="download.do?no=${sculpture.no }" style="width: 270px; height: 220px;"></a>
                     </li>
 					</c:forEach>
                 </ul>
@@ -101,10 +129,19 @@
                 	<h4 align="center">검색 결과 없음</h4>
                 	</c:if>
 					<c:forEach items="${artList }" var="art">
-                    <li class="span3 blog-post-item">                        
-                        <a href="selectOneArt.do?no=${art.no }">
-                        <img src="download.do?no=${art.no }" style="width: 250px; height: 250px;"><br>
-                        	${art.title }</a>
+                    <li class="span3 blog-post-item">          
+                    <div class="blog-post-hover hidden-phone hidden-tablet">
+                   <p><a href="selectOneArt.do?no=${art.no }" class="clearfix">${art.title }</a>
+                   posted on <fmt:formatDate pattern="dd/MM/yyyy" value="${art.artDate}"/>
+                   <br> genre : ${art.genre } <br> 
+                   <c:choose>
+                   <c:when test="${art.sellCheck==1 }">available for purchase</c:when>
+                   <c:otherwise>display only</c:otherwise>
+                   </c:choose>
+                   </p>
+                   </div>
+                   <a href="selectOneArt.do?no=${art.no }">
+                   <img src="download.do?no=${art.no }" style="width: 270px; height: 220px;"></a>
                     </li>
 					</c:forEach>
                 </ul>
@@ -158,10 +195,19 @@
             <div class="row clearfix">
                 <ul class="blog-post-grid">
 					<c:forEach items="${artList }" var="art">
-                    <li class="span3 blog-post-item">                        
-                        <a href="selectOneArt.do?no=${art.no }">
-                        <img src="download.do?no=${art.no }" style="width: 250px; height: 250px;"><br>
-                        ${art.title }</a>
+                    <li class="span3 blog-post-item">      
+                    <div class="blog-post-hover hidden-phone hidden-tablet">
+                   <p><a href="selectOneArt.do?no=${art.no }" class="clearfix">${art.title }</a>
+                    posted on <fmt:formatDate pattern="dd/MM/yyyy" value="${art.artDate}"/>
+                   <br> genre : ${art.genre } <br> 
+                   <c:choose>
+                   <c:when test="${art.sellCheck==1 }">available for purchase</c:when>
+                   <c:otherwise>display only</c:otherwise>
+                   </c:choose>
+                   </p>
+                   </div>
+                   <a href="selectOneArt.do?no=${art.no }">
+                   <img src="download.do?no=${art.no }" style="width: 270px; height: 220px;"></a>                  
                     </li>
 					</c:forEach>
                 </ul>

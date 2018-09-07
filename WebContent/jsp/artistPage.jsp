@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -75,8 +76,11 @@
                        <img src="download.do?no=${art.no }" style="width: 370px; height: 300px;"><br>
                        </a>
                         <span class="project-details"><a href="selectOneArt.do?no=${art.no }">${art.title }</a>
-                        [${art.genre }] [${art.artDate }]
-                        <c:if test="${art.sellCheck==1 }">[구매가능]</c:if>
+                        posted on <fmt:formatDate pattern="dd/MM/yyyy" value="${art.artDate}"/>
+                       <c:choose>
+                 	   <c:when test="${art.sellCheck==1 }">,&nbsp;&nbsp;available for purchase</c:when>
+                 	   <c:otherwise>,&nbsp;&nbsp;display only</c:otherwise>
+                 	   </c:choose>
                         </span>
                     </li>
             </c:forEach>
