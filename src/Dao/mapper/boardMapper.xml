@@ -16,7 +16,20 @@
 	</select>
 	
 	<select id="selectOneBoard" resultType="board" parameterType="int">
-		select * form board where no=#{no};
+		select * from board where no=#{no};
+	</select>
+
+	<insert id="insertBoardComment" parameterType="boardComment">
+		insert into boardComment(no, id, content, time, groupNo, childNode, groupOrder)
+		values (#{no}, #{id}, #{content}, default, #{groupNo}, #{childNode}, #{groupOrder})
+	</insert>
+	
+	<select id="selectBoardComment" parameterType="java.util.HashMap" resultType="boardComment">
+		select * from boardComment where no=#{no} order by groupNo desc, commentNo asc limit ${startComment}, ${skip};
+	</select>
+	
+	<select id="selectBoardLatestcomment" resultType="boardComment">
+		select * from boardComment order by commentNo desc limit 1;
 	</select>
 
 <!-- 	QnA게시판 게시글 맵퍼 -->	
@@ -32,5 +45,22 @@
 	<select id="selectOneQna" resultType="qna" parameterType="int">
 		select * from qna where no=#{no};
 	</select>
+	
+	<insert id="insertQnaComment" parameterType="qnaComment">
+		insert into qnaComment(no, id, content, time, groupNo, childNode, groupOrder)
+		values (#{no}, #{id}, #{content}, default, #{groupNo}, #{childNode}, #{groupOrder})
+	</insert>
+	
+	<select id="selectQnaComment" parameterType="java.util.HashMap" resultType="qnaComment">
+		select * from qnaComment where no=#{no} order by groupNo desc, commentNo asc limit ${startComment}, ${skip};
+	</select>
+	
+	<select id="selectQnaLatestcomment" resultType="qnaComment">
+		select * from qnaComment order by commentNo desc limit 1;
+	</select>
+	
+	<select id="selectOneById" resultType="int" parameterType="java.util.HashMap">
+		select max(no) from ${table} where id=#{id};
+	</select>	
 	
 	</mapper>

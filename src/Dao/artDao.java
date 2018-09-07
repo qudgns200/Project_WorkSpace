@@ -1,11 +1,11 @@
 package Dao;
 
 import java.util.HashMap;
+
 import java.util.List;
 
 import Model.art;
 import Model.artComment;
-import Model.artRecomment;
 import Model.pay;
 
 public interface artDao {
@@ -24,11 +24,11 @@ public interface artDao {
 	public int selectRecentArtCount(String genre); //추가
 
 	//추가
-	public int getMaxGroupNo(int no);
-	public int deleteComment(artComment artComment);
-	public int updateComment(artComment artComment);
+	public int getMaxGroupNo(HashMap<String, Object> params);
+	public int deleteComment(HashMap<String, Object> params);
+	public int updateComment(HashMap<String, Object> params);
 	
-	public int selectGroupNo(artComment artComment);
-	public int maxGroupOrder(int groupNo);
-	public int updateGroupOrder(artComment artComment);
+	public int selectGroupNo(HashMap<String, Object> params);
+	public int maxGroupOrder(HashMap<String, Object> params);
+	public int updateGroupOrder(HashMap<String, Object> params);
 }

@@ -94,17 +94,17 @@
 
 			<div class="span8 contact">
 				<!--Begin page form column-->
-				<form action="writeBoard.do" id="contact-form" enctype=multipart/form-data method="post">
+				<form action="writeBoard.do" id="contact-form" enctype='multipart/form-data' method="post">
 			
 					<div class="input-prepend">
 						<span class="add-on"><i class="icon-pencil"></i></span> 
 						<input class="span7" id="focusedInput" name="title" type="text" size="16"
-							placeholder="글 제목을 입력하세요." style="height: 30px;">
+							placeholder="글 제목을 입력하세요." style="height: 20px;">
 					</div>
 								
 				<div class="input-prepend">
 						    <span class="add-on"><i class="icon-edit"></i>&nbsp;글 내용</span><br>
-							<textarea class="span8" type="text" id="writeArt-form" name="content" placeholder="내용을 입력하세요."
+							<textarea class="span8" id="writeArt-form" name="content" placeholder="내용을 입력하세요."
 							    maxlength="2048" style="height: 350px;"></textarea>
 					</div>
 				
@@ -124,7 +124,7 @@
     <!-- Footer Area
         ================================================== -->
     <%@include file="footer.jsp"%>
-    
+    </div>
     
 </body>
 </html>

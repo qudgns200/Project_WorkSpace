@@ -254,9 +254,9 @@ public class memberServiceImpl implements memberService {
 	}
 
 	@Override
-	public int updateArt(int no, String file, String title, String content) {
+	public int updateArt(HashMap<String, Object> params) {
 		// TODO Auto-generated method stub
-		return 0;
+		return memberDao.updateArt(params);
 	}
 
 	@Override

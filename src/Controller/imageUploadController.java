@@ -33,10 +33,16 @@ public class imageUploadController {
 	         filename_ext = filename_ext.toLowerCase();
 	         //파일 기본경로
 	         String dftFilePath = request.getSession().getServletContext().getRealPath("/");
+	         
+	         System.out.println("기본경로 : " + dftFilePath);
+	         
+//	         String dftFilePath = "C:/Project/Project/WebContent/";
 	         //파일 기본경로 _ 상세경로
 	         String filePath = dftFilePath + "resources" + File.separator + "photoUpload" + File.separator;
-	        
+//	         String filePath = dftFilePath + "resources/photoUpload/";
+	         
 	         File file = new File(filePath);
+	         
 	         if(!file.exists()) {
 	            file.mkdirs();
 	         }
@@ -45,9 +51,12 @@ public class imageUploadController {
 	         String today= formatter.format(new java.util.Date());
 	         realFileNm = today+UUID.randomUUID().toString() + filename.substring(filename.lastIndexOf("."));
 	         String rlFileNm = filePath + realFileNm;
+	         
 	         ///////////////// 서버에 파일쓰기 /////////////////
 	         InputStream is = request.getInputStream();
+	         
 	         OutputStream os=new FileOutputStream(rlFileNm);
+	         
 	         int numRead;
 	         byte b[] = new byte[Integer.parseInt(request.getHeader("file-size"))];
 	         while((numRead = is.read(b,0,b.length)) != -1){
@@ -58,17 +67,23 @@ public class imageUploadController {
 	         }
 	         os.flush();
 	         os.close();
-	         ///////////////// 서버에 파일쓰기 /////////////////
-	         // 정보 출력
-	         sFileInfo += "&bNewLine=true";
+	         
+	         // 정보 출력/////////////////////////////////////////////////
+	         sFileInfo += "&bNewLine=false";
 	         // img 태그의 title 속성을 원본파일명으로 적용시켜주기 위함
 	         sFileInfo += "&sFileName="+ filename;;
-	         sFileInfo += "&sFileURL="+"http://localhost:8080/Project/resources/photoUpload/"+realFileNm;
-	         PrintWriter print = response.getWriter();
+//	         sFileInfo += "&sFileURL="+"/Project/WebContent/resources/photoUpload/"+realFileNm;
+	         sFileInfo += "&sFileURL=" + "http://localhost:8080/Project/resources/photoUpload/" +realFileNm;
+	         
+	         System.out.println(sFileInfo);
+	         
+	         PrintWriter out = response.getWriter();
 
-	         print.print(sFileInfo);
-	         print.flush();
-	         print.close();
+	         out.print(sFileInfo);
+	         
+	         out.flush();
+	         out.close();
+	      
 	    } catch (Exception e) {
 	        e.printStackTrace();
 	    }

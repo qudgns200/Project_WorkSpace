@@ -1,6 +1,7 @@
 package Service;
 
 import java.util.HashMap;
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,8 +10,8 @@ import org.springframework.stereotype.Service;
 import Dao.artDao;
 import Model.art;
 import Model.artComment;
-import Model.artRecomment;
 import Model.pay;
+
 @Service
 public class artServiceImpl implements artService{
 
@@ -85,37 +86,37 @@ public class artServiceImpl implements artService{
 
 	//추가
 	@Override
-	public int getMaxGroupNo(int no) {
+	public int getMaxGroupNo(HashMap<String, Object> params) {
 		// TODO Auto-generated method stub
-		return artDao.getMaxGroupNo(no);
+		return artDao.getMaxGroupNo(params);
 	}
 
 	@Override
-	public int deleteComment(artComment artComment) {
+	public int deleteComment(HashMap<String, Object> params) {
 		// TODO Auto-generated method stub
-		return artDao.deleteComment(artComment);
+		return artDao.deleteComment(params);
 	}
 	
 	@Override
-	public int updateComment(artComment artComment) {
-		return artDao.updateComment(artComment);
+	public int updateComment(HashMap<String, Object> params) {
+		return artDao.updateComment(params);
 	}
 
 	@Override
-	public int selectGroupNo(artComment artComment) {
+	public int selectGroupNo(HashMap<String, Object> params) {
 		// TODO Auto-generated method stub
-		return artDao.selectGroupNo(artComment);
+		return artDao.selectGroupNo(params);
 	}
 
 	@Override
-	public int maxGroupOrder(int groupNo) {
+	public int maxGroupOrder(HashMap<String, Object> params) {
 		// TODO Auto-generated method stub
-		return artDao.maxGroupOrder(groupNo);
+		return artDao.maxGroupOrder(params);
 	}
 	
 	@Override
-	public int updateGroupOrder(artComment artComment) {
-		return artDao.updateComment(artComment);
+	public int updateGroupOrder(HashMap<String, Object> params) {
+		return artDao.updateComment(params);
 	}
 	
 }

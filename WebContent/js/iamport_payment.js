@@ -7,7 +7,7 @@ $(function(){
 	var param = {
 			"no" : $('#no').val(),
 			"merchant_uid" : $('#merchant_uid').val(),
-		    "name" : $('#name').val(),
+		    "name" : $('#artist').val(),
 		    "amount" : $('#price').val(), // 결제창에 표시될 금액. 실제 승인이 이뤄지지는 않습니다. (모바일에서는 가격이 표시되지 않음)
 		    "customer_uid" : $('#customer_uid').val(),
 		    "buyer_email" : $('#buyer_email').val(),
@@ -38,7 +38,7 @@ $(function(){
 		            type: 'POST',
 		            success: function(result) {
 		            	alert(result.result)
-		                	 location.href="orderArtForm.do";
+		                	 location.href="mySellFormA.do";
 		             }
 		          });
 				}
@@ -46,7 +46,7 @@ $(function(){
 		        var msg = '결제에 실패하였습니다.';
 		        msg += '에러내용 : ' + rsp.error_msg;
 		        alert(msg);
-		        location.href="artPayForm.do";
+		        location.href="artPayForm.do?no=" + ${'#no'}.val();
 		    }})
 	});
 });

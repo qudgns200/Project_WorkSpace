@@ -122,7 +122,12 @@
 	</select>
 	
 	<update id="updateArt" parameterType="java.util.HashMap">
-	
+		<if test="totalCount!=null">
+			update art set totalCount=#{totalCount} where no=#{no};
+		</if>
+		<if test="totalCount==null">
+			update art set title=#{title}, file=#{file}, content=#{content} where no=#{no};
+		</if>
 	</update>
 
 	<delete id="deleteArt" parameterType="java.util.HashMap">

@@ -1,6 +1,7 @@
 package Service;
 
 import java.io.File;
+
 import java.io.IOException;
 import java.util.Date;
 import java.util.HashMap;
@@ -13,7 +14,6 @@ import org.springframework.web.multipart.MultipartFile;
 import Dao.lectureDao;
 import Model.lecture;
 import Model.lectureComment;
-import Model.lectureRecomment;
 
 @Service
 public class lectureServiceImpl implements lectureService{
@@ -114,26 +114,21 @@ public class lectureServiceImpl implements lectureService{
 	}
 
 	@Override
-	public int insertLectureComment(int no) {
+	public int insertLectureComment(lectureComment lectureComment) {
 		// TODO Auto-generated method stub
-		return 0;
+		return lectureDao.insertLectureComment(lectureComment);
+	}
+
+
+	@Override
+	public List<lectureComment> selectLectureComment(HashMap<String, Object> params) {
+		// TODO Auto-generated method stub
+		return lectureDao.selectLectureComment(params);
 	}
 
 	@Override
-	public int insertLectureRecomment(int commentNo) {
+	public lectureComment selectLectureLatestcomment() {
 		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public List<lectureComment> selectLectureComment(int no) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<lectureRecomment> selectLectureRecomment(int commentNo) {
-		// TODO Auto-generated method stub
-		return null;
+		return lectureDao.selectLectureLatestcomment();
 	}
 }

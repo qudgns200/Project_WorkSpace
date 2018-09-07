@@ -1,7 +1,9 @@
 package Service;
 
 import java.io.File;
+
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,10 +13,8 @@ import org.springframework.web.multipart.MultipartFile;
 import Dao.boardDao;
 import Model.board;
 import Model.boardComment;
-import Model.boardRecomment;
 import Model.qna;
 import Model.qnaComment;
-import Model.qnaRecomment;
 
 @Service
 public class boardServiceImpl implements boardService{
@@ -64,27 +64,15 @@ public class boardServiceImpl implements boardService{
 	}
 
 	@Override
-	public int insertBoardComment(int no) {
+	public int insertBoardComment(boardComment boardComment) {
 		// TODO Auto-generated method stub
-		return 0;
+		return boardDao.insertBoardComment(boardComment);
 	}
 
 	@Override
-	public int insertBoardRecomment(int commentNo) {
+	public List<boardComment> selectBoardComment(HashMap<String, Object>params) {
 		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public List<boardComment> selectBoardComment(int no) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<boardRecomment> selectBoardRecomment(int commentNo) {
-		// TODO Auto-generated method stub
-		return null;
+		return boardDao.selectBoardComment(params);
 	}
 
 	@Override
@@ -126,25 +114,31 @@ public class boardServiceImpl implements boardService{
 	@Override
 	public int insertQnaComment(qnaComment qnaComment) {
 		// TODO Auto-generated method stub
-		return 0;
+		return boardDao.insertQnaComment(qnaComment);
 	}
 
 	@Override
-	public int insertQnaRecomment(qnaRecomment qnaRecomment) {
+	public List<qnaComment> selectQnaComment(HashMap<String, Object>params) {
 		// TODO Auto-generated method stub
-		return 0;
+		return boardDao.selectQnaComment(params);
 	}
 
 	@Override
-	public List<qnaComment> selectQnaComment(int no) {
+	public boardComment selectBoardLatestcomment() {
 		// TODO Auto-generated method stub
-		return null;
+		return boardDao.selectBoardLatestcomment();
 	}
 
 	@Override
-	public List<qnaRecomment> selectQnaRecomment(int commentNo) {
+	public qnaComment selectQnaLatestcomment() {
 		// TODO Auto-generated method stub
-		return null;
+		return boardDao.selectQnaLatestcomment();
+	}
+
+	@Override
+	public int selectOneById(HashMap<String, Object> params) {
+		// TODO Auto-generated method stub
+		return boardDao.selectOneById(params);
 	}
 
 }
