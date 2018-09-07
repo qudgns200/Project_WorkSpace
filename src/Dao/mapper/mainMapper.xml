@@ -6,27 +6,27 @@
 
 <mapper namespace="Dao.mainDao">
 	<select id="containerOne" resultType="member">
-	
+		select id, nickname, profile from member join follow using(id) 
+		group by id order by count(follower) desc limit 4;
 	</select>
 	
 	<select id="containerTwo" resultType="member">
-	
+		select id, nickname, profile from member where isCheck=2 order by joinDate desc limit 4;
 	</select>
 	
 	<select id="containerThree" resultType="art">
-	
+		select title, art.file, art.no, nickname from member join art using(id) join likes using(no)
+		where art.isCheck=1 group by no order by count(likes.id) desc limit 4;
 	</select>
 	
 	<select id="containerFour" resultType="art">
-	
+		select title, art.file, art.no, nickname from member join art using(id) 
+		where art.isCheck=1 order by artDate desc limit 4;
 	</select>
 	
-	<select id="feed" parameterType="String" resultType="member">
-	
-	</select>
-	
-	<select id="selectFollowing" parameterType="String" resultType="String">
-	
+	<select id="feed" parameterType="java.util.HashMap" resultType="art">
+		select title, a.no, nickname, a.file from member join art a using(id) join follow f on a.id=f.following 
+		where f.id=#{id} order by a.artDate desc limit 0, #{qty};
 	</select>
 	
 	<insert id="sendMessage" parameterType="message">
@@ -34,7 +34,7 @@
 	</insert>
 	
 	<select id="messageList" parameterType="String" resultType="message">
-		select distinct isFrom from message where isTo=#{isTo} order by time desc;
+		select distinct isTo, isFrom from message where isTo=#{isTo} or isFrom=#{isTo} order by time desc;
 	</select>
 	
 	<select id="logMessage" parameterType="message" resultType="message">

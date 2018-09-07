@@ -38,7 +38,17 @@ public class mainController {
 	
 	// 메인 페이지 이동
 		@RequestMapping("main.do") 
-		public void main() {}
+		public ModelAndView main() {
+			ModelAndView mav = new ModelAndView();
+			
+			mav.addObject("One", mainService.containerOne());
+			mav.addObject("Two", mainService.containerTwo());
+			mav.addObject("Three", mainService.containerThree());
+			mav.addObject("Four", mainService.containerFour());
+			mav.setViewName("main");
+			
+			return mav;
+		}
 		
 		@RequestMapping("loginForm.do")
 		public void loginForm() {}
@@ -287,7 +297,22 @@ public class mainController {
 		}	
 		
 		@RequestMapping("feed.do")
-		public void feed() {}
+		public ModelAndView feed(HttpSession session, String check) {
+			String id = (String) session.getAttribute("id");
+			ModelAndView mav = new ModelAndView();
+			HashMap<String, Object> params = new HashMap<>();
+			
+			params.put("id", id);
+			
+			if(check != null) {
+				params.put("check", check);
+			}
+			
+			mav.addObject("list", mainService.feed(params));
+			mav.setViewName("feed");
+
+			return mav;
+		}
 		
 		@RequestMapping("myPage.do")
 		public String myPage(HttpSession session) {				// 권한에 따라 이동할 페이지 다름  ★ 코드 추가해야함
@@ -455,44 +480,43 @@ public class mainController {
 		pw.println(jsonObject);
 	}
 	
-//	@RequestMapping("messageList.do")
-//	public void messageList(HttpSession session, HttpServletResponse resp) throws IOException {
-//		String id = (String) session.getAttribute("id");
-//		JSONObject jsonObject = new JSONObject();
-//		
-//		jsonObject.put("messageList", mainService.messageList(id));
-//		
-//		resp.setContentType("text/html; charset=UTF-8");
-//		PrintWriter pw = resp.getWriter();
-//		pw.println(jsonObject);
-//		System.out.println(jsonObject);
-//	}
-	
 	@RequestMapping("messageList.do")
-	public ModelAndView messageList(HttpSession session) {
+	public void messageList(HttpSession session, HttpServletResponse resp) throws IOException {
 		String id = (String) session.getAttribute("id");
+		JSONObject jsonObject = new JSONObject();
+		
+		jsonObject.put("messageList", mainService.messageList(id));
+		
+		resp.setContentType("text/html; charset=UTF-8");
+		PrintWriter pw = resp.getWriter();
+		pw.println(jsonObject);
+	}
+	
+	@RequestMapping("logMessagePage.do")
+	public ModelAndView logMessagePage(String isFrom) {
 		ModelAndView mav = new ModelAndView();
 		
-		mav.addObject("messageList", mainService.messageList(id));
-		mav.setViewName("messageList");
+		mav.addObject("isFrom", isFrom);
+		mav.setViewName("logMessagePage");
 		
 		return mav;
 	}
 	
 	@RequestMapping("logMessage.do")
-	public ModelAndView logMessage(HttpSession session, String isFrom) {
+	public void logMessage(HttpSession session, HttpServletRequest req, HttpServletResponse resp) throws IOException {
+		JSONObject jsonObject = new JSONObject();
 		String isTo = (String) session.getAttribute("id");
-		ModelAndView mav = new ModelAndView();
-		message message = new message();
+		String isFrom = req.getParameter("isFrom");
 		
+		message message = new message();
 		message.setIsTo(isTo);
 		message.setIsFrom(isFrom);
 		
-		mav.addObject("isFrom", isFrom);
-		mav.addObject("logMessage", mainService.logMessage(message));
-		mav.setViewName("logMessage");
+		jsonObject.put("logMessage", mainService.logMessage(message));
 		
-		return mav;
+		resp.setContentType("text/html; charset=UTF-8");
+		PrintWriter pw = resp.getWriter();
+		pw.println(jsonObject);
 	}
 	
 	@RequestMapping("deleteMessage.do")
@@ -518,7 +542,6 @@ public class mainController {
 		PrintWriter pw = resp.getWriter();
 		pw.println(jsonObject);
 	}
-	
 } // public class의 끝.
 
 //	@RequestMapping("isCheckMember.do")

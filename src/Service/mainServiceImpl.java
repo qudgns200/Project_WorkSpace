@@ -18,7 +18,8 @@ import Model.message;
 
 @Service
 public class mainServiceImpl implements mainService{
-
+	int count = 2;
+	
 	@Autowired
 	private mainDao mainDao;
 	
@@ -37,31 +38,38 @@ public class mainServiceImpl implements mainService{
 	@Override
 	public List<member> containerOne() {
 		// TODO Auto-generated method stub
-		return null;
+		return mainDao.containerOne();
 	}
 
 	@Override
 	public List<member> containerTwo() {
 		// TODO Auto-generated method stub
-		return null;
+		return mainDao.containerTwo();
 	}
 
 	@Override
 	public List<art> containerThree() {
 		// TODO Auto-generated method stub
-		return null;
+		return mainDao.containerThree();
 	}
 
 	@Override
 	public List<art> containerFour() {
 		// TODO Auto-generated method stub
-		return null;
+		return mainDao.containerFour();
 	}
 
 	@Override
-	public List<art> feed(String id) {
+	public List<art> feed(HashMap<String, Object> params) {
 		// TODO Auto-generated method stub
-		return null;
+		if(params.get("check") != null) {
+			count++;
+			params.put("qty", getSkip(count, 4));
+		} else {
+			params.put("qty", getSkip(2, 4));
+		}
+
+		return mainDao.feed(params);
 	}
 
 	@Override

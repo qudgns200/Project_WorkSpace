@@ -8,9 +8,9 @@ import org.springframework.stereotype.Service;
 
 import Dao.artistDao;
 import Model.art;
+import Model.follow;
 import Model.lecture;
 import Model.likes;
-import Model.member;
 @Service
 public class artistServiceImpl implements artistService{
 
@@ -21,27 +21,27 @@ public class artistServiceImpl implements artistService{
 	private mainService mainService;
 	
 	@Override
-	public int insertFollow(String followerID, String followingID) {
+	public int insertFollow(follow follow) {
 		// TODO Auto-generated method stub
-		return 0;
+		return artistDao.insertFollow(follow);
 	}
 
 	@Override
 	public List<String> selectFollower(String id) {
 		// TODO Auto-generated method stub
-		return null;
+		return artistDao.selectFollower(id);
 	}
 
 	@Override
 	public List<String> selectFollowing(String id) {
 		// TODO Auto-generated method stub
-		return null;
+		return artistDao.selectFollowing(id);
 	}
 
 	@Override
-	public int deleteFollow(String followerID, String followingID) {
+	public int deleteFollow(follow follow) {
 		// TODO Auto-generated method stub
-		return 0;
+		return artistDao.deleteFollow(follow);
 	}
 
 	@Override

@@ -1,8 +1,6 @@
 package Controller;
 
 import java.io.IOException;
-
-
 import java.io.PrintWriter;
 import java.rmi.ServerException;
 import java.util.HashMap;
@@ -21,9 +19,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-
 import Model.art;
-import Model.member;
+import Model.follow;
+import Service.artistService;
 import Service.mainService;
 import Service.memberService;
 
@@ -35,6 +33,9 @@ public class artistController {
 	
 	@Autowired
 	mainService mainService; //추가
+	
+	@Autowired
+	artistService artistService;
 		
 	//아티스트 개인 페이지 이동 (아티스트용)
 	@RequestMapping("artistMyPage.do") 
@@ -193,16 +194,48 @@ public class artistController {
 	}
 	
 	@RequestMapping("insertFollow.do") 
-	public void insertFollow() {}
+	public void insertFollow(HttpSession session, String artistID) {
+		String id = (String) session.getAttribute("id");
+		follow follow = new follow();
+		
+		follow.setFollowing(artistID);
+		follow.setId(id);
+		
+		artistService.insertFollow(follow);
+		
+		follow.setFollower(id);
+		follow.setFollowing(null);
+		follow.setId(artistID);
+		
+		artistService.insertFollow(follow);
+	}
 
 	@RequestMapping("deleteFollow.do") 
-	public void deleteFollow() {}
+	public void deleteFollow(HttpSession session, String artistID) {
+		String id = (String) session.getAttribute("id");
+		follow follow = new follow();
+		
+		follow.setFollowing(artistID);
+		follow.setId(id);
+		
+		artistService.deleteFollow(follow);
+	}
 	
 	@RequestMapping("followerList.do") 
-	public void followerList() {}
+	public void followerList() {
+		
+	}
 
 	@RequestMapping("followingList.do") 
-	public void followingList() {}
+	public ModelAndView followingList(HttpSession session) {
+		ModelAndView mav = new ModelAndView();
+		String id = (String) session.getAttribute("id");
+
+		mav.addObject("followingList", artistService.selectFollowing(id));
+		mav.setViewName("searchMessage");
+		
+		return mav;
+	}
 
 	@RequestMapping("insertLikes.do") 
 	public void insertLikes() {}
@@ -236,6 +269,7 @@ public class artistController {
   			mav.addObject("name", memberService.selectOneMember(id).getName());
   			mav.addObject("nickname", memberService.selectOneMember(id).getNickname());
   			mav.addObject("content", memberService.selectOneMember(id).getContent());
+  			mav.addObject("followCheck", artistService.selectFollower(id));
   			mav.setViewName("artistPage");
   			return mav;
   		}

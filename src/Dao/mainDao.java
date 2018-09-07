@@ -15,9 +15,8 @@ public interface mainDao {
 	public List<member>	containerTwo();
 	public List<art>	containerThree();
 	public List<art>	containerFour();
-	public List<art>	feed(String id);
+	public List<art>	feed(HashMap<String, Object> params); // 파라미터 수정
 	public List<member>	searchID(String id);
-	public List<String>	selectFollowing(String id);
 	public int sendMessage(message message);
 	public List<message> messageList(String to); // 추가
 	public List<message> logMessage(message message); // 파라미터 수정

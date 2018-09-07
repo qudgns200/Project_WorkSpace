@@ -14,7 +14,7 @@ public interface mainService {
 	public	List<member>	containerTwo	();
 	public	List<art>	containerThree	();
 	public	List<art>	containerFour	();
-	public	List<art>	feed	(String id);
+	public	List<art>	feed	(HashMap<String, Object> params); // 파라미터 수정
 	public	List<member>	searchID	(String id);
 	public	List<String>	selectFollowing	(String id);
 	public	int	sendMessage	(message message);

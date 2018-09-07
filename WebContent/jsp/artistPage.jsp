@@ -32,6 +32,22 @@
 <script src="js/jquery.flexslider.js"></script>
 <script src="js/jquery.custom.js"></script>
 
+<script type="text/javascript">
+$(document).ready(function() {
+	$("#isFrom").click(function() {
+		var width = 800,
+		height = 500;
+		var left = (screen.availWidth - width) / 2;
+		var top = (screen.availHeight - height) / 2;
+		var specs = "width=" + width;
+		specs += ",height=" + height;
+		specs += ",left=" + left;
+		specs += ",top=" + top;
+
+		window.open("logMessagePage.do?isFrom=" + $(this).val(), "팝업", specs);
+	});
+});
+</script>
 </head>
 
 <body>
@@ -61,6 +77,27 @@
                     <blockquote>
                         <p>${content }</p>
                     </blockquote>
+                    
+                    <c:forEach var="list" items="${followCheck }" varStatus="status">
+                    	<c:if test="${count != 1 }">
+                   			<c:set var="count" value="0"></c:set>
+                    	</c:if>
+                    	<c:if test="${list == id }">
+                    		<button class="btn btn-small btn-inverse" type="button" 
+                    		onclick="location.href='deleteFollow.do?artistID=${artistID}'">팔로잉</button>
+                    		<c:set var="count" value="1"></c:set>
+                    	</c:if>
+                    	<c:if test="${status.last }">
+                    		<c:if test="${count == 0 }">
+                    			<button class="btn btn-small btn-inverse" type="button" 
+                    			onclick="location.href='insertFollow.do?artistID=${artistID}'">팔로우</button>
+                    		</c:if>
+                    	</c:if>
+                    </c:forEach>
+                    
+                    <button class="btn btn-small btn-inverse" type="button" 
+                    id="isFrom" value="${artistID }">메시지</button><br>
+                    
                     <h5>게시글 : ${artCount }&nbsp;&nbsp;&nbsp;팔로워 : num&nbsp;&nbsp;&nbsp;팔로잉 : num&nbsp;&nbsp;&nbsp;좋아요 :num</h5>
                 </div>
             </div>

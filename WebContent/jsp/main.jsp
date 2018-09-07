@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -39,7 +40,6 @@
 
 <script type="text/javascript">
 $(document).ready(function () {
-
     $("#btn-blog-next").click(function () {
       $('#blogCarousel').carousel('next')
     });
@@ -53,7 +53,6 @@ $(document).ready(function () {
      $("#btn-client-prev").click(function () {
       $('#clientCarousel').carousel('prev')
     });
-    
 });
 
  $(window).load(function(){
@@ -109,8 +108,8 @@ $(document).ready(function () {
     <div class="row gallery-row"><!-- Begin Gallery Row --> 
       
     	<div class="span12"><!-- First Container Gallery Row -->
-            <h5 class="title-bg">Today's ART 
-                <small>오늘의 주목할 작품</small>
+            <h5 class="title-bg">Popular Artist
+                <small>인기 작가</small>
                 <button class="btn btn-mini btn-inverse hidden-phone" type="button">View Portfolio</button>
             </h5>
     	
@@ -119,7 +118,7 @@ $(document).ready(function () {
 
             <div class="row clearfix no-margin">
             <ul class="gallery-post-grid holder">
-
+				<c:forEach var="O" items="${One }">
                     <!-- Gallery Item 1 -->
                     <li  class="span3 gallery-item" data-id="id-1" data-type="illustration">
                         <span class="gallery-hover-4col hidden-phone hidden-tablet">
@@ -128,45 +127,10 @@ $(document).ready(function () {
                                 <a href="gallery-single.htm" class="item-details-link"></a>
                             </span>
                         </span>
-                        <a href="gallery-single.htm"><img src="img/gallery/gallery-img-1-4col.jpg" alt="Gallery"></a>
-                        <span class="project-details"><a href="gallery-single.htm">Custom Illustration</a>For an international ad campaign.</span>
+                        <a href="gallery-single.htm"><img src="download.do?id=${O.id }&profile=a"></a>
+                        <span class="project-details"><a href="gallery-single.htm">${O.nickname }</a>For an international ad campaign.</span>
                     </li>
-
-                    <!-- Gallery Item 2 -->
-                    <li class="span3 gallery-item" data-id="id-2" data-type="illustration">
-                        <span class="gallery-hover-4col hidden-phone hidden-tablet">
-                            <span class="gallery-icons">
-                                <a href="img/gallery/gallery-img-2-full.jpg" class="item-zoom-link lightbox" title="Custom Illustration" data-rel="prettyPhoto"></a>
-                                <a href="gallery-single.htm" class="item-details-link"></a>
-                            </span>
-                        </span>
-                        <a href="gallery-single.htm"><img src="img/gallery/gallery-img-2-4col.jpg" alt="Gallery"></a>
-                        <span class="project-details"><a href="gallery-single.htm">3 Color Poster Design</a>For a regional festival event.</span>
-                    </li>
-
-                    <!-- Gallery Item 3 -->
-                    <li class="span3 gallery-item" data-id="id-3" data-type="web">
-                        <span class="gallery-hover-4col hidden-phone hidden-tablet">
-                            <span class="gallery-icons">
-                                <a href="img/gallery/gallery-img-3-full.jpg" class="item-zoom-link lightbox" title="Custom Illustration" data-rel="prettyPhoto"></a>
-                                <a href="#" class="item-details-link"></a>
-                            </span>
-                        </span>
-                        <a href="gallery-single.htm"><img src="img/gallery/gallery-img-3-4col.jpg" alt="Gallery"></a>
-                        <span class="project-details"><a href="gallery-single.htm">Ink Pen Illustration</a>Created for a best selling children's book.</span>
-                    </li>
-
-                    <!-- Gallery Item 4 -->
-                    <li class="span3 gallery-item" data-id="id-4" data-type="video">
-                        <span class="gallery-hover-4col hidden-phone hidden-tablet">
-                            <span class="gallery-icons">
-                                <a href="img/gallery/gallery-img-4-full.jpg" class="item-zoom-link lightbox" title="Custom Illustration" data-rel="prettyPhoto"></a>
-                                <a href="gallery-single.htm" class="item-details-link"></a>
-                            </span>
-                        </span>
-                        <a href="gallery-single.htm"><img src="img/gallery/gallery-img-4-4col.jpg" alt="Gallery"></a>
-                        <span class="project-details"><a href="gallery-single.htm">Custom Illustration</a>For an international add campaign.</span>
-                    </li>                    
+				</c:forEach>    
                 </ul>
                 </div>
             </div>
@@ -174,8 +138,8 @@ $(document).ready(function () {
             
             
             <div class="span12"><!-- Second Container Gallery Row -->
-            <h5 class="title-bg">Today's ARTIST 
-                <small>오늘의 작가</small>
+            <h5 class="title-bg">New ARTIST 
+                <small>신예 작가</small>
                 <button class="btn btn-mini btn-inverse hidden-phone" type="button">View Portfolio</button>
             </h5>
     	
@@ -184,7 +148,7 @@ $(document).ready(function () {
 
             <div class="row clearfix no-margin">
             <ul class="gallery-post-grid holder">
-                    
+            	<c:forEach var="T" items="${Two }">
                     <!-- Gallery Item 5 -->
                     <li class="span3 gallery-item" data-id="id-5" data-type="web illustration">
                         <span class="gallery-hover-4col hidden-phone hidden-tablet">
@@ -193,52 +157,17 @@ $(document).ready(function () {
                                 <a href="artistDetail.html" class="item-details-link"></a>
                             </span>
                         </span>
-                        <a href="gallery-single.htm"><img src="img/gallery/gallery-img-5-4col.jpg" alt="Gallery"></a>
-                        <span class="project-details"><a href="artistDetail.html">Icon Design</a>Classic retro style illustration.</span>
+                        <a href="gallery-single.htm"><img src="download.do?id=${T.id }&profile=a" alt="Gallery"></a>
+                        <span class="project-details"><a href="artistDetail.html">${T.nickname }</a>Classic retro style illustration.</span>
                     </li>
-
-                    <!-- Gallery Item 6 -->
-                    <li class="span3 gallery-item" data-id="id-6" data-type="illustration design">
-                        <span class="gallery-hover-4col hidden-phone hidden-tablet">
-                            <span class="gallery-icons">
-                                <a href="img/gallery/gallery-img-6-full.jpg" class="item-zoom-link lightbox" title="Custom Illustration" data-rel="prettyPhoto"></a>
-                                <a href="artistDetail.html" class="item-details-link"></a>
-                            </span>
-                        </span>
-                        <a href="gallery-single.htm"><img src="img/gallery/gallery-img-6-4col.jpg" alt="Gallery"></a>
-                        <span class="project-details"><a href="artistDetail.html">Animation Cell</a>Creative storyboard illustration</span>
-                    </li>
-
-                    <!-- Gallery Item 7 -->
-                    <li class="span3 gallery-item" data-id="id-7" data-type="design">
-                        <span class="gallery-hover-4col hidden-phone hidden-tablet">
-                            <span class="gallery-icons">
-                                <a href="img/gallery/gallery-img-7-full.jpg" class="item-zoom-link lightbox" title="Custom Illustration" data-rel="prettyPhoto"></a>
-                                <a href="artistDetail.html" class="item-details-link"></a>
-                            </span>
-                        </span>
-                        <a href="gallery-single.htm"><img src="img/gallery/gallery-img-7-4col.jpg" alt="Gallery"></a>
-                        <span class="project-details"><a href="artistDetail.html">Poster Ad Campaign</a>Regional ad for a local company.</span>
-                    </li>
-
-                    <!-- Gallery Item 8 -->
-                    <li class="span3 gallery-item" data-id="id-8" data-type="web video">
-                        <span class="gallery-hover-4col hidden-phone hidden-tablet">
-                            <span class="gallery-icons">
-                                <a href="img/gallery/gallery-img-8-full.jpg" class="item-zoom-link lightbox" title="Custom Illustration" data-rel="prettyPhoto"></a>
-                                <a href="artistDetail.html" class="item-details-link"></a>
-                            </span>
-                        </span>
-                        <a href="gallery-single.htm"><img src="img/gallery/gallery-img-8-4col.jpg" alt="Gallery"></a>
-                        <span class="project-details"><a href="artistDetail.html">Magazine Ad</a>For an international add campaign.</span>
-                    </li>                   
+				</c:forEach>                 
                 </ul>
                 </div>
             </div>
             
             <div class="span12"><!-- Third Container Gallery Row -->
-            <h5 class="title-bg">Popular art this week
-                <small>이번 주 인기작품</small>
+            <h5 class="title-bg">Popular art
+                <small>인기 작품</small>
                 <button class="btn btn-mini btn-inverse hidden-phone" type="button">View Portfolio</button>
             </h5>
     	
@@ -247,7 +176,7 @@ $(document).ready(function () {
 
             <div class="row clearfix no-margin">
             <ul class="gallery-post-grid holder">
-                                        
+            	<c:forEach var="Th" items="${Three }">     
                     <!-- Gallery Item 9 -->
                     <li class="span3 gallery-item" data-id="id-9" data-type="design">
                         <span class="gallery-hover-4col hidden-phone hidden-tablet">
@@ -256,45 +185,38 @@ $(document).ready(function () {
                                 <a href="gallery-single.htm" class="item-details-link"></a>
                             </span>
                         </span>
-                        <a href="gallery-single.htm"><img src="img/gallery/gallery-img-9-4col.jpg" alt="Gallery"></a>
-                        <span class="project-details"><a href="gallery-single.htm">Character Designs</a>For a feature film.</span>
+                        <a href="gallery-single.htm"><img src="download.do?no=${Th.no }" alt="Gallery"></a>
+                        <span class="project-details"><a href="gallery-single.htm">${Th.title }</a>${Th.nickname }</span>
                     </li>
+                </c:forEach>
+                </ul>
+                </div>
+            </div>
+            
+            <div class="span12"><!-- Third Container Gallery Row -->
+            <h5 class="title-bg">New art
+                <small>신규 작품</small>
+                <button class="btn btn-mini btn-inverse hidden-phone" type="button">View Portfolio</button>
+            </h5>
+    	
+        <!-- Gallery Thumbnails
+        ================================================== -->
 
-                    <!-- Gallery Item 10 -->
-                    <li class="span3 gallery-item" data-id="id-10" data-type="web design">
+            <div class="row clearfix no-margin">
+            <ul class="gallery-post-grid holder">
+            	<c:forEach var="F" items="${Four }">     
+                    <!-- Gallery Item 9 -->
+                    <li class="span3 gallery-item" data-id="id-9" data-type="design">
                         <span class="gallery-hover-4col hidden-phone hidden-tablet">
                             <span class="gallery-icons">
-                                <a href="img/gallery/gallery-img-10-full.jpg" class="item-zoom-link lightbox" title="Custom Illustration" data-rel="prettyPhoto"></a>
+                                <a href="img/gallery/gallery-img-9-full.jpg" class="item-zoom-link lightbox" title="Custom Illustration" data-rel="prettyPhoto"></a>
                                 <a href="gallery-single.htm" class="item-details-link"></a>
                             </span>
                         </span>
-                        <a href="gallery-single.htm"><img src="img/gallery/gallery-img-10-4col.jpg" alt="Gallery"></a>
-                        <span class="project-details"><a href="gallery-single.htm">Poster and Ad Design</a>For an international add campaign.</span>
+                        <a href="gallery-single.htm"><img src="download.do?no=${F.no }" alt="Gallery"></a>
+                        <span class="project-details"><a href="gallery-single.htm">${F.title }</a>${F.nickname }</span>
                     </li>
-
-                    <!-- Gallery Item 11 -->
-                    <li class="span3 gallery-item" data-id="id-11" data-type="illustration">
-                        <span class="gallery-hover-4col hidden-phone hidden-tablet">
-                            <span class="gallery-icons">
-                                <a href="img/gallery/gallery-img-11-full.jpg" class="item-zoom-link lightbox" title="Custom Illustration" data-rel="prettyPhoto"></a>
-                                <a href="gallery-single.htm" class="item-details-link"></a>
-                            </span>
-                        </span>
-                        <a href="gallery-single.htm"><img src="img/gallery/gallery-img-11-4col.jpg" alt="Gallery"></a>
-                        <span class="project-details"><a href="gallery-single.htm">Website and Animation</a>For a local business.</span>
-                    </li>
-
-                    <!-- Gallery Item 12 -->
-                    <li class="span3 gallery-item" data-id="id-12" data-type="illustration video">
-                        <span class="gallery-hover-4col hidden-phone hidden-tablet">
-                            <span class="gallery-icons">
-                                <a href="img/gallery/gallery-img-12-full.jpg" class="item-zoom-link lightbox" title="Custom Illustration" data-rel="prettyPhoto"></a>
-                                <a href="gallery-single.htm" class="item-details-link"></a>
-                            </span>
-                        </span>
-                        <a href="gallery-single.htm"><img src="img/gallery/gallery-img-12-4col.jpg" alt="Gallery"></a>
-                        <span class="project-details"><a href="gallery-single.htm">Branding Design</a>For an international add campaign.</span>
-                    </li>
+                </c:forEach>
                 </ul>
                 </div>
             </div>
