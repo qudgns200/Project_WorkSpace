@@ -79,6 +79,10 @@ $(document).ready(function() {
                         <p>${content }</p>
                     </blockquote>
                     
+                    <c:if test="${followCheck.isEmpty() }">
+                    <button class="btn btn-small btn-inverse" type="button" 
+                    onclick="location.href='insertFollow.do?artistID=${artistID}'">팔로우</button>
+                    </c:if>
                     <c:forEach var="list" items="${followCheck }" varStatus="status">
                     	<c:if test="${count != 1 }">
                    			<c:set var="count" value="0"></c:set>

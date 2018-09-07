@@ -31,5 +31,6 @@ public interface lectureDao {
 	public int selectAllLectureGCount(); //추가
 	public int searchLectureCount(HashMap<String, Object> params); //추가
 	public int updateLecturePeople(lecture lecture); //추가
+	public List<attendants> selectAttendants(int no); //추가
 	
 }

@@ -61,9 +61,15 @@
 /**
  * 초기 페이지 로딩시 댓글 불러오기
  */
+ $(document).ready(function(){
+if('${msg}'=='1'){alert("이미 신청한 강의입니다.\n강의내역을 확인해주세요."); }
+if('${msg}'=='0'){alert("강의 신청이 완료됐습니다.\n강의내역을 확인해주세요."); }
+ });
+
 $(function(){
     getCommentList(0, 'lecture', $('#currentId').val());
 });
+
 </script>
 
 </head>
@@ -148,7 +154,7 @@ $(function(){
             </table>
         </div>
         <div class="modal-footer">
-       		<button class="btn" data-dismiss="modal" aria-hidden="true" onclick="location.href='lectureAttend.do?no=${lecture.no}'">신청</button>
+       		<button class="btn btn-inverse" onclick="location.href='lectureAttend.do?no=${lecture.no}'">신청</button>
             <button class="btn" data-dismiss="modal" aria-hidden="true">취소</button>
         </div>
  		</div>   	

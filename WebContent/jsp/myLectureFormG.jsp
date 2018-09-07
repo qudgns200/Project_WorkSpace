@@ -62,7 +62,7 @@ var myLectureFormG = function(){ // 강의 내역 페이지 요청 함수
 				var imageUrl =  '<img src="download.do?no=' + attendList.no + '&lecture=a" width=50 height=50>';
 				var aTag = '<a href="selectOneLecture.do?no=' + attendList.no + '">';
 				var pay = '인원 모집 중<br>(결제전)';
-				if(attendList.numberPeople == attendList.maxPeople){
+				if(attendList.state==2){
 					pay = '<button>결제하기</button>'
 				}
 				

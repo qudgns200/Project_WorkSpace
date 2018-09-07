@@ -20,10 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import Model.art;
-<<<<<<< HEAD
 import Model.follow;
-=======
->>>>>>> origin/master
 import Service.artistService;
 import Service.mainService;
 import Service.memberService;
@@ -38,11 +35,7 @@ public class artistController {
 	mainService mainService; //추가
 	
 	@Autowired
-<<<<<<< HEAD
-	artistService artistService;
-=======
 	artistService artistService; //추가
->>>>>>> origin/master
 		
 	//아티스트 개인 페이지 이동 (아티스트용)
 	@RequestMapping("artistMyPage.do") 
