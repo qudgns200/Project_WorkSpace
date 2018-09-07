@@ -59,8 +59,11 @@
 <script type="text/javascript">
 $(document).ready(function() {
 		
-		if($("#checkIsCheck").val()==2)
+		if($("#checkIsCheck").val()==2) {
 			$("#modalButton").hide();
+			$("#selectedArtist").hide();
+		}
+			
 	});
 
 </script>
@@ -119,7 +122,7 @@ function addArtist(name) {
         	<a href="#myModal" role="button" class="btn btn-inverse" data-toggle="modal">강사 선택</a>
         </div>
         <div>
-         <input type="text" id='selectedArtist' name="artistID">
+        <input type="text" id='selectedArtist' name="artistID">
          
         </div>
         </div>
@@ -166,7 +169,7 @@ function addArtist(name) {
                   
                 <div class="input-prepend">
 				    <span class="add-on"><i class="icon-map-marker"></i></span>					
-							<input class="span5" type="text" id="sample5_address" style="height: 20px;" placeholder="강의 장소를 입력하세요.">
+							<input class="span5" type="text" name="place" id="sample5_address" style="height: 20px;" placeholder="강의 장소를 입력하세요.">
                             <input class="btn btn-small btn-inverse" type="button" onclick="sample5_execDaumPostcode()" value="주소 검색" style="text-align: center; margin: 0 auto; height: 30px;"><br>
                             <div id="map" style="width:580px;height:250px;margin-top:10px;display:none"></div>
 
@@ -296,6 +299,6 @@ function addArtist(name) {
     <!-- 	Footer section -->
 	<%@include file="footer.jsp" %>
         <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
-
+<script src="js/fileImage.js"></script>
 </body>
 </html>

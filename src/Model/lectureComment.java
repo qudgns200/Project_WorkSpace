@@ -9,6 +9,9 @@ public class lectureComment {
 	private String content;
 	private Date time;
 	private int commentNo;
+	private int groupNo; //댓글 묶음 번호
+	private int childNode; //댓글, 답글 깊이 여부
+	private int groupOrder; //댓글 묶음 내 순서
 	
 	public int getNo() {
 		return no;
@@ -40,12 +43,29 @@ public class lectureComment {
 	public void setCommentNo(int commentNo) {
 		this.commentNo = commentNo;
 	}
+	public int getGroupNo() {
+		return groupNo;
+	}
+	public void setGroupNo(int groupNo) {
+		this.groupNo = groupNo;
+	}
+	public int getChildNode() {
+		return childNode;
+	}
+	public void setChildNode(int childNode) {
+		this.childNode = childNode;
+	}
+	public int getGroupOrder() {
+		return groupOrder;
+	}
+	public void setGroupOrder(int groupOrder) {
+		this.groupOrder = groupOrder;
+	}
 	@Override
 	public String toString() {
-		return "artcomment [no=" + no + ", id=" + id + ", content=" + content + ", time=" + time + ", commentNo="
-				+ commentNo + "]";
+		return "lectureComment [no=" + no + ", id=" + id + ", content=" + content + ", time=" + time + ", commentNo="
+				+ commentNo + ", groupNo=" + groupNo + ", childNode=" + childNode + ", groupOrder=" + groupOrder + "]";
 	}
-	
-	
+
 	
 }

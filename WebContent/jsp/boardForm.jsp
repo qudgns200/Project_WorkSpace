@@ -44,12 +44,37 @@
 
 
 <script>
+var lang_kor = {
+	    "decimal" : "",
+	    "emptyTable" : "데이터가 없습니다.",
+	    "info" : "_START_ - _END_ (총 _TOTAL_ 글)",
+	    "infoEmpty" : "0명",
+	    "infoFiltered" : "(전체 _MAX_ 명 중 검색결과)",
+	    "infoPostFix" : "",
+	    "thousands" : ",",
+	    "lengthMenu" : "_MENU_ 개씩 보기",
+	    "loadingRecords" : "로딩중...",
+	    "processing" : "처리중...",
+	    "search" : "검색 : ",
+	    "zeroRecords" : "검색된 데이터가 없습니다.",
+	    "paginate" : {
+	        "first" : "첫 페이지",
+	        "last" : "마지막 페이지",
+	        "next" : "다음",
+	        "previous" : "이전"
+	    },
+	    "aria" : {
+	        "sortAscending" : " :  오름차순 정렬",
+	        "sortDescending" : " :  내림차순 정렬"
+	    }
+	};
     $(function() {
     	$("#Tables").DataTable({
     		responsive: true,
     		searching: true,
     		bAutoWidth: true,
-    		bPaginate: true
+    		bPaginate: true,
+    		language : lang_kor //or lang_eng
     	});
     });
 </script>
@@ -99,7 +124,7 @@
                         <h2 class="title-bg">자유게시판</h2>
                         <!-- /.panel-heading -->
                         <div class="panel-body">
-                        	<table width="100%" class="table table-striped table-bordered table-hover" id="Tables">
+                        	<table data-order='[[ 0, "desc" ]]' width="100%" class="table table-striped table-bordered table-hover" id="Tables">
                                 <thead>
                                     <tr>
                                         <th style="background-color: #eeeeee; text-align: center;">글번호</th>
@@ -112,7 +137,7 @@
                                 	<c:forEach var="list" items="${boardList}">
                                 		<tr>
                                 			<td>${list.no }</td>
-                                			<td><a onclick="selectOneBoard.do?no='${list.no}'">${list.title }</a></td>
+                                			<td><a href="selectOneBoard.do?no=${list.no}">${list.title }</a></td>
                                 			<td>${list.id }</td>
                                 			<td><fmt:formatDate pattern="yyyy-MM-dd" value="${list.writeDate }"/></td>
                                 		</tr>
@@ -120,7 +145,7 @@
                                 </tbody>
                             </table>
                             <!-- /.table-responsive -->
-                            <a href="location.href='writeBoardForm.do" class="btn btn-primary pull-right">글쓰기</a>                            
+                            <a href="writeBoardForm.do" class="btn btn-primary pull-right">글쓰기</a>                            
                         </div>
                         <!-- /.panel-body -->
                     </div>

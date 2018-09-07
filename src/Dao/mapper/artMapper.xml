@@ -55,6 +55,7 @@
 	<select id="selectArtComment" parameterType="java.util.HashMap" resultType="artComment">
 		select * from artComment where no=#{no} order by groupNo desc, commentNo asc limit ${startComment}, ${skip};
 	</select>
+	
 	<select id="selectArtLatestcomment" resultType="artComment">
 		select * from artComment order by commentNo desc limit 1;
 	</select>
@@ -85,29 +86,29 @@
 	</select>
 
 <!-- 	추가 -->
-	<select id="getMaxGroupNo" parameterType="int" resultType="int">
-		select IFNULL(max(groupNo), 0) from artComment where no=#{no};
+	<select id="getMaxGroupNo" parameterType="java.util.HashMap" resultType="int">
+		select IFNULL(max(groupNo), 0) from ${comment} where no=#{no};
 	</select>
 
-	<update id="deleteComment" parameterType="artComment">
-		update artComment set content=#{content} where no=#{no} and commentNo=#{commentNo};
+	<update id="deleteComment" parameterType="java.util.HashMap">
+		update ${comment} set content=#{content} where no=#{no} and commentNo=#{commentNo};
 	</update>
 
-	<update id="updateComment" parameterType="artComment">
-		update artComment set content=#{content} where no=#{no} and commentNo=#{commentNo};
+	<update id="updateComment" parameterType="java.util.HashMap">
+		update ${comment} set content=#{content} where no=#{no} and commentNo=#{commentNo};
 	</update>
 
 <!-- 답글 입력 시 해당 댓글을 밑쪽에 달기 위한 맵퍼 -->
-	<select id="selectGroupNo" parameterType="artComment" resultType="int">
-		select IFNULL(min(groupOrder),-1) from artComment where groupNo = #{groupNo} and groupOrder > #{groupOrder} and childNode <![CDATA[<=]]> #{childNode};
+	<select id="selectGroupNo" parameterType="java.util.HashMap" resultType="int">
+		select IFNULL(min(groupOrder),-1) from ${comment} where groupNo = #{groupNo} and groupOrder > #{groupOrder} and childNode <![CDATA[<=]]> #{childNode};
 	</select>
 	
-	<select id="maxGroupOrder" parameterType="int" resultType="int">
-		select IFNULL(max(groupOrder),0) from artComment where groupNo = #{groupNo};
+	<select id="maxGroupOrder" parameterType="java.util.HashMap" resultType="int">
+		select IFNULL(max(groupOrder),0) from ${comment} where groupNo = #{groupNo};
 	</select>
 
-	<update id="updateGroupOrder" parameterType="artComment">
-		update artComment set groupOrder = groupOrder + 1 where groupNo = #{groupNo} and groupOrder <![CDATA[>=]]> #{groupOrder};
+	<update id="updateGroupOrder" parameterType="java.util.HashMap">
+		update ${comment} set groupOrder = groupOrder + 1 where groupNo = #{groupNo} and groupOrder <![CDATA[>=]]> #{groupOrder};
 	</update>
 
 </mapper>

@@ -1,7 +1,7 @@
 package Dao;
 
+import java.util.HashMap;
 import java.util.List;
-
 import Model.board;
 import Model.boardComment;
 import Model.qna;
@@ -17,7 +17,11 @@ public interface boardDao {
 	public List<board>	selectBoard();
 	public board selectOneBoard(int no);
 	public int	insertBoardComment(boardComment boardComment);
+<<<<<<< HEAD
 	public List<boardComment>	selectBoardComment(int no);
+=======
+	public List<boardComment>	selectBoardComment(HashMap<String, Object>params);
+>>>>>>> origin/master
 	public List<qna>	searchQna(String id);
 	public int	insertQna(qna qna);
 	public int	updateQna(qna qna);
@@ -25,6 +29,14 @@ public interface boardDao {
 	public List<qna> selectQna();
 	public qna	selectOneQna(int no);
 	public int	insertQnaComment(qnaComment qnaComment);
+<<<<<<< HEAD
 	public List<qnaComment>	selectQnaComment(int no);
+=======
+	public List<qnaComment>	selectQnaComment(HashMap<String, Object>params);
+>>>>>>> origin/master
 
+	//추가
+	public boardComment selectBoardLatestcomment();
+	public qnaComment selectQnaLatestcomment();
+	public int selectOneById(HashMap<String, Object>params);
 }

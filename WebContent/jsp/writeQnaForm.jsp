@@ -33,15 +33,19 @@
 <script src="js/bootstrap.js"></script>
 <script src="js/jquery.custom.js"></script>
 
-<!-- For NaverEditor
-================================================== -->
-<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script> 
-<script src="resources/editor/js/HuskyEZCreator.js" charset="utf-8"></script>
+<script type="text/javascript">
 
-<!-- 네이버 에디터 사용
-================================================== -->
-<script type="text/javascript" src="js/naverEditor.js"></script>
+//비밀번호 공백 체크
+function checkNull() {
+	if($("#password").val()==""	) {
+		alert("패스워드를 입력하셔야 합니다.")
+		return false;
+	}
+	else
+		return true;
+}
 
+</script>
 </head>
 
 <body>
@@ -95,24 +99,21 @@
 
 			<div class="span8 contact">
 				<!--Begin page form column-->
-				<form action="writeQna.do" id="contact-form" enctype=multipart/form-data method="post">
+				<form action="writeQna.do" id="contact-form" enctype=multipart/form-data method="post" onsubmit="return checkNull()">
 			
 					<div class="input-prepend">
-						<span class="add-on"><i class="icon-pencil"></i></span> <input
-							class="span7" id="focusedInput" name="title" type="text" size="16"
-							placeholder="글 제목을 입력하세요." style="height: 30px;">
+						<span class="add-on"><i class="icon-pencil"></i></span> 
+						<input class="span7" id="title" name="title" type="text" size="16" placeholder="글 제목을 입력하세요." style="height: 20px;">
 					</div>
 								
 				<div class="input-prepend">
 						<span class="add-on"><i class="icon-edit"></i>&nbsp;글 내용</span><br>
-							<textarea class="span8" type="text" id="writeArt-form" name="content"
-								placeholder="글 내용을 입력하세요." maxlength="2048" style="height: 350px;"></textarea>
+							<textarea class="span8" id="writeArt-form" name="content" placeholder="글 내용을 입력하세요." maxlength="2048" style="height: 350px;"></textarea>
 					</div>
 					
 				<div class="input-prepend">
 						<span class="add-on"><i class="icon-lock"></i></span> 
-						<input class="span2" id="focusedInput" name="pw" type="password" size="16"
-							placeholder="비밀번호 입력" style="height: 30px;">
+						<input class="span2" id="password" name="pw" type="password" size="16" placeholder="비밀번호 입력" style="height: 20px;">
 					</div>	
 				
 				<div class="row">
@@ -132,7 +133,7 @@
     <!-- Footer Area
         ================================================== -->
     <%@include file="footer.jsp"%>
-    
+ </div>  
     
 </body>
 </html>

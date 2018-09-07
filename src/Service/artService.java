@@ -21,17 +21,17 @@ public interface artService {
 	public	artComment	selectArtLatestcomment();
 
 	//추가
-	public int getMaxGroupNo(int no); //댓글 묶음 번호 확인
-	public int deleteComment(artComment artComment);
-	public int updateComment(artComment artComment);
+	public int getMaxGroupNo(HashMap<String, Object> params); //댓글 묶음 번호 확인
+	public int deleteComment(HashMap<String, Object> params);
+	public int updateComment(HashMap<String, Object> params);
 	
 	//조건에 따라 해당 댓글 그룹 안의 그룹 넘버 확인
-	public int selectGroupNo(artComment artComment);
+	public int selectGroupNo(HashMap<String, Object> params);
 	
 	//그룹 넘버가 null 일 때 수행
-	public int maxGroupOrder(int groupNo);
+	public int maxGroupOrder(HashMap<String, Object> params);
 
 	//그룹 넘버가 null 이 아닐 때 수행 -> 댓글, 답글 입력 시 그룹 내 순서 번호 수정
-	public int updateGroupOrder(artComment artComment); 
+	public int updateGroupOrder(HashMap<String, Object> params); 
 	
 }

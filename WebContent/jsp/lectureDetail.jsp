@@ -38,10 +38,14 @@
 ================================================== -->
 <script src="http://code.jquery.com/jquery-latest.js"
 	type="text/javascript"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"
+	integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+	crossorigin="anonymous"></script>	
 <script src="js/bootstrap.js"></script>
 <script src="js/jquery.prettyPhoto.js"></script>
 <script src="js/jquery.flexslider.js"></script>
 <script src="js/jquery.custom.js"></script>
+<script src="js/comment.js?ver=0.27"></script>
 <style>
 #map img {
 	max-width: none;
@@ -52,9 +56,20 @@
 	important
 }
 </style>
+
+<script type="text/javascript">
+/**
+ * 초기 페이지 로딩시 댓글 불러오기
+ */
+$(function(){
+    getCommentList(0, 'lecture', $('#currentId').val());
+});
+</script>
+
 </head>
 
 <body>
+<input type="hidden" id="currentId" value="${currentId }">
 	<div class="color-bar-1"></div>
     <div class="color-bar-2 color-bg"></div>
     <div class="container main-container">
@@ -70,7 +85,7 @@
         <div class="span12 gallery-single">
             <div class="row">
             <div class="span6">
-<img src="download.do?no=${lecture.no }&lecture=a" style="width: 500px; height: 530px; margin-left: 50px; margin-top: 30px;">
+			<img src="download.do?no=${lecture.no }&lecture=a" style="width: 500px; height: 530px; margin-left: 50px; margin-top: 30px;">
             </div>
                 <div class="span6">
                     <h2>${lecture.title }</h2> 		<!-- 강의 제목 출력  -->
@@ -148,123 +163,36 @@
 			 ${lecture.content }
     </div>
   
-</div><!-- End gallery-single-->
-</div><!-- End container row -->
-</div> <!-- End Container -->
-
-	 
-
-<!-- Post Comments================================================== -->
-				<section class="comments">
-					<h4 class="title-bg">
-						<a name="comments"></a>5 Comments so far
-					</h4>
-					<ul>
-						<li><img src="img/user-avatar.jpg" alt="Image" /> <span
-							class="comment-name">John Doe</span> <span class="comment-date">March
-								15, 2015 | <a href="#">Reply</a>
-						</span>
-							<div class="comment-content">Lorem ipsum dolor sit amet,
-								consectetur adipiscing elit. Etiam venenatis, ligula quis
-								sagittis euismod, odio ante molestie tortor, eget ullamcorper
-								lacus nunc a ligula. Donec est lacus, aliquet in interdum id,
-								rutrum ac tellus. Ut rutrum, justo et lobortis commodo, est
-								metus ornare tortor, vitae luctus turpis leo sed magna. In leo
-								dolor, suscipit non mattis in.</div> <!-- Reply -->
-							<ul>
-								<li><img src="img/user-avatar.jpg" alt="Image" /> <span
-									class="comment-name">Jason Doe</span> <span
-									class="comment-date">March 15, 2015 | <a href="#">Reply</a></span>
-									<div class="comment-content">Lorem ipsum dolor sit amet,
-										consectetur adipiscing elit. Etiam venenatis, ligula quis
-										sagittis euismod, odio ante molestie tortor, eget ullamcorper
-										lacus nunc a ligula. Donec est lacus, aliquet in interdum id,
-										rutrum ac tellus. Ut rutrum, justo et lobortis commodo, est
-										metus ornare tortor, vitae luctus turpis leo sed magna. In leo
-										dolor, suscipit non mattis in.</div></li>
-								<li><img src="img/user-avatar.jpg" alt="Image" /> <span
-									class="comment-name">Jason Doe</span> <span
-									class="comment-date">March 15, 2015 | <a href="#">Reply</a></span>
-									<div class="comment-content">Lorem ipsum dolor sit amet,
-										consectetur adipiscing elit. Etiam venenatis, ligula quis
-										sagittis euismod, odio ante molestie tortor, eget ullamcorper
-										lacus nunc a ligula. Donec est lacus, aliquet in interdum id,
-										rutrum ac tellus. Ut rutrum, justo et lobortis commodo, est
-										metus ornare tortor, vitae luctus turpis leo sed magna. In leo
-										dolor, suscipit non mattis in.</div></li>
-							</ul></li>
-						<li><img src="img/user-avatar.jpg" alt="Image" /> <span
-							class="comment-name">John Doe</span> <span class="comment-date">March
-								15, 2015 | <a href="#">Reply</a>
-						</span>
-							<div class="comment-content">Lorem ipsum dolor sit amet,
-								consectetur adipiscing elit. Etiam venenatis, ligula quis
-								sagittis euismod, odio ante molestie tortor, eget ullamcorper
-								lacus nunc a ligula. Donec est lacus, aliquet in interdum id,
-								rutrum ac tellus. Ut rutrum, justo et lobortis commodo, est
-								metus ornare tortor, vitae luctus turpis leo sed magna. In leo
-								dolor, suscipit non mattis in.</div></li>
-						<li><img src="img/user-avatar.jpg" alt="Image" /> <span
-							class="comment-name">John Doe</span> <span class="comment-date">March
-								15, 2015 | <a href="#">Reply</a>
-						</span>
-							<div class="comment-content">Lorem ipsum dolor sit amet,
-								consectetur adipiscing elit. Etiam venenatis, ligula quis
-								sagittis euismod, odio ante molestie tortor, eget ullamcorper
-								lacus nunc a ligula. Donec est lacus, aliquet in interdum id,
-								rutrum ac tellus. Ut rutrum, justo et lobortis commodo, est
-								metus ornare tortor, vitae luctus turpis leo sed magna. In leo
-								dolor, suscipit non mattis in.</div></li>
-
-					</ul>
-
-					<!-- Comment Form -->
-					<div class="comment-form-container">
-						<h6>작가에게 전하고 싶은 말</h6>
-						<form action="#" id="comment-form">
-							<div class="input-prepend">
-								<span class="add-on"><i class="icon-user"></i></span> <input
-									class="span4" id="prependedInput" size="16" type="text"
-									placeholder="Name">
+				<!-- comment Area
+        ================================================== -->
+				<section class="comments span12">
+					<form id="commentForm" name="commentForm" method="post">
+						<br>
+						<br>
+						<div>
+							<div>
+								<span><h5 class="title-bg">Comments</h5></span> <span id="cCnt"></span>
 							</div>
-							<div class="input-prepend">
-								<span class="add-on"><i class="icon-envelope"></i></span> <input
-									class="span4" id="prependedInput" size="16" type="text"
-									placeholder="Email Address">
+							<div>
+								<textarea style="width: 500px" rows="3" cols="30" id="comment"	name="comment" placeholder="댓글을 입력하세요"></textarea>
+								<a onClick="fn_comment(0)" class="btn btn-sq-sm btn-success">등록</a>
 							</div>
-							<div class="input-prepend">
-								<span class="add-on"><i class="icon-globe"></i></span> <input
-									class="span4" id="prependedInput" size="16" type="text"
-									placeholder="Website URL">
-							</div>
-							<textarea class="span6"></textarea>
-							<div class="row">
-								<div class="span2">
-									<input type="submit" class="btn btn-inverse"
-										value="Post My Comment">
-								</div>
-							</div>
+						</div>
+						<input type="hidden" id="no" name="no" value="${lecture.no }" />
+					</form>
+					<div>
+						<form id="commentListForm" name="commentListForm" method="post">
+							<ul id="commentList">
+							</ul>
 						</form>
 					</div>
 				</section>
-				<!-- Close comments section-->
-
-
-				<!-- Pagination -->
-				<div class="pagination">
-					<ul>
-						<li class="active"><a href="#">Prev</a></li>
-						<li class="active"><a href="#">1</a></li>
-						<li><a href="#">2</a></li>
-						<li><a href="#">3</a></li>
-						<li><a href="#">4</a></li>
-						<li><a href="#">Next</a></li>
-					</ul>
-				</div>
+			</div><!-- End gallery-single-->
+		</div><!-- End container row -->
 
 <!--    Footer section -->
 <%@include file="footer.jsp"%>
-
+	</div> <!-- End Container -->
 </body>
 
 </html>

@@ -7,13 +7,13 @@ $(function() {
 			"no" : $('#no').val(),
 			"partner_order_id" : $('#merchant_uid').val(),
 			"partner_user_id" : "workSpace",
-			"item_name" : $('#name').val(),
+			"item_name" : $('#title').val(),
 			"quantity" : "1",
 		    "total_amount" : $('#price').val(), // 결제창에 표시될 금액. 실제 승인이 이뤄지지는 않습니다. (모바일에서는 가격이 표시되지 않음)
 		    "vat_amount" : $('#price').val()*0.1,
 		    "tax_free_amount" : "0",
-		    "approval_url" : "http://localhost:8080/Project/kakaoApproval.do",
-		    "fail_url" : "http://localhost:8080/Project/artPayForm.do",
+		    "approval_url" : "http://localhost:8080/Project/kakaoApproval.do?no=" + $('#no').val(),
+		    "fail_url" : "http://localhost:8080/Project/artPayForm.do?no=" + $('#no').val(),
 		    "cancel_url" : "http://localhost:8080/Project/artDetail.do?no=" + $('#no').val()
 		}	
 		

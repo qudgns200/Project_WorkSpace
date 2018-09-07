@@ -1,6 +1,7 @@
 package Service;
 
 import java.io.File;
+
 import java.io.IOException;
 import java.util.Date;
 import java.util.HashMap;
@@ -116,24 +117,20 @@ public class lectureServiceImpl implements lectureService{
 	}
 
 	@Override
-	public int insertLectureComment(int no) {
+	public int insertLectureComment(lectureComment lectureComment) {
 		// TODO Auto-generated method stub
-		return 0;
+		return lectureDao.insertLectureComment(lectureComment);
 	}
 
-	@Override
-	public int insertLectureRecomment(int commentNo) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
 
 	@Override
-	public List<lectureComment> selectLectureComment(int no) {
+	public List<lectureComment> selectLectureComment(HashMap<String, Object> params) {
 		// TODO Auto-generated method stub
-		return null;
+		return lectureDao.selectLectureComment(params);
 	}
 	// 강의 모집인원 숫자 변경 함수 // 추가
 	@Override
+<<<<<<< HEAD
 	public int updateLecturePeople(int no) {
 		lecture originLec = lectureDao.selectOneLecture(no);
 		int currentPeople = originLec.getNumberPeople();
@@ -149,6 +146,11 @@ public class lectureServiceImpl implements lectureService{
 		lecture.setNumberPeople(currentPeople + 1);
 		lecture.setNo(no);
 		return lectureDao.updateLecturePeople(lecture);
+=======
+	public lectureComment selectLectureLatestcomment() {
+		// TODO Auto-generated method stub
+		return lectureDao.selectLectureLatestcomment();
+>>>>>>> origin/master
 	}
 
 	

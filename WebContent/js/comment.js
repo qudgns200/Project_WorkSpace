@@ -7,26 +7,48 @@ var init = {
 	startComment : 0,
 	temp : 0,
 	groupNoName : "",
-	groupNoTemp : 0
+	groupNoTemp : 0,
+	pageText : "",
+	listText : "",
+	insertText : "",
+	id : ""
 }
 
+//무한 스크롤
 $(window).scroll(function () {
 	if($(window).scrollTop() == $(document).height() - $(window).height()) {
-		getCommentList(1, pageText);
+		getCommentList(1, init.pageText);
 	}
 });
 
 /**
  * 댓글 불러오기(Ajax)
  */
-function getCommentList(num, text){
+function getCommentList(num, text, id){
+	init.id = id;
 	
 	if(text=='art') {
-		pageText = text;
-		listText = "selectArtComment.do";
-		insertText = "artComment.do";
-		deleteText = "deleteComment.do";
-		modifyText = "modifyComment.do";
+		init.pageText = text;
+		init.listText = "selectArtComment.do";
+		init.insertText = "artComment.do";
+	}
+	
+	else if(text=='lecture') {
+		init.pageText = text;
+		init.listText = "selectLectureComment.do";
+		init.insertText = "lectureComment.do";
+	}
+	
+	else if(text=='board') {
+		init.pageText = text;
+		init.listText = "selectBoardComment.do";
+		init.insertText = "boardComment.do";
+	}
+	
+	else if(text=='qna') {
+		init.pageText = text;
+		init.listText = "selectQnaComment.do";
+		init.insertText = "qnaComment.do";
 	}
 	
 	if(num!=0)  {
@@ -38,7 +60,7 @@ function getCommentList(num, text){
 	
     $.ajax({
         type:'GET',
-        url : listText,
+        url : init.listText,
         dataType : "json",
         data:{
         	"no" : $("#no").val(),
@@ -69,15 +91,22 @@ function getCommentList(num, text){
                 		groupNoName=data[i].id;
                 		groupNoTemp=data[i].groupNo;
                 		html +="<li id=comment" + data[i].commentNo + ">";
-                		html += "<span class='comment-name'>"+ data[i].id + "</span><span class='comment-date'>" + writeDate + "</span>&nbsp";
+                		html += "<span class='comment-name'>"+ data[i].id + "</span>" +
+                				"<span> / </span>" +
+                				"<span class='comment-date'>" + writeDate + "</span>" + 
+                				"<span> / </span>";
                 		html += commentInput(sendData);
                 		html += "<ul id='groupNo" + data[i].groupNo + "'></ul></li>";
                 		$("#commentList").append(html);
                 	}
                 	else {
                 		html +="<li id=comment" + data[i].commentNo + ">";
-                		html += "<span class='comment-name'>"+ groupNoName + "에 대한 답글" + "</span><span class='comment-name'>" + data[i].id + 
-                				"</span><span class='comment-date'>" + writeDate + "</span>&nbsp";
+                		html += "<span class='comment-name'>"+ groupNoName + "에 대한 답글" + "</span>" +
+                				"<span> / </span>" +
+                				"<span class='comment-name'>" + data[i].id + "</span>" +
+                				"<span> / </span>" +
+                				"<span class='comment-date'>" + writeDate + "</span>" +
+                				"<span> / </span>";
                 		html += commentInput(sendData);
                 		html += "</li>";
                 		var ulLoc = "#groupNo" + groupNoTemp;
@@ -102,10 +131,11 @@ function getCommentList(num, text){
 /*
  * 댓글 등록하기(Ajax)
  */
-function fn_comment(childNode, groupNo, groupOrder, commentNo){
+function fn_comment(childNode, groupNo, groupOrder, commentNo, writer){
 	
 	var reText = "#reText" + commentNo;
 	var spanText = "#span" + commentNo;
+	var writer = writer;
 	
 	if(childNode!=0)
 		var content = $(reText).val();
@@ -116,10 +146,10 @@ function fn_comment(childNode, groupNo, groupOrder, commentNo){
 		var groupNum = 0;
 	else
 		var groupNum = groupNo;
-
+	
     $.ajax({
         type:'POST',
-        url : insertText,
+        url : init.insertText,
         data: {
         	"no" : $("#no").val(),
         	"content" : content,
@@ -129,7 +159,6 @@ function fn_comment(childNode, groupNo, groupOrder, commentNo){
         },
         dataType:'json',
         success : function(data){
-        	
         	var html="";
             var sendData = data[0]; //해당 객체를 넘겨주기 위해 생성
             
@@ -138,7 +167,10 @@ function fn_comment(childNode, groupNo, groupOrder, commentNo){
         	
             	if(data[0].childNode==0) {
                 	html +="<li id=comment" + data[0].commentNo + ">";
-                	html += "<span id='span" + data[0].commentNo + "' class='comment-name'>"+ data[0].id + "</span><span class='comment-date'>" + writeDate + "</span>&nbsp";
+                	html += "<span id='span" + data[0].commentNo + "' class='comment-name'>"+ data[0].id + "</span>" +
+                			"<span> / </span>" +
+                			"<span class='comment-date'>" + writeDate + "</span>" +
+                			"<span> / </span>";
             		html += commentInput(sendData);
                 	html += "<ul id='groupNo" + data[0].groupNo + "'></ul></li>";
                 	$("#commentList").prepend(html);
@@ -146,8 +178,12 @@ function fn_comment(childNode, groupNo, groupOrder, commentNo){
             	} else {
             		var commentAfter = "#groupNo" + groupNo;
                 	html +="<li id=comment" + data[0].commentNo + ">";
-                	html += "<span id='span" + data[0].commentNo + "' class='comment-name'>"+ $(spanText).text() + "에 대한 답글" + "</span><span class='comment-name'>" + data[0].id + 
-                			"</span><span class='comment-date'>" + writeDate + "</span>&nbsp";
+                	html += "<span id='span" + data[0].commentNo + "' class='comment-name'>"+ writer + "에 대한 답글" + "</span>" +
+                			"<span> / </span>" +
+                			"<span class='comment-name'>" + data[0].id + "</span>" +
+                			"<span> / </span>" +
+                			"<span class='comment-date'>" + writeDate + "</span>" +
+                			"<span> / </span>";
                 	html += commentInput(sendData);
                 	html += "</li>";
                 	$(commentAfter).append(html);
@@ -163,13 +199,15 @@ function fn_comment(childNode, groupNo, groupOrder, commentNo){
     });
 }
 
-
+//추가 폼 공통 양식(답글 / 수정 / 삭제)
 function commentInput(data) {
 	var html="";
 	
     html += "<a id='aRe" + data.commentNo + "' onclick='recommentForm(" + data.commentNo + ")'>답글</a>&nbsp";
+    if(init.id==data.id) {
     html += "<a id='aMo" + data.commentNo + "' onclick='modifyForm(" + data.commentNo + ")'>수정</a>&nbsp";
     html += "<a onclick='deleteComment(" + data.commentNo + ")'>삭제</a>&nbsp";
+    }
     html += "<div class='comment-content' id='contentForm" + data.commentNo + "'>" + data.content + "</div>";
     html += "<input type='hidden' id='" + data.commentNo + "' value='" + data.content +"'>";
     html += "</div>";  
@@ -178,7 +216,7 @@ function commentInput(data) {
     html +="<div class='recommentDiv' id='recomment" + data.commentNo + "' style='display:none'>";
 	html +="<textarea style='width:500px' rows='3' cols='10' id='reText" + data.commentNo + "' name='reText' placeholder='댓글을 입력하세요'></textarea>&nbsp";
 	
-	html +="<a onClick='fn_comment(" + (data.childNode+1) + ", " + data.groupNo + ", " + data.groupOrder + ", " + data.commentNo + ")' class='btn btn-sq-sm btn-success'>답글 쓰기</a>"
+	html +="<a onClick='fn_comment(" + (data.childNode+1) + ", " + data.groupNo + ", " + data.groupOrder + ", " + data.commentNo + ", " + data.id + ")' class='btn btn-sq-sm btn-success'>답글 쓰기</a>"
     
 	html +="</div>";
     /////////////////////////
@@ -202,10 +240,11 @@ function deleteComment(commentNo) {
 	
 	   $.ajax({
 	        type:'GET',
-	        url : deleteText,
+	        url : "deleteComment.do",
 	        data: {
 	        	"commentNo" : commentNo,
-	        	"no" : $("#no").val()
+	        	"no" : $("#no").val(),
+	        	"text" : init.pageText
 	        },
 	        contentType: "application/x-www-form-urlencoded; charset=UTF-8", 
 	        success : function(data){
@@ -224,11 +263,12 @@ function fn_commentUpdate(commentNo) {
 	
 	   $.ajax({
 	        type:'GET',
-	        url : modifyText,
+	        url : "modifyComment.do",		
 	        data: {
 	        	"commentNo" : commentNo,
 	        	"no" : $("#no").val(),
-	        	"content" : $(updateComment).val()
+	        	"content" : $(updateComment).val(),
+	        	"text" : init.pageText
 	        },
 	        contentType: "application/x-www-form-urlencoded; charset=UTF-8", 
 	        success : function(data){

@@ -1,5 +1,12 @@
 package Service;
 
+<<<<<<< HEAD
+=======
+import java.io.File;
+
+import java.io.IOException;
+import java.util.HashMap;
+>>>>>>> origin/master
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,14 +66,15 @@ public class boardServiceImpl implements boardService{
 	}
 
 	@Override
-	public int insertBoardComment(int no) {
+	public int insertBoardComment(boardComment boardComment) {
 		// TODO Auto-generated method stub
-		return 0;
+		return boardDao.insertBoardComment(boardComment);
 	}
 
 	@Override
-	public int insertBoardRecomment(int commentNo) {
+	public List<boardComment> selectBoardComment(HashMap<String, Object>params) {
 		// TODO Auto-generated method stub
+<<<<<<< HEAD
 		return 0;
 	}
 
@@ -74,6 +82,9 @@ public class boardServiceImpl implements boardService{
 	public List<boardComment> selectBoardComment(int no) {
 		// TODO Auto-generated method stub
 		return null;
+=======
+		return boardDao.selectBoardComment(params);
+>>>>>>> origin/master
 	}
 
 	@Override
@@ -115,14 +126,38 @@ public class boardServiceImpl implements boardService{
 	@Override
 	public int insertQnaComment(qnaComment qnaComment) {
 		// TODO Auto-generated method stub
-		return 0;
+		return boardDao.insertQnaComment(qnaComment);
 	}
 
 	@Override
+<<<<<<< HEAD
 	public List<qnaComment> selectQnaComment(int no) {
+=======
+	public List<qnaComment> selectQnaComment(HashMap<String, Object>params) {
 		// TODO Auto-generated method stub
-		return null;
+		return boardDao.selectQnaComment(params);
 	}
 
+	@Override
+	public boardComment selectBoardLatestcomment() {
+>>>>>>> origin/master
+		// TODO Auto-generated method stub
+		return boardDao.selectBoardLatestcomment();
+	}
+
+<<<<<<< HEAD
+=======
+	@Override
+	public qnaComment selectQnaLatestcomment() {
+		// TODO Auto-generated method stub
+		return boardDao.selectQnaLatestcomment();
+	}
+
+	@Override
+	public int selectOneById(HashMap<String, Object> params) {
+		// TODO Auto-generated method stub
+		return boardDao.selectOneById(params);
+	}
+>>>>>>> origin/master
 
 }
