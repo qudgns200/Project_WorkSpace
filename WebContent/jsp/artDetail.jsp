@@ -71,12 +71,11 @@ $(function(){
 		<!-- Page Content
     ================================================== -->
 		<div class="row">
-<<<<<<< HEAD
+
 			<!-- Gallery Items
         ================================================== -->
 		<div class="span12 blog">
-=======
->>>>>>> origin/master
+
 		<form id="form" action="artPayForm.do">
             <div class="row">
                 <div class="span6">
@@ -114,7 +113,7 @@ $(function(){
                     </div>
                 </div>
             </div>
-<<<<<<< HEAD
+
 	</form>
 		<br>
 		<div class="span12">
@@ -122,7 +121,7 @@ $(function(){
 				 ${art.content }
     	</div>
 
-=======
+
 </form>
 	<br>
 	<div class="span12">
@@ -130,7 +129,7 @@ $(function(){
 			 ${art.content }
     </div>
   
->>>>>>> origin/master
+
 				<!-- comment Area
         ================================================== -->
 				<section class="comments span12">
