@@ -22,6 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.View;
 
+import Model.alarm;
 import Model.member;
 import Model.message;
 import Service.mainService;
@@ -30,6 +31,7 @@ import Service.memberService;
 
 @Controller
 public class mainController {
+	
 	@Autowired
 	private memberService memberService;
 	
@@ -339,12 +341,15 @@ public class mainController {
 		public void deleteAlarm() {}
 		
 		@RequestMapping("selectAlarm.do")
-		public void selectAlarm(HttpSession session, HttpServletResponse response)throws ServletException, IOException {
+		public void selectAlarm(HttpSession session, HttpServletResponse response, @RequestParam(required=false)int readCheck)throws ServletException, IOException {
 			response.setCharacterEncoding("UTF-8");
 	    	PrintWriter pw = response.getWriter();
-	    	String id = (String)session.getAttribute("id"); 
+	    	String id = (String)session.getAttribute("id");
+	    	alarm alarm = new alarm();
+			alarm.setIsTo(id);
+			alarm.setReadCheck(readCheck);
 	    	JSONObject jsonObj = new JSONObject();
-	    	jsonObj.put("alarmList", mainService.selectAlarm(id));
+	    	jsonObj.put("alarmList", mainService.selectAlarm(alarm));
 			pw.println(jsonObj);
 		}
 		
@@ -433,12 +438,17 @@ public class mainController {
 	
 	// 알림 페이지로 이동
 	@RequestMapping("alarmPage.do")
-	public void alarmPage() {
-			
-			
-			
-			
-			
+	public ModelAndView alarmPage(@RequestParam(required=false)Integer readCheck, HttpSession session) {
+		ModelAndView mav = new ModelAndView();
+			String id = (String) session.getAttribute("id");
+			alarm alarm = new alarm();
+			alarm.setIsTo(id);
+			if (readCheck!=null) {
+				alarm.setReadCheck(readCheck);
+			}
+			mav.addObject("alarmList", mainService.selectAlarm(alarm));
+			mav.setViewName("alarmPage");
+			return mav;
 	}
 	// 알림 개수 조회
 	@RequestMapping("alarmCount.do")

@@ -35,6 +35,19 @@
 	select count(*) from lecture where guestID is not null 
 	</select>
 	
+	<insert id="insertLectureComment" parameterType="lectureComment">
+		insert into lectureComment(no, id, content, time, groupNo, childNode, groupOrder)
+		values (#{no}, #{id}, #{content}, default, #{groupNo}, #{childNode}, #{groupOrder})
+	</insert>
+
+	<select id="selectLectureComment" parameterType="java.util.HashMap" resultType="lectureComment">
+		select * from lectureComment where no=#{no} order by groupNo desc, commentNo asc limit ${startComment}, ${skip};
+	</select>
+	
+	<select id="selectLectureLatestcomment" resultType="lectureComment">
+		select * from lectureComment order by commentNo desc limit 1;
+	</select>
+	
 	<select id="searchLecture" parameterType="java.util.HashMap" resultType="lecture">
 	select * from lecture L join member M on L.artistID = M.id 
 	where M.isCheck = 2 and 1 = 0 
@@ -75,6 +88,23 @@
 	<select id="selectOneLecture" resultType="lecture" parameterType="int">
 	select * from lecture where no=#{no}
 	</select>
+	
+	<update id="updateLecture" parameterType="lecture">
+	update lecture set title=#{title},genre=#{genre},startDate=#{startDate},
+	endDate=#{endDate}, numberPeople=#{numberPeople}, place=#{place},content=#{content},file=#{file}, 
+	writeDate=default, state=#{state}, maxPeople=#{maxPeople}, price=#{price} where no=#{no};
+	</update>
+	
+	<update id="updateLecturePeople" parameterType="lecture">
+	update lecture set
+	<if test="state!=null">state = #{state},</if>
+	numberPeople = #{numberPeople}
+	where no=#{no}
+	</update>
+	
+	<insert id="insertAttendants" parameterType="attendants">
+	insert into attendants values(#{no}, #{id}, default)
+	</insert>
 	
 
 </mapper>

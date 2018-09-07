@@ -30,7 +30,6 @@
 <link rel="apple-touch-icon" sizes="114x114" href="img/apple-touch-icon-114x114.png">
 
 <!-- JS
-<<<<<<< HEAD
 ================================================== -->
 <script src="http://code.jquery.com/jquery-1.8.3.min.js"></script>
 <script src="js/bootstrap.js"></script>

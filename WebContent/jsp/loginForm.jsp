@@ -91,7 +91,7 @@ $(document).ready(function() {
                         	
                             <div class="carousel-inner" >
                                 <div class="item active">
-                                    <img class="d-block img-fluid" src="https://images.pexels.com/photos/33972/pexels-photo.jpg" alt="First slide">
+                                    <img class="d-block img-fluid" src="img/login/pexels-photo.jpg" alt="First slide">
                                     <div class="carousel-caption d-none d-md-block">
                                         <div class="banner-text">
                                             <h2>This is WorkSpace</h2>
@@ -101,7 +101,7 @@ $(document).ready(function() {
 								</div>
 
                                 <div class="item">
-                                    <img class="d-block img-fluid" src="https://images.pexels.com/photos/7097/people-coffee-tea-meeting.jpg" alt="Second slide">
+                                    <img class="d-block img-fluid" src="img/login/people-coffee-tea-meeting.jpg" alt="Second slide">
                                     <div class="carousel-caption d-none d-md-block">
                                         <div class="banner-text">
                                             <h2>This is Web Gellary</h2>
@@ -110,7 +110,7 @@ $(document).ready(function() {
                                     </div>
                                 </div>
                                 <div class="item">
-                                    <img class="d-block img-fluid" src="https://images.pexels.com/photos/872957/pexels-photo-872957.jpeg" alt="Third slide">
+                                    <img class="d-block img-fluid" src="img/login/pexels-photo-872957.jpeg" alt="Third slide">
                                     <div class="carousel-caption d-none d-md-block">
                                         <div class="banner-text">
                                             <h2>This is Heaven</h2>

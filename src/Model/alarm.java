@@ -6,8 +6,8 @@ public class alarm {
 
 	private String type;
 	private Date time;
-	private String to;
-	private String from;
+	private String isTo;
+	private String isFrom;
 	private int readCheck;
 	private int no;
 	
@@ -29,30 +29,30 @@ public class alarm {
 	public void setTime(Date time) {
 		this.time = time;
 	}
-	public String getTo() {
-		return to;
-	}
-	public void setTo(String to) {
-		this.to = to;
-	}
-	public String getFrom() {
-		return from;
-	}
-	public void setFrom(String from) {
-		this.from = from;
-	}
-	
 	public int getNo() {
 		return no;
 	}
 	public void setNo(int no) {
 		this.no = no;
 	}
+	public String getIsTo() {
+		return isTo;
+	}
+	public void setIsTo(String isTo) {
+		this.isTo = isTo;
+	}
+	public String getIsFrom() {
+		return isFrom;
+	}
+	public void setIsFrom(String isFrom) {
+		this.isFrom = isFrom;
+	}
 	@Override
 	public String toString() {
-		return "alarm [type=" + type + ", time=" + time + ", to=" + to + ", from=" + from + ", readCheck=" + readCheck
-				+ ", no=" + no + "]";
+		return "alarm [type=" + type + ", time=" + time + ", isTo=" + isTo + ", isFrom=" + isFrom + ", readCheck="
+				+ readCheck + ", no=" + no + "]";
 	}
+	
 	
 	
 	

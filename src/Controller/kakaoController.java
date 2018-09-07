@@ -5,19 +5,25 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.URL;
+import java.util.Date;
+import java.util.HashMap;
 
 import javax.net.ssl.HttpsURLConnection;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import Model.art;
 import Model.member;
 import Model.pay;
+import Service.artService;
 import Service.memberService;
 
 @Controller
@@ -43,6 +49,8 @@ public class kakaoController {
 	
 	@Autowired
 	private memberService memberService;
+	@Autowired
+	private artService artService;
 	
 	@RequestMapping("kakaoPayment.do")
 	public void kakaoPayment(HttpServletResponse response, HttpServletRequest request) {
@@ -113,7 +121,7 @@ public class kakaoController {
 	}
 	
 	@RequestMapping("kakaoApproval.do")
-	public void kakaoApproval(HttpServletRequest request) {
+	public String kakaoApproval(@RequestParam int no, HttpServletRequest request, HttpSession session) {
 		String apiURL = null;
 		String admin_key = "bae67e1926bf8534d3b638dbd95bbb67";
 		
@@ -164,8 +172,7 @@ public class kakaoController {
 			
 			pay pay = new pay();
 			
-//			String id = session.getAttribute("id");
-			String id = "test";
+			String id = (String)session.getAttribute("id");
 			
 			member member = new member();
 			member = memberService.selectOneMember(id);			
@@ -174,15 +181,30 @@ public class kakaoController {
 			pay.setAddr(member.getAddr());
 			pay.setPhone(member.getPhone());
 			pay.setName(member.getName());
-//			pay.setTotalPrice(json.get("total"));
-//			pay.setPayMethod(json.get("payment_method_type"));
-			pay.setTotalPrice(1);
-//			pay.setPayDate(json.get("approved_at"));
+			int totalPrice = Integer.parseInt((String) json.get("total"));
+			pay.setTotalPrice(totalPrice);
+			int payMethod = Integer.parseInt((String)json.get("payment_method_type"));
+			pay.setPayMethod(payMethod);
+			Date payDate = (Date)json.get("approved_at");
+			pay.setPayDate(payDate);
 			
+			int result = artService.insertArtPay(pay);
+			
+			if(result==1) {
+				art art = new art();
+				art = artService.selectOneArt(no);
+				
+				HashMap<String, Object> params2 = new HashMap<String, Object>();
+				params2.put("totalCount", (art.getTotalCount()-1));
+				params2.put("no", no);
+				
+				memberService.updateArt(params2);
+			}
 			
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
+		return "mySellFormA0.do";
 	}
 	
 }

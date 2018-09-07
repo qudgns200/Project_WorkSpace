@@ -254,9 +254,9 @@ public class memberServiceImpl implements memberService {
 	}
 
 	@Override
-	public int updateArt(int no, String file, String title, String content) {
+	public int updateArt(HashMap<String, Object> params) {
 		// TODO Auto-generated method stub
-		return 0;
+		return memberDao.updateArt(params);
 	}
 
 	@Override
@@ -266,9 +266,11 @@ public class memberServiceImpl implements memberService {
 	}
 
 	@Override
-	public int updateDelivery(int no, String id, int state) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int updateDelivery(String orderNumber, int state) {
+		pay pay = new pay();
+		pay.setOrderNumber(orderNumber);
+		pay.setState(state);
+		return memberDao.updateDelivery(pay);
 	}
 
 	@Override
@@ -314,17 +316,8 @@ public class memberServiceImpl implements memberService {
 	}
 
 	@Override
-	public HashMap<String, Object> selectOnePay(String id, int page, HashMap<String, Object> params) {
-		HashMap<String, Object> result = new HashMap<>();
-		params.put("skipBuy", mainService.getSkip(page, 5));
-		params.put("qty", 5);
-		params.put("id", id);
-		result.put("currentBuy", page);
-		result.put("startBuy", mainService.getStartPage(page));
-		result.put("endBuy", mainService.getEndPage(page));
-		result.put("lastBuy", mainService.getOnePayLastPage(id));
-		result.put("buyingList", memberDao.selectOnePay(params));
-		return result;
+	public pay selectOnePay(String orderNumber) {
+		return memberDao.selectOnePay(orderNumber);
 	}
 
 	@Override
@@ -337,8 +330,6 @@ public class memberServiceImpl implements memberService {
 			dir.mkdirs(); //지정 경로에 폴더가 없을 시 폴더 생성 요청
 		
 		String fileName=new Date().getTime() + "_" + file.getOriginalFilename();
-		
-		System.out.println("패스 : " + path + fileName);
 		
 		File attachFile = new File(path + fileName);
 		try {
@@ -375,6 +366,14 @@ public class memberServiceImpl implements memberService {
 			}
 		}
 		return new File(path + fileName);
+	}
+
+	@Override
+	public Integer updateApproveLec(int no, int state) {
+		lecture lecture = new lecture();
+		lecture.setNo(no);
+		lecture.setState(state);
+		return memberDao.updateApproveLec(lecture);
 	}
 	
 	

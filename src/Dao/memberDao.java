@@ -21,25 +21,25 @@ public interface memberDao {
 	public int	updateRefuseArtist(String id);
 	public int	updateMember(member member);
 	//params : 스킵할 레코드의 갯수와 조회할 레코드의 갯수
-	public List<lecture>	selectMyAttendLec(HashMap<String, Object>params);
-	public List<lecture>	selectGatherLec(HashMap<String, Object>params);
+	public List<HashMap<String, Object>>	selectMyAttendLec(HashMap<String, Object>params);	//수정
+	public List<HashMap<String, Object>>	selectGatherLec(HashMap<String, Object>params);		//수정
 	
 	//params : 스킵할 레코드의 갯수와 조회할 레코드의 갯수
-	public List<pay> selectOnePay(HashMap<String, Object>params);
+	public pay selectOnePay(String orderNumber);
 	public int	insertLecturePay(pay pay);
 	public int	insertArt(art art);
 	public List<art>	selectArtistArt(String id);
 	
 	public int	updateArt(HashMap<String, Object> params); // 수정
 	public int	deleteArt(HashMap<String, Object> params); // 수정
-	public List<lecture>	selectRequestLec(HashMap<String, Object>params);
-	public List<lecture>	selectApproveLec(HashMap<String, Object>params);
+	public List<HashMap<String, Object>>	selectRequestLec(HashMap<String, Object>params);
+	public List<HashMap<String, Object>>	selectApproveLec(HashMap<String, Object>params);
 	
 	public List<art>	selectSellingArt(HashMap<String, Object>params);
 	public List<HashMap<String, Object>>	selectSoldArt(HashMap<String, Object>params);
 	public List<HashMap<String, Object>>	selectBuyingArt(HashMap<String, Object>params);
 	
-	public int	updateDelivery(HashMap<String, Object>params); // 수정
+	public int	updateDelivery(pay pay); // 수정
 	
 	public member selectOneNickname(String nickname);
 	
@@ -57,4 +57,6 @@ public interface memberDao {
 	public int getSellingArtCount(String id);
 	public int getSoldArtCount(String id);
 	public int getOnePayCount(String id);
+	
+	public Integer updateApproveLec(lecture lecture); // 추가
 }

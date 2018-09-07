@@ -50,19 +50,21 @@
 	</insert>
 	
 	<update id="updateAlarm" parameterType="int">
-	update alarm set readCheck = 1 where no = #{no}
+	update alarm set readCheck = 2 where no = #{no}
 	</update>
 	
 	<delete id="deleteAlarm" parameterType="String">
 	
 	</delete>
 	
-	<select id="selectAlarm" parameterType="String" resultType="alarm">
-	select * from alarm where isFrom = #{from} and readCheck=0 order by time desc
+	<select id="selectAlarm" parameterType="alarm" resultType="alarm">
+	select * from alarm where isTo = #{isTo} 
+	<if test="readCheck!=0">and readCheck = #{readCheck}</if>
+	 order by time desc
 	</select>
 	
 	<select id="alarmCount" parameterType="String" resultType="int">
-	select count(*) from alarm where isFrom = #{from} and readCheck=0 
+	select count(*) from alarm where isTo = #{isTo} and readCheck=1 
 	</select>
 	
 </mapper>

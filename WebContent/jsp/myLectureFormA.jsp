@@ -37,9 +37,15 @@
 <script src="js/bootstrap.js"></script>
 <script src="js/jquery.custom.js"></script>
 <script type="text/javascript">
-window.onload = function(){
-myLectureFormA();	
+function moveUrl(num) {
+	var payMethod = $("input[name=payMethod]:checked").val();
+	
+	location.href="lecturePayForm.do?no=" + num + "&payMethod=" + payMethod;
 }
+
+$(document).ready(function(){
+myLectureFormA();	
+});
 
 var attendPagingLog;
 var gatherPagingLog;
@@ -65,9 +71,28 @@ var myLectureFormA = function(){ // 강의 내역 페이지 요청 함수
 			
 			var str1 = "<tr>";
 			$.each(data.attendList, function(index, attendList){ 	// 강의신청 목록
-				str1 += '<td>' + attendList.genre + '</td><td>' + attendList.title + '</td><td>' +
-						attendList.artistID + '</td><td>' + attendList.startDate + '</td><td>' +
-						attendList.place + '</td>';
+				
+				var imageUrl =  '<img src="download.do?no=' + attendList.no + '&lecture=a" width=50 height=50>';
+				var aTag = '<a href="selectOneLecture.do?no=' + attendList.no + '">';
+				var pay = '인원 모집 중<br>(결제전)';
+				if(attendList.numberPeople == attendList.maxPeople) {
+					pay = "<div id='modalButton'><a href='#myModal' role='button' class='btn btn-inverse' data-toggle='modal'>결제하기</a></div>" + 
+				          "<div class='modal hide fade' id='myModal' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true' style='display: none;'>" + 
+			        	  "<div class='modal-header'>" +
+			              "<button type='button' class='close' data-dismiss='modal' aria-hidden='true'>×</button>" +
+			              "<h5 id='myModalLabel'>결제방법을 선택하세요.</h5>" +
+			        	  "</div>" +
+			       	 	  "<div class='modal-body'>" +
+			              "<input type='radio' name='payMethod' value='1'>카드결제" + 
+			              "<input type='radio' name='payMethod' value='2'>카카오페이" +
+			              "<div class='modal-footer'><button class='btn'" +
+			              "data-dismiss='modal' aria-hidden='true' onclick='moveUrl(" + attendList.no + ")'>Close</button></div></div>";
+				}
+				
+				str1 += '<td>' + attendList.genre + '</td><td><span>' + aTag + 
+						imageUrl + '</a></span> &nbsp; <span>' + aTag + attendList.title + '</a></span></td><td>' +
+						attendList.artistID + '</td><td>' + attendList.startDate + ' ~ ' + attendList.endDate + '</td><td>' +
+						attendList.place + '</td><td>' + pay +'</td>';
 				str1 += '</tr>';
 			}); // each
 			$('#attendList').append(str1); // 강의신청 목록- 테이블에 붙이기
@@ -104,9 +129,18 @@ var myLectureFormA = function(){ // 강의 내역 페이지 요청 함수
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 			var str2 = "<tr>";
 			$.each(data.gatherList, function(index, gatherList){ 		// 모집 중인 강의 목록
-				str2 += '<td>' + gatherList.genre + '</td><td>' + gatherList.title + '</td><td>' +
-						gatherList.artistID + '</td><td>' + gatherList.startDate + '</td><td>' +
-						gatherList.place + '</td><td>' + gatherList.state + '</td>';
+				
+				var imageUrl =  '<img src="download.do?no=' + gatherList.no + '&lecture=a" width=50 height=50>';
+				var aTag = '<a href="selectOneLecture.do?no=' + gatherList.no + '">';
+				var state;
+				if(gatherList.state==1){state = '인원 모집 중';}
+				if(gatherList.state==2){state = '모집완료';}
+				if(gatherList.state==6){state = '결제완료';}
+				str2 += '<td>' + gatherList.genre + 
+						'</td><td><span>' + aTag + imageUrl + '</a></span> &nbsp; <span>' +
+						aTag + gatherList.title + '</a></span></td><td>' +
+						gatherList.artistID + '</td><td>' + gatherList.startDate + ' ~ ' + gatherList.endDate + '</td><td>' +
+						gatherList.place + '</td><td>' + state + '</td>';
 				str2 += '</tr>';
 			}); // each
 			$('#gatherList').append(str2); // 모집 중인 강의- 테이블에 붙이기
@@ -144,9 +178,23 @@ var myLectureFormA = function(){ // 강의 내역 페이지 요청 함수
 			
 			var str3 = "<tr>";
 			$.each(data.requestList, function(index, requestList){ 	// 요청 받은 강의목록
-				str3 += '<td>' + requestList.genre + '</td><td>' + requestList.title + '</td><td>' +
-						requestList.startDate + '</td><td>' + requestList.place + '</td><td>' +
-						requestList.maxPeople + '</td><td>' + requestList.guestID + '</td>';
+				
+				var state;
+				var imageUrl =  '<img src="download.do?no=' + requestList.no + '&lecture=a" width=50 height=50>';
+				var aTag = '<a href="selectOneLecture.do?no=' + requestList.no + '">';
+			
+				if(requestList.state==3){
+				state = '<a href="updateApproveLec.do?state=4&no='+ requestList.no +'">요청 승인</a><br>' + 
+						'<a href="updateApproveLec.do?state=5&no='+ requestList.no +'">요청 거절</a>';
+				}
+				if(requestList.state==5){state = '승인거절';}
+				
+				str3 += '<td>' + requestList.genre + 
+						'</td><td><span>' + aTag + imageUrl + '</a></span> &nbsp; <span>' +
+						aTag + requestList.title + '</a></span></td><td>' +
+						requestList.startDate + ' ~ ' + requestList.endDate + '</td><td>' + requestList.place + '</td><td>' +
+						requestList.maxPeople + '</td><td>' + requestList.guestID + '</td><td>' +
+						state + '</td>';
 				str3 += '</tr>';
 			}); // each
 			$('#requestList').append(str3); // 요청 받은 강의목록- 테이블에 붙이기
@@ -182,8 +230,15 @@ var myLectureFormA = function(){ // 강의 내역 페이지 요청 함수
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 			var str4 = "<tr>";
 			$.each(data.approveList, function(index, approveList){ 	// 요청 수락한 강의목록
-				str4 += '<td>' + approveList.genre + '</td><td>' + approveList.title + '</td><td>' +
-						approveList.startDate + '</td><td>' + approveList.place + '</td><td>' +
+				
+				var imageUrl =  '<img src="download.do?no=' + approveList.no + '&lecture=a" width=50 height=50>';
+				var aTag = '<a href="selectOneLecture.do?no=' + approveList.no + '">';
+				
+				str4 += '<td>' + approveList.genre + 
+						'</td><td><span>' + aTag + imageUrl + '</a></span> &nbsp; <span>' +
+						aTag + approveList.title + '</a></span></td><td>' +
+						approveList.startDate + ' ~ ' + approveList.endDate + '</td><td>' + 
+						approveList.place + '</td><td>' +
 						approveList.numberPeople + '</td><td>' +
 						approveList.maxPeople + '</td><td>' + approveList.guestID + '</td>';
 				str4 += '</tr>';
@@ -259,13 +314,10 @@ var myLectureFormA = function(){ // 강의 내역 페이지 요청 함수
 			<div class="span8 contact">
 				<!--Begin page content column-->
 
-				<h2>강의 내역 조회</h2>
-
-				<div class="alert alert-success">Well done! You successfully
-					read this important alert message.</div>
-
-				<h4>신청한 강의</h4>
-				<table class="table table-bordered">
+	<h3 class="title-bg" style="margin-top: 0px;">강의 내역 조회</h3>
+	<h4>신청한 강의</h4>
+	<hr style="display: block; margin-top: 0.5em; margin-bottom: 0.5em; border-style: inset; border-width: 1px;">
+				<table class="table table-striped">
 					<thead>
 						<tr>
 							<th scope="col">장르</th>
@@ -273,6 +325,7 @@ var myLectureFormA = function(){ // 강의 내역 페이지 요청 함수
 							<th scope="col">아티스트</th>
 							<th scope="col">강의기간</th>
 							<th scope="col">장소</th>
+							<th scope="col">결제</th>
 						</tr>
 					</thead>
 					<tbody id="attendList">
@@ -282,8 +335,9 @@ var myLectureFormA = function(){ // 강의 내역 페이지 요청 함수
 					</tr>
 				</table>
 
-				<h4>모집 중인 강의</h4>
-				<table class="table table-bordered">
+				<h4>인원 모집 중인 강의</h4>
+				<hr style="display: block; margin-top: 0.5em; margin-bottom: 0.5em; border-style: inset; border-width: 1px;">
+				<table class="table table-striped">
 					<thead>
 						<tr>
 							<th scope="col">장르</th>
@@ -302,7 +356,8 @@ var myLectureFormA = function(){ // 강의 내역 페이지 요청 함수
 				</table>
 
 				<h4>요청 받은 강의</h4>
-				<table class="table table-bordered">
+				<hr style="display: block; margin-top: 0.5em; margin-bottom: 0.5em; border-style: inset; border-width: 1px;">
+				<table class="table table-striped">
 					<thead>
 						<tr>
 							<th scope="col">장르</th>
@@ -311,6 +366,7 @@ var myLectureFormA = function(){ // 강의 내역 페이지 요청 함수
 							<th scope="col">장소</th>
 							<th scope="col">최대 인원</th>
 							<th scope="col">강의 요청자</th>
+							<th scope="col">상태</th>
 						</tr>
 					</thead>
 					<tbody id="requestList">
@@ -321,7 +377,8 @@ var myLectureFormA = function(){ // 강의 내역 페이지 요청 함수
 				</table>
 
 				<h4>요청 수락한 강의</h4>
-				<table class="table table-bordered">
+				<hr style="display: block; margin-top: 0.5em; margin-bottom: 0.5em; border-style: inset; border-width: 1px;">
+				<table class="table table-striped">
 					<thead>
 						<tr>
 							<th scope="col">장르</th>

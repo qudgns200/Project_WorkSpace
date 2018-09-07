@@ -20,7 +20,10 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import Model.art;
+<<<<<<< HEAD
 import Model.follow;
+=======
+>>>>>>> origin/master
 import Service.artistService;
 import Service.mainService;
 import Service.memberService;
@@ -35,7 +38,11 @@ public class artistController {
 	mainService mainService; //추가
 	
 	@Autowired
+<<<<<<< HEAD
 	artistService artistService;
+=======
+	artistService artistService; //추가
+>>>>>>> origin/master
 		
 	//아티스트 개인 페이지 이동 (아티스트용)
 	@RequestMapping("artistMyPage.do") 
@@ -142,15 +149,14 @@ public class artistController {
 		jsonObj.put("endSold", resultSold.get("endSold"));
 		jsonObj.put("lastSold", resultSold.get("lastSold"));
 		pw.println(jsonObj); 
-//		System.out.println(jsonObj);
     }
     
     @RequestMapping("updateDelivery.do") 
-	public void updateDelivery() {}
+	public String updateDelivery(String orderNumber, int state) {
+    	memberService.updateDelivery(orderNumber, state);
+    	return "redirect:mySellFormA0.do";
+    }
 	
-    @RequestMapping("myOrderFormA.do") 
-	public void myOrderFormA() {}
-    
 	//작품 등록 글 폼 요청
 	@RequestMapping("writeArtForm.do") 
 	public void writeArtForm() {}
@@ -182,14 +188,16 @@ public class artistController {
 				art.setState(state);
 			}
 		}
-
-		System.out.println(art);
 		
 		memberService.insertArt(art, ufile);
 
 		//		 알림 소스 추가
-		mainService.insertAlarm("writeArt", id, id);
+		List<String> followerList = artistService.selectFollower(id);
+		for (String str : followerList) {			// following하는 아티스트가 글 작성시, follower들에게 알림 보내기
+			mainService.insertAlarm("writeArt", str, id);
+		}
 		// 알림 소스
+		
 		return "redirect:artistMyPage.do";
 	}
 	
@@ -294,13 +302,14 @@ public class artistController {
 				return "myLectureFormG";
 			}
 	    }
+  	  
+  	  @RequestMapping("updateApproveLec.do")
+  	  public String updateApproveLec(int no, int state) {
+  		memberService.updateApproveLec(no, state); 
+  		return "redirect:myLectureFormA0.do";
+  	  }
 
-//상세 페이지에서 그림 로드 기능 - 추후 사용해야함
-//  		@RequestMapping("download.do")
-//  		public View download(int num) {
-//  			View view = new DownloadView(memberService.getAttachFile(num));
-//  			return view;
-//  		}
+  	  
   	    
 }		// public class의 끝
 

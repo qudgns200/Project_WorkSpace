@@ -38,10 +38,14 @@
 ================================================== -->
 <script src="http://code.jquery.com/jquery-latest.js"
 	type="text/javascript"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"
+	integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+	crossorigin="anonymous"></script>	
 <script src="js/bootstrap.js"></script>
 <script src="js/jquery.prettyPhoto.js"></script>
 <script src="js/jquery.flexslider.js"></script>
 <script src="js/jquery.custom.js"></script>
+<script src="js/comment.js?ver=0.27"></script>
 <style>
 #map img {
 	max-width: none;
@@ -52,9 +56,20 @@
 	important
 }
 </style>
+
+<script type="text/javascript">
+/**
+ * 초기 페이지 로딩시 댓글 불러오기
+ */
+$(function(){
+    getCommentList(0, 'lecture', $('#currentId').val());
+});
+</script>
+
 </head>
 
 <body>
+<input type="hidden" id="currentId" value="${currentId }">
 	<div class="color-bar-1"></div>
     <div class="color-bar-2 color-bg"></div>
     <div class="container main-container">
@@ -69,9 +84,9 @@
         ================================================== --> 
         <div class="span12 gallery-single">
             <div class="row">
-                <div class="span6">
-                    <img src="download.do?no=${lecture.no }&lecture=a" style="width: 550px; height: 550px;">
-                </div>
+            <div class="span6">
+			<img src="download.do?no=${lecture.no }&lecture=a" style="width: 500px; height: 530px; margin-left: 50px; margin-top: 30px;">
+            </div>
                 <div class="span6">
                     <h2>${lecture.title }</h2> 		<!-- 강의 제목 출력  -->
                     <p class="lead"></p>
@@ -85,7 +100,60 @@
                         <li><h6>artist :</h6> ${lecture.artistID }</li>
                         <li><h6>Genre :</h6> ${lecture.genre }</li>
                         <li><h6>Location :</h6> ${lecture.place }</li>
-                    </ul>
+<!-- 지도 API ==================================================-->
+<li>
+	<div class="row" id="map" style="width: 400px; height: 250px; margin-left: auto; margin-right: auto;
+	margin-bottom: auto;">
+	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=df63ab88c6f092a4b29b7f555f1a82dc&libraries=services"></script>
+		<script>
+ 						var geocoder = new daum.maps.services.Geocoder();
+
+ 	  					var callback = function(result, status) {
+ 	  					    if (status === daum.maps.services.Status.OK) {
+ 	  					    	var container = document.getElementById('map'); // 지도를 표시할 div 
+ 	  		  					var options = { 
+ 	  									center : new daum.maps.LatLng(result[0].y, result[0].x), // 지도의 중심좌표 
+ 	  									level : 5 	// 지도의 확대 레벨 
+ 	  		  							}; 
+ 	  		 						// 지도를 생성한다 
+ 	  		  						var map = new daum.maps.Map(container, options); 
+ 	  		  						// 지도에 마커를 생성하고 표시한다 
+ 	  		 						var marker = new daum.maps.Marker({ 
+ 	  		  						position : new daum.maps.LatLng(result[0].y, result[0].x), // 마커의 좌표 
+ 	  		  						map : map 
+ 	  		  						// 마커를 표시할 지도 객체 
+ 	  		  						}); 
+ 	  					    }
+ 	  					};
+ 	  					geocoder.addressSearch('${lecture.place}', callback);
+ 		</script>
+	</div>
+</li>
+     </ul>
+		<!-- 모집 중일 때만 신청 버튼 생성 -->
+     <c:if test="${lecture.state == 1 }"> 
+        <div id="modalButton">
+        	<a href="#myModal" role="button" class="btn btn-inverse" data-toggle="modal">강의 신청</a>
+        </div>
+        <div class="modal hide fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+        <div class="modal-header">
+        </div>
+        <div class="modal-body">
+            <table class="display" id="Tables">
+            	<thead>
+            		<tr>
+            			<th style="background-color: #eeeeee; text-align: center;">강의를 신청하시겠습니까?</th>
+            		</tr>
+            	</thead>
+            </table>
+        </div>
+        <div class="modal-footer">
+       		<button class="btn" data-dismiss="modal" aria-hidden="true" onclick="location.href='lectureAttend.do?no=${lecture.no}'">신청</button>
+            <button class="btn" data-dismiss="modal" aria-hidden="true">취소</button>
+        </div>
+ 		</div>   	
+<!--  모달 사용 끗!!! -->
+     </c:if>
                 </div>
             </div>
 
@@ -95,144 +163,36 @@
 			 ${lecture.content }
     </div>
   
-</div><!-- End gallery-single-->
-</div><!-- End container row -->
-</div> <!-- End Container -->
-
-<!-- 지도api ==================================================-->
-<!-- 			<div class="row" id="map" style="width: 400px; height: 250px;"> -->
-<!-- 			<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script> -->
-<!-- 			<script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=df63ab88c6f092a4b29b7f555f1a82dc"></script> -->
-<!-- 			<script> -->
-<!--  					var container = document.getElementById('map'); // 지도를 표시할 div -->
-<!--  					var options = { -->
-<!-- 							center : new daum.maps.LatLng(37.5706073, 126.9853092), // 지도의 중심좌표 -->
-<!--  							level : 5 -->
-<!--  									// 지도의 확대 레벨 -->
-<!--  							}; -->
-<!--  						// 지도를 생성한다  -->
-<!--  						var map = new daum.maps.Map(container, options); -->
-<!--  						// 지도에 마커를 생성하고 표시한다 -->
-<!--  						var marker = new daum.maps.Marker({ -->
-<!--  						position : new daum.maps.LatLng(37.57053, 126.98531), // 마커의 좌표 -->
-<!--  						map : map -->
-<!--  						// 마커를 표시할 지도 객체 -->
-<!--  						}); -->
-<!-- 			</script> -->
-<!-- 			</div> -->
-	 
-
-<!-- Post Comments================================================== -->
-				<section class="comments">
-					<h4 class="title-bg">
-						<a name="comments"></a>5 Comments so far
-					</h4>
-					<ul>
-						<li><img src="img/user-avatar.jpg" alt="Image" /> <span
-							class="comment-name">John Doe</span> <span class="comment-date">March
-								15, 2015 | <a href="#">Reply</a>
-						</span>
-							<div class="comment-content">Lorem ipsum dolor sit amet,
-								consectetur adipiscing elit. Etiam venenatis, ligula quis
-								sagittis euismod, odio ante molestie tortor, eget ullamcorper
-								lacus nunc a ligula. Donec est lacus, aliquet in interdum id,
-								rutrum ac tellus. Ut rutrum, justo et lobortis commodo, est
-								metus ornare tortor, vitae luctus turpis leo sed magna. In leo
-								dolor, suscipit non mattis in.</div> <!-- Reply -->
-							<ul>
-								<li><img src="img/user-avatar.jpg" alt="Image" /> <span
-									class="comment-name">Jason Doe</span> <span
-									class="comment-date">March 15, 2015 | <a href="#">Reply</a></span>
-									<div class="comment-content">Lorem ipsum dolor sit amet,
-										consectetur adipiscing elit. Etiam venenatis, ligula quis
-										sagittis euismod, odio ante molestie tortor, eget ullamcorper
-										lacus nunc a ligula. Donec est lacus, aliquet in interdum id,
-										rutrum ac tellus. Ut rutrum, justo et lobortis commodo, est
-										metus ornare tortor, vitae luctus turpis leo sed magna. In leo
-										dolor, suscipit non mattis in.</div></li>
-								<li><img src="img/user-avatar.jpg" alt="Image" /> <span
-									class="comment-name">Jason Doe</span> <span
-									class="comment-date">March 15, 2015 | <a href="#">Reply</a></span>
-									<div class="comment-content">Lorem ipsum dolor sit amet,
-										consectetur adipiscing elit. Etiam venenatis, ligula quis
-										sagittis euismod, odio ante molestie tortor, eget ullamcorper
-										lacus nunc a ligula. Donec est lacus, aliquet in interdum id,
-										rutrum ac tellus. Ut rutrum, justo et lobortis commodo, est
-										metus ornare tortor, vitae luctus turpis leo sed magna. In leo
-										dolor, suscipit non mattis in.</div></li>
-							</ul></li>
-						<li><img src="img/user-avatar.jpg" alt="Image" /> <span
-							class="comment-name">John Doe</span> <span class="comment-date">March
-								15, 2015 | <a href="#">Reply</a>
-						</span>
-							<div class="comment-content">Lorem ipsum dolor sit amet,
-								consectetur adipiscing elit. Etiam venenatis, ligula quis
-								sagittis euismod, odio ante molestie tortor, eget ullamcorper
-								lacus nunc a ligula. Donec est lacus, aliquet in interdum id,
-								rutrum ac tellus. Ut rutrum, justo et lobortis commodo, est
-								metus ornare tortor, vitae luctus turpis leo sed magna. In leo
-								dolor, suscipit non mattis in.</div></li>
-						<li><img src="img/user-avatar.jpg" alt="Image" /> <span
-							class="comment-name">John Doe</span> <span class="comment-date">March
-								15, 2015 | <a href="#">Reply</a>
-						</span>
-							<div class="comment-content">Lorem ipsum dolor sit amet,
-								consectetur adipiscing elit. Etiam venenatis, ligula quis
-								sagittis euismod, odio ante molestie tortor, eget ullamcorper
-								lacus nunc a ligula. Donec est lacus, aliquet in interdum id,
-								rutrum ac tellus. Ut rutrum, justo et lobortis commodo, est
-								metus ornare tortor, vitae luctus turpis leo sed magna. In leo
-								dolor, suscipit non mattis in.</div></li>
-
-					</ul>
-
-					<!-- Comment Form -->
-					<div class="comment-form-container">
-						<h6>작가에게 전하고 싶은 말</h6>
-						<form action="#" id="comment-form">
-							<div class="input-prepend">
-								<span class="add-on"><i class="icon-user"></i></span> <input
-									class="span4" id="prependedInput" size="16" type="text"
-									placeholder="Name">
+				<!-- comment Area
+        ================================================== -->
+				<section class="comments span12">
+					<form id="commentForm" name="commentForm" method="post">
+						<br>
+						<br>
+						<div>
+							<div>
+								<span><h5 class="title-bg">Comments</h5></span> <span id="cCnt"></span>
 							</div>
-							<div class="input-prepend">
-								<span class="add-on"><i class="icon-envelope"></i></span> <input
-									class="span4" id="prependedInput" size="16" type="text"
-									placeholder="Email Address">
+							<div>
+								<textarea style="width: 500px" rows="3" cols="30" id="comment"	name="comment" placeholder="댓글을 입력하세요"></textarea>
+								<a onClick="fn_comment(0)" class="btn btn-sq-sm btn-success">등록</a>
 							</div>
-							<div class="input-prepend">
-								<span class="add-on"><i class="icon-globe"></i></span> <input
-									class="span4" id="prependedInput" size="16" type="text"
-									placeholder="Website URL">
-							</div>
-							<textarea class="span6"></textarea>
-							<div class="row">
-								<div class="span2">
-									<input type="submit" class="btn btn-inverse"
-										value="Post My Comment">
-								</div>
-							</div>
+						</div>
+						<input type="hidden" id="no" name="no" value="${lecture.no }" />
+					</form>
+					<div>
+						<form id="commentListForm" name="commentListForm" method="post">
+							<ul id="commentList">
+							</ul>
 						</form>
 					</div>
 				</section>
-				<!-- Close comments section-->
-
-
-				<!-- Pagination -->
-				<div class="pagination">
-					<ul>
-						<li class="active"><a href="#">Prev</a></li>
-						<li class="active"><a href="#">1</a></li>
-						<li><a href="#">2</a></li>
-						<li><a href="#">3</a></li>
-						<li><a href="#">4</a></li>
-						<li><a href="#">Next</a></li>
-					</ul>
-				</div>
+			</div><!-- End gallery-single-->
+		</div><!-- End container row -->
 
 <!--    Footer section -->
 <%@include file="footer.jsp"%>
-
+	</div> <!-- End Container -->
 </body>
 
 </html>

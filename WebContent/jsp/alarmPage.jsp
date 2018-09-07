@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -58,9 +59,6 @@
 
 				<h3>알 림</h3>
 
-				<div class="alert alert-success">Well done! You successfully
-					read this important alert message.</div>
-
 				<table class="table table-bordered">
 					<thead>
 						<tr>
@@ -69,11 +67,15 @@
 							<th scope="col">읽음/안읽음</th>
 						</tr>
 					</thead>
-					<tbody id="alarmList">
+					<tbody>
+						<c:forEach items="${alarmList }" var="alarm">
+							<tr>
+							<td>${alarm.type }</td>
+							<td>${alarm.time }</td>
+							<td>${alarm.readCheck }</td>							
+							</tr>
+						</c:forEach>
 					</tbody>
-					<tr>
-						<td id="alarmPaging" colspan="3"></td>
-					</tr>
 				</table>
 			</div>
 			<!--End page content column-->

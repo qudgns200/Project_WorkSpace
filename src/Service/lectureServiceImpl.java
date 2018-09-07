@@ -11,9 +11,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import Dao.lectureDao;
+import Model.attendants;
 import Model.lecture;
 import Model.lectureComment;
-import Model.lectureRecomment;
 
 @Service
 public class lectureServiceImpl implements lectureService{
@@ -77,8 +77,10 @@ public class lectureServiceImpl implements lectureService{
 
 	@Override
 	public int insertAttendants(int no, String id) {
-		// TODO Auto-generated method stub
-		return 0;
+		attendants attendants = new attendants();
+		attendants.setNo(no);
+		attendants.setId(id);
+		return lectureDao.insertAttendants(attendants);
 	}
 
 	@Override
@@ -114,26 +116,41 @@ public class lectureServiceImpl implements lectureService{
 	}
 
 	@Override
-	public int insertLectureComment(int no) {
+	public int insertLectureComment(lectureComment lectureComment) {
 		// TODO Auto-generated method stub
-		return 0;
+		return lectureDao.insertLectureComment(lectureComment);
+	}
+
+
+	@Override
+	public List<lectureComment> selectLectureComment(HashMap<String, Object> params) {
+		// TODO Auto-generated method stub
+		return lectureDao.selectLectureComment(params);
+	}
+	// 강의 모집인원 숫자 변경 함수 // 추가
+	@Override
+	public int updateLecturePeople(int no) {
+		lecture originLec = lectureDao.selectOneLecture(no);
+		int currentPeople = originLec.getNumberPeople();
+		lecture lecture = new lecture();
+		if (currentPeople + 1 == originLec.getMaxPeople()) {
+			lecture.setState(2);
+			// 알림 소스
+			mainService.insertAlarm("maxPeople", originLec.getArtistID(), originLec.getTitle());		// 모집 완료 알림: 아티스트에게 전송
+			if (originLec.getGuestID()!=null) {
+				mainService.insertAlarm("maxPeople", originLec.getGuestID(), originLec.getTitle());  // // 모집 완료 알림: 개설한 사용자에게 전송
+			}
+		}
+		lecture.setNumberPeople(currentPeople + 1);
+		lecture.setNo(no);
+		return lectureDao.updateLecturePeople(lecture);
 	}
 
 	@Override
-	public int insertLectureRecomment(int commentNo) {
+	public lectureComment selectLectureLatestcomment() {
 		// TODO Auto-generated method stub
-		return 0;
+		return lectureDao.selectLectureLatestcomment();
 	}
 
-	@Override
-	public List<lectureComment> selectLectureComment(int no) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<lectureRecomment> selectLectureRecomment(int commentNo) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	
 }

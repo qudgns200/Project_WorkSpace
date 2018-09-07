@@ -130,8 +130,8 @@ public class mainServiceImpl implements mainService{
 	}
 
 	@Override
-	public List<alarm> selectAlarm(String from) {
-		return mainDao.selectAlarm(from);
+	public List<alarm> selectAlarm(alarm alarm) {
+		return mainDao.selectAlarm(alarm);
 	}
 
 	@Override

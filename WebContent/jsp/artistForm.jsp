@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title>Piccolo Theme</title>
+<title>아티스트</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <!-- CSS
@@ -25,7 +25,6 @@
 <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
 <link rel="apple-touch-icon" sizes="72x72" href="img/apple-touch-icon-72x72.png">
 <link rel="apple-touch-icon" sizes="114x114" href="img/apple-touch-icon-114x114.png">
-
 
 <!-- JS
 ================================================== -->
@@ -52,15 +51,17 @@
        <c:if test="${viewChoice==1 }">
         <h5 class="title-bg">Original<small>-popular artist</small></h5>
 		<!-- First Container-좋아요 상위 6개==================== -->
-            <div class="row clearfix">
-                <ul class="blog-post-grid">
-					<c:forEach items="${originalList }" var="original">
-                    <li class="span3 blog-post-item">                        
-                        <a href="artistPage.do?id=${original.id }">
-                        <img src="download.do?id=${original.id }&profile=a" style="width: 250px; height: 250px;"><br>
-                        	${original.nickname }</a>
-                    </li>
-					</c:forEach>
+           <div class="row clearfix">
+               <ul class="blog-post-grid">
+				<c:forEach items="${originalList }" var="original">
+                   <li class="span3 blog-post-item">
+                   <div class="blog-post-hover hidden-phone hidden-tablet">
+                   <p><a href="artistPage.do?id=${original.id }" class="clearfix">${original.nickname }</a></p>
+                   </div>
+                   <a href="artistPage.do?id=${original.id }">
+                   <img src="download.do?id=${original.id }&profile=a" style="width: 270px; height: 220px;"></a>
+                   </li>
+				</c:forEach>
                 </ul>
             </div>
         <!-- Second Container-좋아요 상위 6개=================== -->
@@ -68,10 +69,12 @@
              <div class="row clearfix">
                 <ul class="blog-post-grid">
                     <c:forEach items="${paintingList }" var="painting">
-                    <li class="span3 blog-post-item">                        
-                        <a href="artistPage.do?id=${painting.id }">
-                        <img src="download.do?id=${painting.id }&profile=a" style="width: 250px; height: 250px;"><br>
-                        	${painting.nickname }</a>
+                    <li class="span3 blog-post-item">
+                    <div class="blog-post-hover hidden-phone hidden-tablet">
+                   <p><a href="artistPage.do?id=${painting.id }" class="clearfix">${painting.nickname }</a></p>
+                   </div>
+                   <a href="artistPage.do?id=${painting.id }">
+                   <img src="download.do?id=${painting.id }&profile=a" style="width: 270px; height: 220px;"></a>
                     </li>
 					</c:forEach>
                 </ul>
@@ -82,9 +85,11 @@
                 <ul class="blog-post-grid">
                     <c:forEach items="${sculptureList }" var="sculpture">
                     <li class="span3 blog-post-item">                        
-                        <a href="artistPage.do?id=${sculpture.id }">
-                        <img src="download.do?id=${sculpture.id }&profile=a" style="width: 250px; height: 250px;"><br>
-                        	${sculpture.nickname }</a>
+                      <div class="blog-post-hover hidden-phone hidden-tablet">
+                   <p><a href="artistPage.do?id=${sculpture.id }" class="clearfix">${sculpture.nickname }</a></p>
+                   </div>
+                   <a href="artistPage.do?id=${sculpture.id }">
+                   <img src="download.do?id=${sculpture.id }&profile=a" style="width: 270px; height: 220px;"></a>
                     </li>
 					</c:forEach>
                 </ul>
@@ -99,10 +104,12 @@
                 	<h4 align="center">검색 결과 없음</h4>
                 	</c:if>
 					<c:forEach items="${artistList }" var="artist">
-                    <li class="span3 blog-post-item">                        
-                        <a href="artistPage.do?id=${artist.id }">
-						<img src="download.do?id=${artist.id }&profile=a" style="width: 250px; height: 250px;"><br>
-                        	${artist.nickname }</a>
+                    <li class="span3 blog-post-item">        
+                    <div class="blog-post-hover hidden-phone hidden-tablet">
+                   <p><a href="artistPage.do?id=${artist.id }" class="clearfix">${artist.nickname }</a></p>
+                   </div>
+                   <a href="artistPage.do?id=${artist.id }">
+                   <img src="download.do?id=${artist.id }&profile=a" style="width: 270px; height: 220px;"></a>
                     </li>
 					</c:forEach>
                 </ul>
@@ -156,10 +163,12 @@
             <div class="row clearfix">
                 <ul class="blog-post-grid">
 					<c:forEach items="${artistList }" var="artist">
-                    <li class="span3 blog-post-item">                        
-                        <a href="artistPage.do?id=${artist.id }">
-                        <img src="download.do?id=${artist.id }&profile=a" style="width: 250px; height: 250px;"><br>
-                        	${artist.nickname }</a>
+                    <li class="span3 blog-post-item">  
+                     <div class="blog-post-hover hidden-phone hidden-tablet">
+                   <p><a href="artistPage.do?id=${artist.id }" class="clearfix">${artist.nickname }</a></p>
+                   </div>
+                   <a href="artistPage.do?id=${artist.id }">
+                   <img src="download.do?id=${artist.id }&profile=a" style="width: 270px; height: 220px;"></a>
                     </li>
 					</c:forEach>
                 </ul>

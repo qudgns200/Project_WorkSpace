@@ -5,6 +5,7 @@
   
   <mapper namespace="Dao.artistDao">
   
+<<<<<<< HEAD
   <insert id="insertFollow" parameterType="follow">
   	insert into follow values(#{follower},#{following},#{id});
   </insert>
@@ -17,6 +18,14 @@
   <delete id="deleteFollow" parameterType="follow">
   	delete from follow where (following=#{following} and id=#{id}) or (follower=#{id} and id=#{following});
   </delete>
+=======
+  <insert id="insertFollow" parameterType="String"></insert>
+  <select id="selectFollower" parameterType="String" resultType="String">
+  select follower from follow where following=#{id}
+  </select>
+  <select id="selectFollowing" parameterType="String" resultType="String"></select>
+  <delete id="deleteFollow" parameterType="String"></delete>
+>>>>>>> origin/master
   <insert id="insertLikes" parameterType="likes"></insert>
   <select id="selectLikesArt" parameterType="String" resultType="art"></select>
   <select id="selectLikesLecture" parameterType="String" resultType="lecture"></select>

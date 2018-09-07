@@ -32,7 +32,7 @@ public interface memberService {
 	public	HashMap<String, Object>	selectBuyingArt	(String id, int page, HashMap<String, Object> params);
 	public	HashMap<String, Object>	selectSellingArt(String id, int page, HashMap<String, Object> params);
 	public	HashMap<String, Object>	selectSoldArt	(String id, int page, HashMap<String, Object> params);
-	public	HashMap<String, Object>	selectOnePay	(String id, int page, HashMap<String, Object> params);
+	public	pay	selectOnePay	(String orderNumber);
 	
 	public	List<art>	selectArtistArt	(String id);
 
@@ -40,9 +40,10 @@ public interface memberService {
 
 	public	int	insertArt	(art art, MultipartFile file);
 
-	public	int	updateArt	(int no, String file, String title, String content);
+	public	int	updateArt	(HashMap<String, Object> params);
 	public	int	deleteArt	(int no, String id);
-	public	int	updateDelivery	(int no, String id, int state);
+	public	int	updateDelivery	(String orderNumber, int state);
 	
 	public File getAttachFile(HashMap<String, Object> params); // 추가 + 수정
+	public Integer updateApproveLec(int no, int state);		// 추가
 }

@@ -1,6 +1,7 @@
 package Service;
 
 import java.util.HashMap;
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,8 +10,8 @@ import org.springframework.stereotype.Service;
 import Dao.artDao;
 import Model.art;
 import Model.artComment;
-import Model.artRecomment;
 import Model.pay;
+
 @Service
 public class artServiceImpl implements artService{
 
@@ -70,42 +71,52 @@ public class artServiceImpl implements artService{
 		return artDao.insertArtComment(artComment);
 	}
 
+
 	@Override
-	public int insertArtRecomment(int commentNo) {
+	public List<artComment> selectArtComment(HashMap<String, Object>params) {
 		// TODO Auto-generated method stub
-		return 0;
+		return artDao.selectArtComment(params);
 	}
 
 	@Override
-	public List<artComment> selectArtComment(int no) {
+	public artComment selectArtLatestcomment() {
 		// TODO Auto-generated method stub
-		return artDao.selectArtComment(no);
-	}
-
-	@Override
-	public List<artRecomment> selectArtRecomment(int commentNo) {
-		// TODO Auto-generated method stub
-		return null;
+		return artDao.selectArtLatestcomment();
 	}
 
 	//추가
 	@Override
-	public int getMaxGroupNo(int no) {
+	public int getMaxGroupNo(HashMap<String, Object> params) {
 		// TODO Auto-generated method stub
-		return artDao.getMaxGroupNo(no);
+		return artDao.getMaxGroupNo(params);
 	}
 
 	@Override
-	public int deleteComment(artComment artComment) {
+	public int deleteComment(HashMap<String, Object> params) {
 		// TODO Auto-generated method stub
-		return artDao.deleteComment(artComment);
+		return artDao.deleteComment(params);
 	}
 	
 	@Override
-	public int updateComment(artComment artComment) {
-		return artDao.updateComment(artComment);
+	public int updateComment(HashMap<String, Object> params) {
+		return artDao.updateComment(params);
 	}
 
+	@Override
+	public int selectGroupNo(HashMap<String, Object> params) {
+		// TODO Auto-generated method stub
+		return artDao.selectGroupNo(params);
+	}
+
+	@Override
+	public int maxGroupOrder(HashMap<String, Object> params) {
+		// TODO Auto-generated method stub
+		return artDao.maxGroupOrder(params);
+	}
 	
+	@Override
+	public int updateGroupOrder(HashMap<String, Object> params) {
+		return artDao.updateComment(params);
+	}
 	
 }
