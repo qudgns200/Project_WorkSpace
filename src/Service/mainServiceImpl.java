@@ -66,7 +66,8 @@ public class mainServiceImpl implements mainService{
 			count++;
 			params.put("qty", getSkip(count, 4));
 		} else {
-			params.put("qty", getSkip(2, 4));
+			count = 2;
+			params.put("qty", getSkip(count, 4));
 		}
 
 		return mainDao.feed(params);
