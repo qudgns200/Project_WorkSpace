@@ -160,9 +160,9 @@
 					if(alarmList.type=="writeLecture"){msg='님이 새 강의를 개설했습니다.';}
 					if(alarmList.type=="artComment"){msg='님이 댓글을 달았습니다.';}
 					if(alarmList.type=="maxPeople"){msg='의 인원 모집이 완료됐습니다.';}
-					if(index < 6){
-						str += '<li><a style="color:white;">' + alarmList.isFrom + msg + 
-						'&emsp;&emsp; <button onclick="updateAlarm('+ alarmList.no + ')" id="updateAlarm">check</button></a></li>';
+					if(index < 7){
+						str += '<li><a style="color:white;">' + alarmList.isFrom + msg + '&emsp;&emsp;<span onmouseup="updateAlarm('+
+								alarmList.no + ')">✔&ensp;읽음</span></a></li>';
 					}
 					else return false;
 				}) // each의 끝
