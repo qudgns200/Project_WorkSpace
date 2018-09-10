@@ -78,10 +78,21 @@ $(document).ready(function() {
                     <blockquote>
                         <p>${content }</p>
                     </blockquote>
+
+					<c:if test="${followCheck.isEmpty() }">
+                       <button class="btn btn-small btn-inverse" type="button" 
+                       onclick="location.href='insertFollow.do?artistID=${artistID}'">팔로우</button>
+
                     
                     <c:if test="${followCheck.isEmpty() }">
+<<<<<<< HEAD
                     	<button class="btn btn-small btn-inverse" type="button" 
                     	onclick="location.href='insertFollow.do?artistID=${artistID}'">팔로우</button>
+=======
+                    <button class="btn btn-small btn-inverse" type="button" 
+                    onclick="location.href='insertFollow.do?artistID=${artistID}'">팔로우</button>
+
+>>>>>>> origin/master
                     </c:if>
                     <c:forEach var="list" items="${followCheck }" varStatus="status">
                     	<c:if test="${count != 1 }">

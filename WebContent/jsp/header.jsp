@@ -160,9 +160,21 @@
 					if(alarmList.type=="writeLecture"){msg='님이 새 강의를 개설했습니다.';}
 					if(alarmList.type=="artComment"){msg='님이 댓글을 달았습니다.';}
 					if(alarmList.type=="maxPeople"){msg='의 인원 모집이 완료됐습니다.';}
+<<<<<<< HEAD
 					if(index < 6){
 						str += '<li><a style="color:white;">' + alarmList.isFrom + msg + 
 						'&emsp;&emsp; <button onclick="updateAlarm('+ alarmList.no + ')" id="updateAlarm">check</button></a></li>';
+=======
+
+					if(index < 6){
+						str += '<li><a style="color:white;">' + alarmList.isFrom + msg + 
+						'&emsp;&emsp; <button onclick="updateAlarm('+ alarmList.no + ')" id="updateAlarm">check</button></a></li>';
+
+					if(index < 7){
+						str += '<li><a style="color:white;">' + alarmList.isFrom + msg + '&emsp;&emsp;<span onmouseup="updateAlarm('+
+								alarmList.no + ')">✔&ensp;읽음</span></a></li>';
+
+>>>>>>> origin/master
 					}
 					else return false;
 				}) // each의 끝
@@ -302,7 +314,15 @@
 	                    <option value="boardForm.do">Board</option>
                         <option value="boardForm.do">- 자유게시판</option>
                         <option value="qnaForm.do">- 문의게시판</option>
+<<<<<<< HEAD
 	                    <option value="features.htm">Feed</option>
+=======
+
+	                    <option value="feed.do">Feed</option>
+
+	                    <option value="features.htm">Feed</option>
+
+>>>>>>> origin/master
 	                    <option value="myLectureFormG.jsp">MyPage</option>
 	                    <option value="myLectureFormG.jsp">- 강의 내역 조회</option>
 	                    <option value="mySellFormA0.do">- 주문 내역 조회</option>

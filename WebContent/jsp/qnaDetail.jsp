@@ -49,6 +49,30 @@ $(function(){
     getCommentList(0, 'qna', $('#currentId').val());
 });
 </script>
+
+<!-- 모달 사용하기 -->
+<!-- 1. 수정일 때 modalCheck 값 1 -->
+<!-- 2. 삭제일 때 modalCheck 값 2 -->
+<script>
+$(document).ready(function(){
+	
+	var modalHeader="";
+	var modalBody="";
+	var modalButton="";
+	
+	if($("#currentId").val()!='${qna.id }') {
+		 $("#modifyBoard").hide();
+		 $("#deleteBoard").hide();
+	}
+    
+    $("#deleteBoard").click(function(){
+    	$("#modalHeader").text("삭제 여부 확인");
+    	$("#modalBody").text("삭제하시겠습니까?");
+    	$("#modalButton").text("삭제");
+        $("#myModal").modal();
+    });
+});
+</script>
 </head>
 
 <body>
@@ -98,12 +122,37 @@ $(function(){
 								<h5 class="title-bg">${qna.title }</h5>
 							</div>
 							<ul class="project-info">
-								<li><h6>${qna.id }</h6> <h6><fmt:formatDate pattern="yyyy-MM-dd" value="${qna.writeDate }"/></h6></li>
+								<li><h6>${qna.id }</h6> <h6><fmt:formatDate pattern="yyyy-MM-dd" value="${qna.writeDate }"/></h6>
+								<h6><a id="modifyBoard">수정</a></h6>
+								<h6><a id="deleteBoard">삭제</a></h6></li>
 							</ul>
 							<br>
 							<p class="lead">
 								${qna.content }
 							</p>
+						
+						<!-- Modal -->
+  							<div class="modal fade" id="myModal" role="dialog">
+    						<div class="modal-dialog">
+     					<!-- Modal content-->
+      						<div class="modal-content">
+        					<div class="modal-header">
+         					 <button type="button" class="close" data-dismiss="modal">×</button>
+         					 <h4 class="modal-title" id="modalHeader"></h4>
+        						</div>
+        						<div class="modal-body">
+         						 <p id="modalBody"></p>
+        						</div>
+       						 <div class="modal-footer">
+       						 	 <button type="button" id="modalButton" class="btn btn-default" onclick="location.href='deleteQna.do?no=${qna.no}'"></button>
+         						 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+       						 </div>
+      						 </div>
+      
+    						 </div>
+  							 </div>
+  						<!--  모달 종료 -->
+							
 						<input type="hidden" name="no" value="${qna.no }">
 						<!-- /.col-lg-9 -->
 					

@@ -46,6 +46,10 @@ public interface memberService {
 	
 	public File getAttachFile(HashMap<String, Object> params); // 추가 + 수정
 	public Integer updateApproveLec(int no, int state);		// 추가
+<<<<<<< HEAD
 	
 	public int userAuth(String email) throws Exception; // 추가
+=======
+	public List<pay> selectPayByNo(HashMap<String, Integer> params); // 각 작품 혹은 강의의 no 로 결제 정보 가져오기
+>>>>>>> origin/master
 }

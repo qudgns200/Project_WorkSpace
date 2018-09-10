@@ -23,7 +23,7 @@ public interface mainDao {
 	public int	deleteMessage(message message); // 파라미터 수정
 	public int	insertAlarm(HashMap<String, Object>params);		// 수정
 	public int	updateAlarm(int no);
-	public int	deleteAlarm(String from);
+	public int	deleteAlarm(int no);
 	public List<alarm>	selectAlarm(alarm alarm);
 	public int alarmCount(String isTo);	
 

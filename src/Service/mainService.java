@@ -23,7 +23,7 @@ public interface mainService {
 	public	int	deleteMessage	(message message);
 	public	int	insertAlarm	(String type, String to, String from);
 	public	int	updateAlarm	(int no);
-	public	int	deleteAlarm	(String from);
+	public	int	deleteAlarm	(int no);
 	public	List<alarm>	selectAlarm	(alarm alarm);
 	
 	public int getStartPage(int page);

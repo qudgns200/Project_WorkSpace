@@ -124,9 +124,8 @@ public class mainServiceImpl implements mainService{
 	}
 
 	@Override
-	public int deleteAlarm(String from) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int deleteAlarm(int no) {
+		return mainDao.deleteAlarm(no);
 	}
 
 	@Override

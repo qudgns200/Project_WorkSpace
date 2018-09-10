@@ -10,6 +10,10 @@
 		insert into board (title, id, content, file) 
 		values (#{title}, #{id}, #{content}, #{file});
 	</insert>
+	
+	<delete id="deleteBoard" parameterType="int">
+		delete from board where no=#{no};
+	</delete>
 
 	<select id="selectBoard" resultType="board">
 		select * from board;
@@ -38,6 +42,10 @@
 		values (#{title}, #{id}, #{content}, #{file}, #{pw});
 	</insert>
 	
+	<delete id="deleteQna" parameterType="int">
+		delete from qna where no=#{no};
+	</delete>
+	
 	<select id="selectQna" resultType="qna">
 		select * from qna;
 	</select>
@@ -62,5 +70,12 @@
 	<select id="selectOneById" resultType="int" parameterType="java.util.HashMap">
 		select max(no) from ${table} where id=#{id};
 	</select>	
+	
+	<delete id="deleteBoardComment" parameterType="int">
+		delete from boardComment where no=#{no};
+	</delete>
+	<delete id="deleteQnaComment" parameterType="int">
+		delete from qnaComment where no=#{no};
+	</delete>
 	
 	</mapper>

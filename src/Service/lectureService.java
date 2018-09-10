@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import Model.attendants;
 import Model.lecture;
 import Model.lectureComment;
 
@@ -28,6 +29,6 @@ public interface lectureService {
 	public	int	insertLectureComment	(lectureComment lectureComment);
 	public	List<lectureComment>	selectLectureComment (HashMap<String, Object> params);
 	public	lectureComment	selectLectureLatestcomment();
-
+	public List<attendants> selectAttendants(int no);
 	
 }

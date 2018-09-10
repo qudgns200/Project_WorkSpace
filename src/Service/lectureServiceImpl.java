@@ -152,5 +152,10 @@ public class lectureServiceImpl implements lectureService{
 		return lectureDao.selectLectureLatestcomment();
 	}
 
+	@Override
+	public List<attendants> selectAttendants(int no) {
+		return lectureDao.selectAttendants(no);
+	}
+
 	
 }

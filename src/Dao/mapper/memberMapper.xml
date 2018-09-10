@@ -131,7 +131,7 @@
 	</update>
 
 	<delete id="deleteArt" parameterType="java.util.HashMap">
-	
+		delete from art where no=#{no} and id=#{id};
 	</delete>
 
 	<select id="selectRequestLec" parameterType="java.util.HashMap" resultType="java.util.HashMap">
@@ -260,9 +260,15 @@
 	update lecture set state = #{state} where no = #{no};
 	</select>
 	
+<<<<<<< HEAD
 	<update id="userAuth" parameterType="String">
 		update member set authStatus = 1 where email = #{email};
 	</update>
+=======
+	<select id="selectPayByNo" parameterType="java.util.HashMap" resultType="pay">
+		select * from pay where no=#{no} and isCheck=#{isCheck};
+	</select>
+>>>>>>> origin/master
 
 </mapper>
 

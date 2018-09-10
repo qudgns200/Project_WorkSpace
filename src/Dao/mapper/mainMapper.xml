@@ -46,15 +46,15 @@
 	</delete>
 	
 	<insert id="insertAlarm" parameterType="java.util.HashMap">
-	insert into alarm values(#{type}, default, #{to}, #{from}, 0, 0);
+	insert into alarm values(#{type}, default, #{to}, #{from}, 1, 0);
 	</insert>
 	
 	<update id="updateAlarm" parameterType="int">
 	update alarm set readCheck = 2 where no = #{no}
 	</update>
 	
-	<delete id="deleteAlarm" parameterType="String">
-	
+	<delete id="deleteAlarm" parameterType="int">
+	delete from alarm where no = #{no}
 	</delete>
 	
 	<select id="selectAlarm" parameterType="alarm" resultType="alarm">

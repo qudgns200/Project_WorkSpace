@@ -1,6 +1,23 @@
 
 
 $(function(){
+	
+	var thisIt = $("thisIt").val();
+	var ajax_Url="";
+	var return_Url="";
+	
+	if(thisIt=='art') {
+		ajax_Url = "artPay.do";
+		return_Url = "artPayForm.do?no=" + $('#no').val();
+	} else {
+		ajax_Url = "lecturePay.do";
+		return_Url = "lecturePayForm.do?no=" + $('#no').val()
+	}
+	
+	
+	
+	
+	
 	$("#payment").on("click", function() {
 	var IMP = window.IMP;
 	IMP.init('imp81234843');
@@ -13,7 +30,8 @@ $(function(){
 		    "buyer_email" : $('#buyer_email').val(),
 		    "buyer_name" : $('#buyer_name').val(),
 		    "buyer_tel" : $('#buyer_tel').val(),
-		    "buyer_addr" : $('#buyer_addr').val()
+		    "buyer_addr" : $('#buyer_addr').val(),
+		    "isCheck" : $('#isCheck').val()
 	}
 
 	<!-- 아임포트 실행 테스트 -->
@@ -31,14 +49,13 @@ $(function(){
 		},	
 		function(rsp) {
 			if ( rsp.success ) {
-				alert("성공 : " + rsp.name);
 				$.ajax({
-					url: 'artPay.do',
+					url: ajax_Url,
 		            data: param,
 		            type: 'POST',
 		            success: function(result) {
 		            	alert(result.result)
-		                	 location.href="mySellFormA.do";
+		                	 location.href="mySellFormA0.do";
 		             }
 		          });
 				}
@@ -46,7 +63,7 @@ $(function(){
 		        var msg = '결제에 실패하였습니다.';
 		        msg += '에러내용 : ' + rsp.error_msg;
 		        alert(msg);
-		        location.href="artPayForm.do?no=" + ${'#no'}.val();
+		        location.href=return_Url;
 		    }})
 	});
 });
