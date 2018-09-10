@@ -20,10 +20,6 @@ public class art {
 	private int totalCount;
 	private String file;
 	private String nickname;
-<<<<<<< HEAD
-
-=======
->>>>>>> origin/master
 	
 	public int getNo() {
 		return no;
@@ -103,18 +99,12 @@ public class art {
 	public void setNickname(String nickname) {
 		this.nickname = nickname;
 	}
-<<<<<<< HEAD
 
-=======
->>>>>>> origin/master
 	@Override
 	public String toString() {
 		return "art [no=" + no + ", title=" + title + ", genre=" + genre + ", content=" + content + ", sellCheck="
 				+ sellCheck + ", price=" + price + ", isCheck=" + isCheck + ", id=" + id + ", artDate=" + artDate
 				+ ", state=" + state + ", totalCount=" + totalCount + ", file=" + file + ", nickname=" + nickname + "]";
-<<<<<<< HEAD
 
-=======
->>>>>>> origin/master
 	}
 }

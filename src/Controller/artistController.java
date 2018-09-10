@@ -23,10 +23,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import Model.art;
 import Model.follow;
-<<<<<<< HEAD
 import Model.pay;
-=======
->>>>>>> origin/master
+
+
 import Service.artistService;
 import Service.mainService;
 import Service.memberService;
@@ -41,17 +40,16 @@ public class artistController {
 	mainService mainService; // 추가
 
 	@Autowired
-<<<<<<< HEAD
+
 	artistService artistService;
 
 	// 아티스트 개인 페이지 이동 (아티스트용)
 	@RequestMapping("artistMyPage.do")
-=======
+
 	artistService artistService; //추가
 		
 	//아티스트 개인 페이지 이동 (아티스트용)
 	@RequestMapping("artistMyPage.do") 
->>>>>>> origin/master
 	public ModelAndView artistMyPage(HttpSession session) {
 		String id = (String) session.getAttribute("id");
 		ModelAndView mav = new ModelAndView();

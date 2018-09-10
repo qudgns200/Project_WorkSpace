@@ -238,10 +238,7 @@ public class boardController {
 		
 	}	
 
-<<<<<<< HEAD
-=======
 
->>>>>>> origin/master
 	@RequestMapping("artPayForm.do") // 결제 폼 요청
 	public String artPayForm(HttpServletRequest request, HttpSession session, Model model) throws ParseException {
 
