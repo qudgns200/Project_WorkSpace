@@ -23,6 +23,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import Model.art;
 import Model.artComment;
+import Model.attendants;
 import Model.board;
 import Model.boardComment;
 import Model.lecture;
@@ -237,6 +238,10 @@ public class boardController {
 		
 	}	
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/master
 	@RequestMapping("artPayForm.do") // 결제 폼 요청
 	public String artPayForm(HttpServletRequest request, HttpSession session, Model model) throws ParseException {
 
@@ -505,10 +510,13 @@ public class boardController {
 	}
 
 	@RequestMapping("selectOneLecture.do") // 강의 상세페이지로 이동
-	public String selectOneLecture(@RequestParam int no, Model model, HttpSession session) {
+	public String selectOneLecture(@RequestParam int no, Model model, HttpSession session, @RequestParam(required=false) Integer msg) {
 		String id = (String)session.getAttribute("id");
 		lecture lecture = lectureService.selectOneLecture(no);
 		model.addAttribute(lecture);
+		if (msg!=null) {
+			model.addAttribute("msg", msg);
+		}
 		model.addAttribute("currentId", id);
 		return "lectureDetail";
 	}
@@ -567,11 +575,29 @@ public class boardController {
 	}
 
 	@RequestMapping("lectureAttend.do")
-	public String lectureAttend(int no, HttpSession session) {
+	public ModelAndView lectureAttend(int no, HttpSession session) {
+		ModelAndView mav = new ModelAndView();
 		String id = (String)session.getAttribute("id");
-		lectureService.updateLecturePeople(no);
-		lectureService.insertAttendants(no, id);
-		return "redirect:selectOneLecture.do?no=" + no ;
+		mav.addObject("no", no);
+		mav.setViewName("redirect:selectOneLecture.do");
+		List<attendants> attList = new ArrayList<>();
+		attList = lectureService.selectAttendants(no);
+		int dif = 0;
+		for (int i = 0; i < attList.size(); i++) {
+			if (attList.get(i).getId().equals(id)) {
+				dif = 1;
+				break;
+			}
+		}
+		if (dif==1) {					// 이미 신청한 강의일 경우
+			mav.addObject("msg", 1);
+			return mav;
+		}else {							// 신청 완료
+			mav.addObject("msg", 0);
+			lectureService.updateLecturePeople(no);
+			lectureService.insertAttendants(no, id);
+			return mav;
+		}
 	}
 
 	@RequestMapping("boardForm.do") // 자유게시판 이동

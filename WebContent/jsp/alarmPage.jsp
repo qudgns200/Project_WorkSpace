@@ -37,6 +37,77 @@
 <script src="http://code.jquery.com/jquery-1.8.3.min.js"></script>
 <script src="js/bootstrap.js"></script>
 <script src="js/jquery.custom.js"></script>
+<script type="text/javascript">
+
+var nonReadAlarm = function(){
+	$.ajax({
+		type: "get",
+		url: "readCheckAlarm.do",
+		data: {"readCheck" : 1},
+		dataType: "json",
+		success: function(data){
+			$('#nonReadAlarm').empty(); //출력결과 누적방지
+			var str = '<tr>';
+			$.each(data.alarmList, function(index, alarmList){
+				str += '<td>' + alarmList.type + '</td><td>' + alarmList.time + '</td><td>' +
+						'<a class="btn btn-info" onclick="funUpdate('+ alarmList.no + ')">읽음</a>' +
+						'<a class="btn btn-warning" onclick="funDelete(' + alarmList.no + ')">삭제</a></td>';
+				str += '</tr>';
+			}) // each의 끝
+			$('#nonReadAlarm').append(str); // 읽지 않은 알림목록 테이블 갱신
+		} // success의 끝
+	}) // ajax의 끝
+} // nonReadAlarm 함수의 끝
+
+var readAlarm = function(){
+	$.ajax({
+		type: "get",
+		url: "readCheckAlarm.do",
+		data: {"readCheck": 2},
+		dataType: "json",
+		success: function(data){
+			$('#readAlarm').empty(); //출력결과 누적방지
+			var str = '<tr>';
+			$.each(data.alarmList, function(index, alarmList){
+				str += '<td>' + alarmList.type + '</td><td>' + alarmList.time + '</td><td>' +
+						'<a class="btn btn-warning" onclick="funDelete(' + alarmList.no + ')">삭제</a></td>';
+				str += '</tr>';
+			}) // each의 끝
+			$('#readAlarm').append(str); // 읽지 않은 알림목록 테이블 갱신
+		} // success의 끝
+	}) // ajax의 끝
+}	// readAlarm 함수의 끝
+
+var deleteAlarm = function(no){
+	$.ajax({
+		type: "get",
+		url: "deleteAlarm.do",
+		data: {"no":no },
+		success: function(){
+			alarmCount();
+			selectAlarm();
+		} // success의 끝
+	}) // ajax의 끝
+} // deleteAlarm 함수의 끝
+
+var funUpdate = function(no){  			// 읽음 클릭시 readCheck값 바꾸고, 목록 갱신
+		updateAlarm(no);
+		setTimeout(function() {
+		nonReadAlarm();
+		readAlarm();
+		}, 200);
+	}
+
+var funDelete = function(no){  			// 삭제 클릭시 데이터 지우고, 목록 갱신
+	deleteAlarm(no);
+	setTimeout(function() {
+	nonReadAlarm();
+	readAlarm();
+	}, 200);
+}
+
+</script>
+
 </head>
 	
 <body>
@@ -57,32 +128,56 @@
 			<div class="span8 contact">
 				<!--Begin page content column-->
 
-				<h3>알 림</h3>
-
+				<h4>읽지 않은 알림</h4>
+				<hr style="display: block; margin-top: 0.5em; margin-bottom: 0.5em; border-style: inset; border-width: 1px;">
 				<table class="table table-bordered">
 					<thead>
 						<tr>
 							<th scope="col">알림 내용</th>
 							<th scope="col">알림 시간</th>
-							<th scope="col">읽음/안읽음</th>
+							<th scope="col">읽음/삭제</th>
 						</tr>
 					</thead>
-					<tbody>
+					<tbody id="nonReadAlarm">
 						<c:forEach items="${alarmList }" var="alarm">
+						<c:if test="${alarm.readCheck==1 }">
 							<tr>
 							<td>${alarm.type }</td>
 							<td>${alarm.time }</td>
-							<td>${alarm.readCheck }</td>							
+							<td><a class="btn btn-info" onclick="funUpdate(${alarm.no})">읽음</a>
+							<a class="btn btn-warning" onclick="funDelete(${alarm.no})">삭제</a></td>							
 							</tr>
-						</c:forEach>
+						</c:if>
+							</c:forEach>
+					</tbody>
+				</table>
+				
+				<h4>읽은 알림</h4>
+				<hr style="display: block; margin-top: 0.5em; margin-bottom: 0.5em; border-style: inset; border-width: 1px;">
+				<table class="table table-bordered">
+					<thead>
+						<tr>
+							<th scope="col">알림 내용</th>
+							<th scope="col">알림 시간</th>
+							<th scope="col">삭제</th>
+						</tr>
+					</thead>
+					<tbody id="readAlarm">
+					<c:forEach items="${alarmList }" var="alarm">
+						<c:if test="${alarm.readCheck==2 }">
+							<tr>
+							<td>${alarm.type }</td>
+							<td>${alarm.time }</td>
+							<td><a class="btn btn-warning" onclick="funDelete(${alarm.no})">삭제</a></td>
+							</tr>
+						</c:if>
+							</c:forEach>
 					</tbody>
 				</table>
 			</div>
 			<!--End page content column-->
-
 		</div>
 		<!-- End container row -->
-
 	</div>
 	<!-- End Container -->
 

@@ -331,14 +331,18 @@ public class mainController {
 		}
 		
 		@RequestMapping("updateAlarm.do")
-		public void updateAlarm(int no, HttpServletResponse response)throws IOException, ServletException {
+		public void updateAlarm(int no, HttpServletResponse response)throws IOException, ServletException{
+			PrintWriter pw = response.getWriter(); 
+			pw.println("1"); // success Callback 함수 실행키 위함
 			mainService.updateAlarm(no);
-			PrintWriter pw = response.getWriter();
-			pw.println("ok");
 		}
 		
 		@RequestMapping("deleteAlarm.do")
-		public void deleteAlarm() {}
+		public void deleteAlarm(int no, HttpServletResponse response)throws IOException, ServletException {
+			PrintWriter pw = response.getWriter(); 
+			pw.println("1"); // success Callback 함수 실행키 위함
+			mainService.deleteAlarm(no);
+		}
 		
 		@RequestMapping("selectAlarm.do")
 		public void selectAlarm(HttpSession session, HttpServletResponse response, @RequestParam(required=false)int readCheck)throws ServletException, IOException {
@@ -438,14 +442,11 @@ public class mainController {
 	
 	// 알림 페이지로 이동
 	@RequestMapping("alarmPage.do")
-	public ModelAndView alarmPage(@RequestParam(required=false)Integer readCheck, HttpSession session) {
+	public ModelAndView alarmPage(HttpSession session) {
 		ModelAndView mav = new ModelAndView();
 			String id = (String) session.getAttribute("id");
 			alarm alarm = new alarm();
 			alarm.setIsTo(id);
-			if (readCheck!=null) {
-				alarm.setReadCheck(readCheck);
-			}
 			mav.addObject("alarmList", mainService.selectAlarm(alarm));
 			mav.setViewName("alarmPage");
 			return mav;
@@ -552,6 +553,24 @@ public class mainController {
 		PrintWriter pw = resp.getWriter();
 		pw.println(jsonObject);
 	}
+	// 알림 페이지 비동기 테이블 업데이트
+	@RequestMapping("readCheckAlarm.do")
+	public void readCheckAlarm(int readCheck, HttpSession session, HttpServletResponse response) throws ServletException, IOException{
+		String id = (String)session.getAttribute("id");
+		response.setCharacterEncoding("UTF-8");
+		PrintWriter pw = response.getWriter();
+		alarm alarm = new alarm();
+		alarm.setIsTo(id);
+		if (readCheck==1) {
+			alarm.setReadCheck(1);
+		}else {
+			alarm.setReadCheck(2);
+		}
+		JSONObject jsonObj = new JSONObject();
+		jsonObj.put("alarmList", mainService.selectAlarm(alarm));
+		pw.println(jsonObj);
+	}
+	
 } // public class의 끝.
 
 //	@RequestMapping("isCheckMember.do")

@@ -28,7 +28,10 @@ public class artistServiceImpl implements artistService{
 
 	@Override
 	public List<String> selectFollower(String id) {
+<<<<<<< HEAD
 		// TODO Auto-generated method stub
+=======
+>>>>>>> origin/master
 		return artistDao.selectFollower(id);
 	}
 
