@@ -142,8 +142,6 @@ $(function(){
         	<a href="#myModal" role="button" class="btn btn-inverse" data-toggle="modal">강의 신청</a>
         </div>
         <div class="modal hide fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
-        <div class="modal-header">
-        </div>
         <div class="modal-body">
             <table class="display" id="Tables">
             	<thead>
@@ -160,8 +158,9 @@ $(function(){
  		</div>   	
 <!--  모달 사용 끗!!! -->
      </c:if>
-                </div>
-            </div>
+     
+</div>
+</div>
 
 	<br>
 	<div class="span12">
