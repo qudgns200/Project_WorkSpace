@@ -27,7 +27,6 @@ public class artistServiceImpl implements artistService{
 	}
 
 	@Override
-<<<<<<< HEAD
 	public HashMap<String, Object> selectFollower(HashMap<String, Object> params, int page) {
 		
 		HashMap<String, Object> result = new HashMap<>();
@@ -44,11 +43,6 @@ public class artistServiceImpl implements artistService{
 		result.put("followerList", artistDao.selectFollower(params));
 		
 		return result;
-=======
-	public List<String> selectFollower(String id) {
-		// TODO Auto-generated method stub
-		return artistDao.selectFollower(id);
->>>>>>> origin/master
 	}
 
 	@Override

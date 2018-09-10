@@ -1,7 +1,6 @@
 package Controller;
 
 import java.io.IOException;
-
 import java.io.PrintWriter;
 import java.rmi.ServerException;
 import java.util.ArrayList;
@@ -25,12 +24,7 @@ import org.springframework.web.servlet.ModelAndView;
 import Dao.artistDao;
 import Model.art;
 import Model.follow;
-<<<<<<< HEAD
-=======
 import Model.pay;
-
-
->>>>>>> origin/master
 import Service.artistService;
 import Service.mainService;
 import Service.memberService;
@@ -45,20 +39,10 @@ public class artistController {
 	mainService mainService; // 추가
 
 	@Autowired
-<<<<<<< HEAD
 	artistService artistService; //추가
 	
 	@Autowired
 	artistDao artistDao;
-=======
-
-	artistService artistService;
-
-	// 아티스트 개인 페이지 이동 (아티스트용)
-	@RequestMapping("artistMyPage.do")
-
-	artistService artistService; //추가
->>>>>>> origin/master
 		
 	//아티스트 개인 페이지 이동 (아티스트용)
 	@RequestMapping("artistMyPage.do") 
@@ -212,19 +196,18 @@ public class artistController {
 
 		memberService.insertArt(art, ufile);
 
-<<<<<<< HEAD
 		//		 알림 소스 추가
-//		List<String> followerList = artistService.selectFollower(id);
+		HashMap<String, Object> params = new HashMap<>();
+		params.put("id", id);
+		HashMap<String, Object> followerList = artistService.selectFollower(params, 0);
+		System.out.println(followerList);
+//		for (int i = 0; i < followerList.size(); i++) {
+//			mainService.insertAlarm("writeArt", followerList.get("id")., id);
+//		}
+		
 //		for (String str : followerList) {			// following하는 아티스트가 글 작성시, follower들에게 알림 보내기
 //			mainService.insertAlarm("writeArt", str, id);
 //		}
-=======
-		// 알림 소스 추가
-		List<String> followerList = artistService.selectFollower(id);
-		for (String str : followerList) { // following하는 아티스트가 글 작성시, follower들에게 알림 보내기
-			mainService.insertAlarm("writeArt", str, id);
-		}
->>>>>>> origin/master
 		// 알림 소스
 
 		return "redirect:artistMyPage.do";
@@ -257,7 +240,6 @@ public class artistController {
 
 		artistService.deleteFollow(follow);
 	}
-<<<<<<< HEAD
 	
 	@RequestMapping("followerList.do") 
 	public String followerList(HttpServletRequest req, HttpServletResponse resp, String follower, Model model) 
@@ -282,12 +264,6 @@ public class artistController {
 		pw.println(jsonObject);
 		
 		return null;
-=======
-
-	@RequestMapping("followerList.do")
-	public void followerList() {
-
->>>>>>> origin/master
 	}
 
 	@RequestMapping("followingList.do")
@@ -301,7 +277,6 @@ public class artistController {
 		return mav;
 	}
 
-<<<<<<< HEAD
 	@RequestMapping("insertLikes.do") 
 	public void insertLikes() {}
 
@@ -342,45 +317,6 @@ public class artistController {
   			mav.setViewName("artistPage");
   			return mav;
   		}
-  	    
-  	    @RequestMapping("mySellFormA0.do")
-  	    public String mySellFormA0(HttpSession session) {
-  	    	String id = (String) session.getAttribute("id");
-  	    	if (memberService.selectOneMember(id).getIsCheck()==2) {
-  	    		return "mySellFormA";
-  			}else {
-  				return "myOrderFormG";
-  			}
-  	    	
-  	    }
-  	    
-  	  @RequestMapping("myLectureFormA0.do")
-	    public String myLectureFormA0(HttpSession session) {
-		  	String id = (String) session.getAttribute("id");
-	    	if (memberService.selectOneMember(id).getIsCheck()==2) {
-	    		return "myLectureFormA";
-			}else {
-				return "myLectureFormG";
-=======
-	@RequestMapping("insertLikes.do")
-	public void insertLikes() {
-	}
-
-	@RequestMapping("likesList.do")
-	public void likesList() {
-	}
-
-	@RequestMapping("deleteLikes.do")
-	public void deleteLikes() {
-	}
-
-	@RequestMapping("updateArtForm.do")
-	public void updateArtForm() {
-	}
-
-	@RequestMapping("updateArt.do")
-	public void updateArt() {
-	}
 
 	@RequestMapping("deleteArt.do")
 	public String deleteArt(@RequestParam int no, HttpSession session) {
@@ -398,7 +334,6 @@ public class artistController {
 				if (payList.get(i).getIsCheck() != 5) {
 					return "redirect:selectOneArt.do?no=" + no + "&deleteText=1";
 				}
->>>>>>> origin/master
 			}
 		}
 		
@@ -407,26 +342,6 @@ public class artistController {
 		if(result==1)
 		return "redirect:artForm.do";
 		else return "redirect:selectOneArt.do?no=" + no;
-	}
-
-	@RequestMapping("searchID.do")
-	public void searchID() {
-	}
-
-	// 아티스트 개인 페이지 이동 (사용자용)
-	@RequestMapping("artistPage.do")
-	public ModelAndView artistPage(String id) {
-		ModelAndView mav = new ModelAndView();
-		List<art> list = memberService.selectArtistArt(id);
-		mav.addObject("artCount", list.size());
-		mav.addObject("artList", list);
-		mav.addObject("artistID", id);
-		mav.addObject("name", memberService.selectOneMember(id).getName());
-		mav.addObject("nickname", memberService.selectOneMember(id).getNickname());
-		mav.addObject("content", memberService.selectOneMember(id).getContent());
-		mav.addObject("followCheck", artistService.selectFollower(id));
-		mav.setViewName("artistPage");
-		return mav;
 	}
 
 	@RequestMapping("mySellFormA0.do")

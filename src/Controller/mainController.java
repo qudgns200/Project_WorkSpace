@@ -575,7 +575,6 @@ public class mainController {
 		PrintWriter pw = resp.getWriter();
 		pw.println(jsonObject);
 	}
-<<<<<<< HEAD
 	
 	@RequestMapping("emailConfirm.do")
 	public void emailConfirm(String email, HttpServletResponse resp) throws Exception { // 이메일인증
@@ -586,7 +585,7 @@ public class mainController {
 		pw.println("<script>alert('인증 성공! 로그인 후 이용이 가능합니다.'); location.href='main.do';</script>");
 		pw.flush();
 	}
-=======
+
 	// 알림 페이지 비동기 테이블 업데이트
 	@RequestMapping("readCheckAlarm.do")
 	public void readCheckAlarm(int readCheck, HttpSession session, HttpServletResponse response) throws ServletException, IOException{
@@ -604,8 +603,7 @@ public class mainController {
 		jsonObj.put("alarmList", mainService.selectAlarm(alarm));
 		pw.println(jsonObj);
 	}
-	
->>>>>>> origin/master
+
 } // public class의 끝.
 
 //	@RequestMapping("isCheckMember.do")

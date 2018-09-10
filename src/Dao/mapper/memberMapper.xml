@@ -260,16 +260,14 @@
 	update lecture set state = #{state} where no = #{no};
 	</select>
 	
-<<<<<<< HEAD
 	<update id="userAuth" parameterType="String">
 		update member set authStatus = 1 where email = #{email};
 	</update>
-=======
+	
 	<select id="selectPayByNo" parameterType="java.util.HashMap" resultType="pay">
 		select * from pay where no=#{no} and isCheck=#{isCheck};
 	</select>
->>>>>>> origin/master
-
+	
 </mapper>
 
 

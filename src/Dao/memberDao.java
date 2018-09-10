@@ -59,10 +59,6 @@ public interface memberDao {
 	public int getOnePayCount(String id);
 	
 	public Integer updateApproveLec(lecture lecture); // 추가
-	
-<<<<<<< HEAD
 	public int userAuth(String email) throws Exception; // 추가
-=======
 	public List<pay> selectPayByNo(HashMap<String, Integer> params); // 각 작품 혹은 강의의 no 로 결제 정보 가져오기 
->>>>>>> origin/master
 }
