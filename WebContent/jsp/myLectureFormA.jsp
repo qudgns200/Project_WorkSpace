@@ -76,7 +76,7 @@ var myLectureFormA = function(){ // 강의 내역 페이지 요청 함수
 				var aTag = '<a href="selectOneLecture.do?no=' + attendList.no + '">';
 				var pay = '인원 모집 중<br>(결제전)';
 				if(attendList.state==2) {
-					pay = "<div id='modalButton'><a href='#myModal' role='button' class='btn btn-inverse' data-toggle='modal'>결제하기</a></div>" + 
+					pay = "<div id='modalButton'><a href='#myModal' role='button' class='btn btn-inverse' data-toggle='modal'>결제</a></div>" + 
 				          "<div class='modal hide fade' id='myModal' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true' style='display: none;'>" + 
 			        	  "<div class='modal-header'>" +
 			              "<button type='button' class='close' data-dismiss='modal' aria-hidden='true'>×</button>" +

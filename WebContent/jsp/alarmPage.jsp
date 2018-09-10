@@ -50,14 +50,33 @@ var nonReadAlarm = function(){
 			var str = '<tr>';
 			$.each(data.alarmList, function(index, alarmList){
 				str += '<td>' + alarmList.type + '</td><td>' + alarmList.time + '</td><td>' +
-						'<a onclick="funUpdate('+ alarmList.no + ')">✔&ensp;읽음</a>' +
-						'<br><a onclick="funDelete(' + alarmList.no + ')">✔&ensp;삭제</a></td>';
+						'<a class="btn btn-info" onclick="funUpdate('+ alarmList.no + ')">읽음</a>' +
+						'<a class="btn btn-warning" onclick="funDelete(' + alarmList.no + ')">삭제</a></td>';
 				str += '</tr>';
 			}) // each의 끝
 			$('#nonReadAlarm').append(str); // 읽지 않은 알림목록 테이블 갱신
 		} // success의 끝
 	}) // ajax의 끝
 } // nonReadAlarm 함수의 끝
+
+var readAlarm = function(){
+	$.ajax({
+		type: "get",
+		url: "readCheckAlarm.do",
+		data: {"readCheck": 2},
+		dataType: "json",
+		success: function(data){
+			$('#readAlarm').empty(); //출력결과 누적방지
+			var str = '<tr>';
+			$.each(data.alarmList, function(index, alarmList){
+				str += '<td>' + alarmList.type + '</td><td>' + alarmList.time + '</td><td>' +
+						'<a class="btn btn-warning" onclick="funDelete(' + alarmList.no + ')">삭제</a></td>';
+				str += '</tr>';
+			}) // each의 끝
+			$('#readAlarm').append(str); // 읽지 않은 알림목록 테이블 갱신
+		} // success의 끝
+	}) // ajax의 끝
+}	// readAlarm 함수의 끝
 
 var deleteAlarm = function(no){
 	$.ajax({
@@ -75,6 +94,7 @@ var funUpdate = function(no){  			// 읽음 클릭시 readCheck값 바꾸고, �
 		updateAlarm(no);
 		setTimeout(function() {
 		nonReadAlarm();
+		readAlarm();
 		}, 200);
 	}
 
@@ -82,6 +102,7 @@ var funDelete = function(no){  			// 삭제 클릭시 데이터 지우고, 목�
 	deleteAlarm(no);
 	setTimeout(function() {
 	nonReadAlarm();
+	readAlarm();
 	}, 200);
 }
 
@@ -123,7 +144,8 @@ var funDelete = function(no){  			// 삭제 클릭시 데이터 지우고, 목�
 							<tr>
 							<td>${alarm.type }</td>
 							<td>${alarm.time }</td>
-							<td><a onclick="funUpdate(${alarm.no})">✔&ensp;읽음</a><br><a onclick="funDelete(${alarm.no})">✔&ensp;삭제</a></td>							
+							<td><a class="btn btn-info" onclick="funUpdate(${alarm.no})">읽음</a>
+							<a class="btn btn-warning" onclick="funDelete(${alarm.no})">삭제</a></td>							
 							</tr>
 						</c:if>
 							</c:forEach>
@@ -137,7 +159,7 @@ var funDelete = function(no){  			// 삭제 클릭시 데이터 지우고, 목�
 						<tr>
 							<th scope="col">알림 내용</th>
 							<th scope="col">알림 시간</th>
-							<th scope="col">읽음/안읽음</th>
+							<th scope="col">삭제</th>
 						</tr>
 					</thead>
 					<tbody id="readAlarm">
@@ -146,19 +168,16 @@ var funDelete = function(no){  			// 삭제 클릭시 데이터 지우고, 목�
 							<tr>
 							<td>${alarm.type }</td>
 							<td>${alarm.time }</td>
-							<td>${alarm.readCheck }</td>							
+							<td><a class="btn btn-warning" onclick="funDelete(${alarm.no})">삭제</a></td>
 							</tr>
 						</c:if>
 							</c:forEach>
 					</tbody>
 				</table>
-				
 			</div>
 			<!--End page content column-->
-
 		</div>
 		<!-- End container row -->
-
 	</div>
 	<!-- End Container -->
 
