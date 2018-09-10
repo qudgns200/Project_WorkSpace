@@ -5,12 +5,14 @@
   
   <mapper namespace="Dao.artistDao">
   
-<<<<<<< HEAD
   <insert id="insertFollow" parameterType="follow">
   	insert into follow values(#{follower},#{following},#{id});
   </insert>
-  <select id="selectFollower" parameterType="String" resultType="String">
-  	select follower from follow where id=#{id};
+  <select id="selectFollower" parameterType="java.util.HashMap" resultType="String">
+  	select follower from follow where id=#{id} 
+  	<if test="skip != null and qty != null">
+  	limit #{skip}, #{qty};
+  	</if>
   </select>
   <select id="selectFollowing" parameterType="String" resultType="String">
   	select following from follow where id=#{id};
@@ -18,19 +20,22 @@
   <delete id="deleteFollow" parameterType="follow">
   	delete from follow where (following=#{following} and id=#{id}) or (follower=#{id} and id=#{following});
   </delete>
-=======
-  <insert id="insertFollow" parameterType="String"></insert>
-  <select id="selectFollower" parameterType="String" resultType="String">
-  select follower from follow where following=#{id}
+
+  <insert id="insertLikes" parameterType="likes">
+  	insert into likes values(#{no},#{id},#{isCheck});
+  </insert>
+  <select id="selectLikesArt" parameterType="String" resultType="art">
+  	select * from art a join likes l using(no) where l.id=#{id} and l.isCheck=0 order by artDate desc limit 5;
   </select>
-  <select id="selectFollowing" parameterType="String" resultType="String"></select>
-  <delete id="deleteFollow" parameterType="String"></delete>
->>>>>>> origin/master
-  <insert id="insertLikes" parameterType="likes"></insert>
-  <select id="selectLikesArt" parameterType="String" resultType="art"></select>
-  <select id="selectLikesLecture" parameterType="String" resultType="lecture"></select>
-  <delete id="deleteLikesArt" parameterType="java.util.HashMap"></delete>
-  <delete id="deleteLikesLecture" parameterType="java.util.HashMap"></delete>
+  <select id="selectLikesLecture" parameterType="String" resultType="lecture">
+  	select * from lecture join likes l using(no) where l.id=#{id} and l.isCheck=1 order by writeDate desc limit 5;
+  </select>
+  <delete id="deleteLikesArt" parameterType="java.util.HashMap">
+  	delete from likes where no=#{no} and id=#{id} and isCheck=0;
+  </delete>
+  <delete id="deleteLikesLecture" parameterType="java.util.HashMap">
+  	delete from likes where no=#{no} and id=#{id} and isCheck=1;
+  </delete>
   <select id="selectGenreArtist" parameterType="String" resultType="String"></select>
   
    <select id="searchArtist" parameterType="java.util.HashMap" resultType="member">
@@ -75,6 +80,10 @@
   
   <select id="recentArtistCount" parameterType="String" resultType="int">
   select count(distinct id, genre) from member m join art using(id) where m.isCheck = 2 and genre = #{genre}
+  </select>
+  
+  <select id="getFollowerCount" parameterType="java.util.HashMap" resultType="int">
+  	select count(*) from member where id = #{id};
   </select>
   
   </mapper>

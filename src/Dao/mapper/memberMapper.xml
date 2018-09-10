@@ -13,7 +13,7 @@
 		insert into member
 		values
 		(#{id}, #{pw}, #{name}, #{phone}, #{addr}, #{email}, #{nickname},
-		#{birth}, 3, #{file}, default, 1, #{content}, #{profile});
+		#{birth}, 3, #{file}, default, 1, #{content}, #{profile}, #{authCode}, 0);
 	</insert>
 	
 	<select id="searchMember" parameterType="java.util.HashMap" resultType="member">
@@ -259,6 +259,10 @@
 	<select id="updateApproveLec" parameterType="lecture">
 	update lecture set state = #{state} where no = #{no};
 	</select>
+	
+	<update id="userAuth" parameterType="String">
+		update member set authStatus = 1 where email = #{email};
+	</update>
 
 </mapper>
 

@@ -14,16 +14,15 @@ import javax.servlet.http.HttpSession;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import Dao.artistDao;
 import Model.art;
-<<<<<<< HEAD
 import Model.follow;
-=======
->>>>>>> origin/master
 import Service.artistService;
 import Service.mainService;
 import Service.memberService;
@@ -38,11 +37,10 @@ public class artistController {
 	mainService mainService; //추가
 	
 	@Autowired
-<<<<<<< HEAD
-	artistService artistService;
-=======
 	artistService artistService; //추가
->>>>>>> origin/master
+	
+	@Autowired
+	artistDao artistDao;
 		
 	//아티스트 개인 페이지 이동 (아티스트용)
 	@RequestMapping("artistMyPage.do") 
@@ -192,10 +190,10 @@ public class artistController {
 		memberService.insertArt(art, ufile);
 
 		//		 알림 소스 추가
-		List<String> followerList = artistService.selectFollower(id);
-		for (String str : followerList) {			// following하는 아티스트가 글 작성시, follower들에게 알림 보내기
-			mainService.insertAlarm("writeArt", str, id);
-		}
+//		List<String> followerList = artistService.selectFollower(id);
+//		for (String str : followerList) {			// following하는 아티스트가 글 작성시, follower들에게 알림 보내기
+//			mainService.insertAlarm("writeArt", str, id);
+//		}
 		// 알림 소스
 		
 		return "redirect:artistMyPage.do";
@@ -230,8 +228,28 @@ public class artistController {
 	}
 	
 	@RequestMapping("followerList.do") 
-	public void followerList() {
+	public String followerList(HttpServletRequest req, HttpServletResponse resp, String follower, Model model) 
+			throws IOException {
+		if(req.getParameter("page") == null) {
+			model.addAttribute("follower", follower);
+			
+			return "followerList";
+		}
+
+		JSONObject jsonObject = new JSONObject();
+		int page = Integer.parseInt(req.getParameter("page"));
+		String id = req.getParameter("follower");
+		HashMap<String, Object> params = new HashMap<>();
 		
+		params.put("id", id);
+		
+		jsonObject.put("follower", artistService.selectFollower(params, page));
+		
+		resp.setContentType("text/html; charset=UTF-8");
+		PrintWriter pw = resp.getWriter();
+		pw.println(jsonObject);
+		
+		return null;
 	}
 
 	@RequestMapping("followingList.do") 
@@ -271,13 +289,17 @@ public class artistController {
   		public ModelAndView artistPage(String id) {
   			ModelAndView mav = new ModelAndView();
   			List<art> list = memberService.selectArtistArt(id);
+  			HashMap<String, Object> params = new HashMap<>();
+  			
+  			params.put("id", id);
+  			
   			mav.addObject("artCount", list.size());
   			mav.addObject("artList", list);
   			mav.addObject("artistID", id);
   			mav.addObject("name", memberService.selectOneMember(id).getName());
   			mav.addObject("nickname", memberService.selectOneMember(id).getNickname());
   			mav.addObject("content", memberService.selectOneMember(id).getContent());
-  			mav.addObject("followCheck", artistService.selectFollower(id));
+  			mav.addObject("followCheck", artistDao.selectFollower(params));
   			mav.setViewName("artistPage");
   			return mav;
   		}

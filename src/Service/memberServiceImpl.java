@@ -6,10 +6,16 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.mail.MessagingException;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import Controller.MailHandler;
+import Controller.TempKey;
 import Dao.artDao;
 import Dao.lectureDao;
 import Dao.memberDao;
@@ -33,6 +39,9 @@ public class memberServiceImpl implements memberService {
 	@Autowired
 	private mainService mainService;
 	
+	@Autowired
+	private JavaMailSender mailSender;
+	
 	@Override
 	public member selectOneMember(String id) {
 		return memberDao.selectOneMember(id);
@@ -51,7 +60,11 @@ public class memberServiceImpl implements memberService {
 		
 		if(member != null) {
 			if(pw.equals(member.getPw())) {
-				return 1;
+				if(member.getAuthStatus() == 1) {
+					return 1;
+				} else {
+					return 0;
+				}
 			} else {
 				return 0;
 			}
@@ -60,11 +73,13 @@ public class memberServiceImpl implements memberService {
 		}
 	}
 	
+	@Transactional
 	@Override
-	public int insertMember(member member, MultipartFile Profile, MultipartFile File) {
+	public int insertMember(member member, MultipartFile Profile, MultipartFile File) throws Exception {
 		// TODO Auto-generated method stub
-		String path = "C:/Project/Project/image/";
-//		String path = "C:/Users/cho/workspace/Project/image/";
+		System.out.println("서비스80");
+//		String path = "C:/Project/Project/image/";
+		String path = "C:/Users/cho/workspace/Project/image/";
 		
 		File dir = new File(path);
 	
@@ -94,11 +109,22 @@ public class memberServiceImpl implements memberService {
 			}
 			member.setFile(fileName);
 		}
-		
+		System.out.println(member.getBirth());
 		if (member.getId() != "" && member.getPw() != "" && member.getName() != "" && member.getName() != ""
 				&& member.getPhone() != "" && member.getAddr() != "" && member.getEmail() != ""
-				&& member.getNickname() != "") {
+				&& member.getNickname() != "" && member.getBirth() != null) {
+			String key = new TempKey().getKey(50, false); // 인증키 생성
+			
+			member.setAuthCode(key);
 			memberDao.insertMember(member);
+
+			MailHandler sendMail = new MailHandler(mailSender);
+			sendMail.setSubject("[작업실 서비스 이메일 인증]");
+			sendMail.setText(
+					new StringBuffer().append("<h1>메일인증</h1>").append("<a href='http://localhost:8080/Project/emailConfirm.do?email=").append(member.getEmail()).append("&key=").append(key).append("' target='_blenk'>이메일 인증 확인</a>").toString());
+			sendMail.setFrom("jo27233@gmail.com", "조영규");
+			sendMail.setTo(member.getEmail());
+			sendMail.send();
 			return 1;
 		} else {
 			return 0;
@@ -376,5 +402,8 @@ public class memberServiceImpl implements memberService {
 		return memberDao.updateApproveLec(lecture);
 	}
 	
-	
+	@Override
+	public int userAuth(String email) throws Exception {
+		return memberDao.userAuth(email);
+	}
 }

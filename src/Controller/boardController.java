@@ -235,7 +235,6 @@ public class boardController {
 		
 	}	
 
-	}
 
 	@RequestMapping("artPayForm.do") // 결제 폼 요청
 	public String artPayForm(HttpServletRequest request, HttpSession session, Model model) throws ParseException {
@@ -490,10 +489,10 @@ public class boardController {
 		lectureService.insertLecture(lecture, ufile);
 		
 		//		 알림 소스 추가
-		List<String> followerList = artistService.selectFollower(id);
-		for (String str : followerList) {			// following하는 아티스트가 강의 개설시, follower들에게 알림 보내기
-			mainService.insertAlarm("writeLecture", str, id);
-		}
+//		List<String> followerList = artistService.selectFollower(id);
+//		for (String str : followerList) {			// following하는 아티스트가 강의 개설시, follower들에게 알림 보내기
+//			mainService.insertAlarm("writeLecture", str, id);
+//		}
 		// 알림 소스
 		
 		return "redirect:myLectureFormA0.do";

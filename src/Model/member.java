@@ -18,6 +18,8 @@ public class member {
 	private int state;
 	private String content;
 	private String profile;
+	private String authCode;
+	private int authStatus;
 	
 	public String getId() {
 		return id;
@@ -103,10 +105,23 @@ public class member {
 	public void setProfile(String profile) {
 		this.profile = profile;
 	}
+	public String getAuthCode() {
+		return authCode;
+	}
+	public void setAuthCode(String authCode) {
+		this.authCode = authCode;
+	}
+	public int getAuthStatus() {
+		return authStatus;
+	}
+	public void setAuthStatus(int authStatus) {
+		this.authStatus = authStatus;
+	}
 	@Override
 	public String toString() {
 		return "member [id=" + id + ", pw=" + pw + ", name=" + name + ", phone=" + phone + ", addr=" + addr + ", email="
 				+ email + ", nickname=" + nickname + ", birth=" + birth + ", isCheck=" + isCheck + ", file=" + file
-				+ ", joinDate=" + joinDate + ", state=" + state + ", content=" + content + ", profile=" + profile + "]";
+				+ ", joinDate=" + joinDate + ", state=" + state + ", content=" + content + ", profile=" + profile
+				+ ", authCode=" + authCode + ", authStatus=" + authStatus + "]";
 	}
 }

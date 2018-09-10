@@ -15,7 +15,7 @@ public interface memberService {
 	public	member	selectOneMember	(String id);
 	public	member	selectOneNickname (String nickname); // 추가
 	public	int login (String id, String pw); // 추가
-	public	int	insertMember	(member member, MultipartFile uProfile, MultipartFile uFile); // 파라미터 추가
+	public	int	insertMember	(member member, MultipartFile uProfile, MultipartFile uFile) throws Exception; // 파라미터 추가
 	public	List<member>	searchMember	(String keyWord, String searchWord, int isCheck);
 	public	HashMap<String, Object>		searchApproveArtist	(HashMap<String, Object> params, int page); // 수정(검색값, 페이지)
 	public	HashMap<String, Object>	selectAllMember	(HashMap<String, Object> params, int page); // 수정(검색값, 페이지)
@@ -46,4 +46,6 @@ public interface memberService {
 	
 	public File getAttachFile(HashMap<String, Object> params); // 추가 + 수정
 	public Integer updateApproveLec(int no, int state);		// 추가
+	
+	public int userAuth(String email) throws Exception; // 추가
 }

@@ -16,11 +16,13 @@ import javax.servlet.http.HttpSession;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.View;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import Model.alarm;
 import Model.member;
@@ -62,18 +64,26 @@ public class mainController {
 		public String join(member member, @RequestParam("pwCheck") String pwCheck, 
 				@RequestParam(value="uProfile", required=false) MultipartFile uProfile, 
 				@RequestParam(value="uFile", required=false) MultipartFile uFile,
-				@RequestParam(value="datepicker1", required=false) String datepicker1,
-				@RequestParam(value="datepicker2", required=false) String datepicker2) throws ParseException {
+				@RequestParam(value="birth", required=false) String datepicker, HttpServletResponse resp) throws Exception {
+			System.out.println("70 : " + datepicker);
+			System.out.println(uProfile);
+			System.out.println(uFile);
 			Date birth = null;
-			if(datepicker1 != null) {
-				birth = new SimpleDateFormat("yyyyMMdd").parse(datepicker1);
-			} else if(datepicker2 != null) {
-				birth = new SimpleDateFormat("yyyyMMdd").parse(datepicker2);
-			}
+			if(datepicker != null) {
+				System.out.println("73");
+				birth = new SimpleDateFormat("MM/dd/yyyy").parse(datepicker);
+			} 
+			System.out.println("79");
 			member.setBirth(birth);
+			System.out.println(birth);
 			
 			if(memberService.insertMember(member, uProfile, uFile) == 1) {
-				return "redirect:main.do";
+				System.out.println("83");
+				resp.setContentType("text/html; charset=UTF-8");
+				PrintWriter pw = resp.getWriter();
+				pw.println("<script>alert('회원가입이 성공하였습니다. 로그인은 이메일 인증 후 사용가능합니다.'); location.href='main.do';</script>");
+				pw.flush();
+				return null;
 			} else {
 				return "redirect:joinForm.do";
 			}
@@ -367,9 +377,14 @@ public class mainController {
 			}
 			String email = req.getParameter("email");
 			String nickname = req.getParameter("nickname");
-//			Date birth = new SimpleDateFormat("yy-mm-dd").parse(req.getParameter("birth"));
+			String temp = req.getParameter("birth");
+			Date birth = null;
+			if(temp != "" && temp != null) {
+				birth = new SimpleDateFormat("MM/dd/yyyy").parse(temp);
+			}
 			String content = req.getParameter("content");
-			boolean idCheck, pwCheck, nameCheck, phoneCheck, addrCheck, emailCheck, nicknameCheck, contentCheck;
+			boolean idCheck, pwCheck, nameCheck, phoneCheck, addrCheck, 
+					emailCheck, birthCheck, nicknameCheck, contentCheck;
 			JSONObject jsonObject = new JSONObject();
 		
 			
@@ -383,6 +398,11 @@ public class mainController {
 			} else {
 				pwCheck = false;
 			}
+			if (birth != null) {
+				birthCheck = true;
+			} else {
+				birthCheck = false;
+			}
 			if (memberService.selectOneNickname(nickname) == null && nickname != "") {
 				nicknameCheck = true;
 			} else {
@@ -391,11 +411,13 @@ public class mainController {
 			
 			jsonObject.put("idCheck", idCheck);
 			jsonObject.put("pwCheck", pwCheck);
+			jsonObject.put("birthCheck", birthCheck);
 			jsonObject.put("nicknameCheck", nicknameCheck);
 			
 			resp.setContentType("text/html; charset=UTF-8");
 			PrintWriter pwr = resp.getWriter();
 			pwr.println(jsonObject);
+			System.out.println(jsonObject);
 		}
 		
 		@RequestMapping("logout.do")
@@ -551,6 +573,16 @@ public class mainController {
 		resp.setContentType("text/html; charset=UTF-8");
 		PrintWriter pw = resp.getWriter();
 		pw.println(jsonObject);
+	}
+	
+	@RequestMapping("emailConfirm.do")
+	public void emailConfirm(String email, HttpServletResponse resp) throws Exception { // 이메일인증
+		memberService.userAuth(email);
+		
+		resp.setContentType("text/html; charset=UTF-8");
+		PrintWriter pw = resp.getWriter();
+		pw.println("<script>alert('인증 성공! 로그인 후 이용이 가능합니다.'); location.href='main.do';</script>");
+		pw.flush();
 	}
 } // public class의 끝.
 

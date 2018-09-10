@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title>아티스트 신청페이지</title>
+<title>회원가입 페이지</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <!-- CSS
@@ -15,6 +15,7 @@
 <link rel="stylesheet" href="css/bootstrap-responsive.css">
 <link rel="stylesheet" href="css/jquery.lightbox-0.5.css">
 <link rel="stylesheet" href="css/custom-styles.css">
+<link rel="stylesheet" href="css/style.css">
 
 <!--[if lt IE 9]>
     <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
@@ -30,18 +31,36 @@
 
 <!-- JS
 ================================================== -->
-<script src="http://code.jquery.com/jquery-latest.js" type="text/javascript"></script>
+<!-- // jQuery UI CSS파일  -->
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css" type="text/css" />  
+<!-- // jQuery 기본 js파일 -->
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>  
+<!-- // jQuery UI 라이브러리 js파일 -->
+<script src="http://code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script>  
 <script src="js/bootstrap.js"></script>
 <script src="js/jquery.custom.js"></script>
-<script src="https://code.jquery.com/jquery-3.3.1.min.js"
-	integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-	crossorigin="anonymous"></script>
-<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
-<script src="//code.jquery.com/jquery.min.js"></script>
-<script src="//code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
-
+<!-- Thumbnail 
+================================================== -->
+<link rel="stylesheet" href="css/fileImage.css?ver=0.1">
 
 <script type="text/javascript">
+$( function() {
+	$( "input[name=birth]" ).datepicker({
+		changeMonth: true,
+		changeYear: true,
+		showButtonPanel: true,
+		nextText: '다음 달',
+		prevText: '이전 달',
+// 		dateFormat: 'yy-MM-dd',
+		dayNamesMin: ['월', '화', '수', '목', '금', '토', '일'],
+		monthNames: ['1','2','3','4','5','6','7','8','9','10','11','12'],
+		monthNamesShort: ['1','2','3','4','5','6','7','8','9','10','11','12'],
+		minDate: '-100Y',
+		maxDate: '-7Y+3M+21D',
+		closeText: '닫기'
+	});
+});
+
 $(document).ready(function() {
 // 	if($('.guestAddr').val() == '' && $('.artistAddr').val() == '') {
 		$('#guestDetail').hide();
@@ -57,30 +76,34 @@ $(document).ready(function() {
 		$('#guestDetail').show();
 		$('#artistDetail').hide();
 		$('.id').val('');
-		$('.idCheck').html('중복결과여부');
+		$('.idCheck').html('');
 		$('.nickname').val('');
-		$('.nicknameCheck').html('중복결과여부');
+		$('.nicknameCheck').html('');
 	});
 	$('#artist').click(function() { // 아티스트 회원가입 폼
 		$('#guestDetail').hide();
 		$('#artistDetail').show();
 		$('.id').val('');
-		$('.idCheck').html('중복결과여부');
+		$('.idCheck').html('');
 		$('.nickname').val('');
-		$('.nicknameCheck').html('중복결과여부');
+		$('.nicknameCheck').html('');
 	});
 	
-	$('.id').blur(function() { // ID 중복검사
+	$('input[name=id]').blur(function() { // ID 중복검사
+		var me = this;
 		$.ajax({
 			type : 'get',
 			url : 'check.do',
-			data : {'id' : $(this).val()},
+			data : {'id' : $(me).val()},
 			dataType : 'json',
 			success : function(data) {
 				if(data.idCheck) {
+					$('.idCheck').css('color', 'black');
 					$('.idCheck').html('사용할 수 있는 아이디입니다.');
 				} else {
+					$('.idCheck').css('color', 'red');
 					$('.idCheck').html('사용할 수 없는 아이디입니다.');
+					$(me).focus();
 				}
 			},
 			error : function(status, error) {
@@ -105,17 +128,63 @@ $(document).ready(function() {
 // 	$('#email').blur(function() {
 		
 // 	});
-	$('.nickname').blur(function() {
+	$('input[name=birth]').blur(function() {
+		var me = this;
 		$.ajax({
 			type : 'get',
 			url : 'check.do',
-			data : {'nickname' : $(this).val()},
+			data : {'birth' : $(me).val()},
+			dataType : 'json',
+			success : function(data) {
+				if(!data.birthCheck) {			
+					$('.birthCheck').css('color', 'red');
+					$('.birthCheck').html('필수 입력 사항입니다.');
+					$(me).focus();
+				} else {
+					$('.birthCheck').html('');
+				}
+			},
+			error : function(status, error) {
+				alert(status);
+				alert(error);
+				alert('생년월일 : 잘못된 접근입니다.');
+			}
+		});
+	});
+	$('input[name=birth]').change(function() {
+		var me = this;
+		$.ajax({
+			type : 'get',
+			url : 'check.do',
+			data : {'birth' : $(me).val()},
+			dataType : 'json',
+			success : function(data) {
+				if(data.birthCheck) {			
+					$('.birthCheck').html('');
+				}
+			},
+			error : function(status, error) {
+				alert(status);
+				alert(error);
+				alert('생년월일 : 잘못된 접근입니다.');
+			}
+		});
+	});
+	$('input[name=nickname]').blur(function() {
+		var me = this;
+		$.ajax({
+			type : 'get',
+			url : 'check.do',
+			data : {'nickname' : $(me).val()},
 			dataType : 'json',
 			success : function(data) {
 				if(data.nicknameCheck) {
+					$('.nicknameCheck').css('color', 'black');
 					$('.nicknameCheck').html('사용할 수 있는 닉네임입니다.');
 				} else {
+					$('.nicknameCheck').css('color', 'red');
 					$('.nicknameCheck').html('사용할 수 없는 닉네임입니다.');
+					$(me).focus();
 				}
 			},
 			error : function(status, error) {
@@ -125,9 +194,6 @@ $(document).ready(function() {
 			}
 		});
 	});
-// 	$('#birth').blur(function() {
-		
-// 	});
 	$('#guestBtn').click(function() {
 		var width=800, height=500;
 		var left = (screen.availWidth - width)/2;
@@ -195,8 +261,8 @@ $(document).ready(function() {
 						<div class="input-prepend">
 							<span class="add-on"><i class="icon-pencil"></i></span> 
 							<input class="span5" name="id" type="text" size="16" placeholder="아이디를 입력해주세요.">
-							<span class="idCheck">중복결과여부</span>
-						</div>
+						</div> 
+						<span class="idCheck"></span>
 
 						<div class="input-prepend">
 							<span class="add-on"><i class="icon-check"></i></span> 
@@ -303,27 +369,26 @@ $(document).ready(function() {
 						<div class="input-prepend">
 							<span class="add-on"><i class="icon-envelope"></i></span> 
 							<input class="span5" name="email" type="email" size="16"	placeholder="사용 중인 이메일을 입력해주세요.">
-							<button class="btn btn-small btn-inverse " onclick="emailCheckFunction();" type="button"
-								style="text-align: center; margin: 0 auto;">이메일인증</button>
 						</div>
 
 						<div class="input-prepend">
 							<div class="input-group date">
 								<span class="add-on"><i class="icon-calendar"></i></span> 
-								<input type="text" class="form-control" id="datepicker1" name="birth"
-									placeholder="생년월일을 입력해주세요.">
+								<input type="text" name="birth" placeholder="생년월일을 입력해주세요." value=""/>
 							</div>
 						</div>
+						<span class="birthCheck"></span>
 
 						<div class="input-prepend">
 							<span class="add-on"><i class="icon-user"></i></span> 
 							<input class="span4" name="nickname" size="16" type="text" placeholder="사용할 닉네임을 입력해주세요.">
 						</div>
+						<span class="nicknameCheck"></span>
 
 						<div class="row">
 							<div class="span7">
 								<input type="submit" class="btn btn-success pull-right" value="회원가입">
-								<input type="button" class="btn btn-warning pull-right"	value="가입취소"> 
+								<input type="reset" class="btn btn-warning pull-right"	value="가입취소"> 
 							</div>
 						</div>
 				</div>
@@ -346,8 +411,8 @@ $(document).ready(function() {
 						<div class="input-prepend">
 							<span class="add-on"><i class="icon-pencil"></i></span> 
 							<input class="span5" name="id" type="text" size="16" placeholder="아이디를 입력해주세요.">
-							<span class="idCheck">중복결과여부</span>
 						</div>
+						<span class="idCheck"></span>
 
 						<div class="input-prepend">
 							<span class="add-on"><i class="icon-check"></i></span> 
@@ -454,28 +519,42 @@ $(document).ready(function() {
 						<div class="input-prepend">
 							<span class="add-on"><i class="icon-envelope"></i></span> 
 							<input class="span5" name="email" type="email" size="16" placeholder="사용 중인 이메일을 입력해주세요.">
-							<button class="btn btn-small btn-inverse" onclick="emailCheckFunction();" type="button"
-								style="text-align: center; margin: 0 auto;">이메일인증</button>
 						</div>
 
 						<div class="input-prepend">
 							<div class="input-group date">
 								<span class="add-on"><i class="icon-calendar"></i></span> 
-								<input type="text" class="form-control" id="datepicker2" name="birth" placeholder="생년월일을 입력해주세요.">
+								<input type="text" name="birth" placeholder="생년월일을 입력해주세요."/>
 							</div>
 						</div>
+						<span class="birthCheck"></span>
 
 						<div class="input-prepend">
 							<span class="add-on"><i class="icon-user"></i></span> 
 							<input class="span4" name="nickname" size="16" type="text" placeholder="사용할 닉네임을 입력해주세요.">
-							<span class="nicknameCheck">중복결과여부</span>
 						</div>
+						<span class="nicknameCheck"></span>
 
 						<!--file upload-->
+<!-- 						<div class="input-prepend"> -->
+<!-- 							<span class="add-on"> <i class="icon-user"></i> -->
+<!-- 							</span> <input class="uProfile" name="uProfile" type="file"> -->
+<!-- 						</div> -->
+						<!-- 썸네일 이미지 업로드 부분 -->
+						<div class="filebox bs3-primary preview-image">
+                            <input class="upload-name" value="프로필사진" disabled="disabled" style="width: 200px;">
+
+                            <label for="input_file">업로드</label> 
+                          <input type="file" id="input_file" class="upload-hidden" name="uProfile"> 
+                        </div>
+						<!-- ====================================================== -->
+						
+						
+						
 						<div class="input-prepend">
 							<span class="add-on"> <i class="icon-user"></i>
-							</span> <input class="uProfile" name="uProfile" type="file">
-						</div>
+							</span> <input name="uFile" type="file">
+						</div>	
 							<br>
 
 							<div class="input-prepend">
@@ -502,6 +581,6 @@ $(document).ready(function() {
 	<!-- Footer Area
         ================================================== -->
 	<%@include file="footer.jsp"%>
-<script type="text/javascript" src="js/datePicker.js"></script>
+<script src="js/fileImage.js"></script>
 </body>
 </html>

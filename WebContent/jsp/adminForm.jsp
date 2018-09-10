@@ -307,6 +307,7 @@ function goArtistPage(pageNum) {
 		$("[data-toggle=tooltip]").tooltip();
 		
 		$("#tbody").on("click", "#search", function() {
+			alert("테스트");
 			if(confirm("선택한 회원을 정지시키겠습니까?")) {
 				$.ajax({
 					type : 'get',
@@ -327,6 +328,7 @@ function goArtistPage(pageNum) {
 		});
 		
 		$("#tbody").on("click", "#all", function() {
+			alert("테스트");
 			if(confirm("선택한 회원을 정지시키겠습니까?")) {
 				$.ajax({
 					type : 'get',
@@ -456,7 +458,6 @@ function goArtistPage(pageNum) {
 
 				<div class="row the-grid" id="artistList">
 					<div class="span12 contact">
-						Begin page content column
 						<div class="container">
 							<!--                             <div class="row the-grid"> -->
 							<div class="col-md-12">
@@ -590,17 +591,10 @@ function goArtistPage(pageNum) {
 							/.modal-dialog
 						</div>
 
-
-						Pagination
 						<div class="pagination" id="artistPaging"></div>
-						End gallery list
 
 					</div>
-					End Container
-
-
 				</div>
-				End page content column
 			</div>
 			<!-- End container row -->
 

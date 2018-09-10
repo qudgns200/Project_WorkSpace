@@ -27,12 +27,22 @@ public class artistServiceImpl implements artistService{
 	}
 
 	@Override
-	public List<String> selectFollower(String id) {
-<<<<<<< HEAD
-		// TODO Auto-generated method stub
-=======
->>>>>>> origin/master
-		return artistDao.selectFollower(id);
+	public HashMap<String, Object> selectFollower(HashMap<String, Object> params, int page) {
+		
+		HashMap<String, Object> result = new HashMap<>();
+		
+		if(page != 0) {
+			result.put("current", page);
+			result.put("start", mainService.getStartPage(page));
+			result.put("end", mainService.getEndPage(page));
+			result.put("last", getFollowerLastPage(params));
+		
+			params.put("skip", mainService.getSkip(page, 10));
+			params.put("qty", 10);
+		}
+		result.put("followerList", artistDao.selectFollower(params));
+		
+		return result;
 	}
 
 	@Override
@@ -50,31 +60,31 @@ public class artistServiceImpl implements artistService{
 	@Override
 	public int insertLikes(likes likes) {
 		// TODO Auto-generated method stub
-		return 0;
+		return artistDao.insertLikes(likes);
 	}
 
 	@Override
 	public List<art> selectLikesArt(String id) {
 		// TODO Auto-generated method stub
-		return null;
+		return artistDao.selectLikesArt(id);
 	}
 
 	@Override
 	public List<lecture> selectLikesLecture(String id) {
 		// TODO Auto-generated method stub
-		return null;
+		return artistDao.selectLikesLecture(id);
 	}
 
 	@Override
-	public int deleteLikesArt(String id, int no) {
+	public int deleteLikesArt(HashMap<String, Object> params) {
 		// TODO Auto-generated method stub
-		return 0;
+		return artistDao.deleteLikesArt(params);
 	}
 
 	@Override
-	public int deleteLikesLecture(String id, int no) {
+	public int deleteLikesLecture(HashMap<String, Object> params) {
 		// TODO Auto-generated method stub
-		return 0;
+		return artistDao.deleteLikesLecture(params);
 	}
 
 	@Override
@@ -112,4 +122,9 @@ public class artistServiceImpl implements artistService{
 		return result;
 	}
 
+	@Override
+	public int getFollowerLastPage(HashMap<String, Object> params) {
+		// TODO Auto-generated method stub
+		return (artistDao.getFollowerCount(params) - 1) / 10 + 1;
+	}
 }

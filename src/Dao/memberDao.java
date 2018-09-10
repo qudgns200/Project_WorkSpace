@@ -59,4 +59,6 @@ public interface memberDao {
 	public int getOnePayCount(String id);
 	
 	public Integer updateApproveLec(lecture lecture); // 추가
+	
+	public int userAuth(String email) throws Exception; // 추가
 }
