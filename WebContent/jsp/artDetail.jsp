@@ -58,7 +58,7 @@ $(function(){
 	if($('#sameId').val()==1) {
 		 $("#deleteArt").show();
 	}
-	else { 
+	else {
 		$("#deleteArt").hide();
 	}
     $("#deleteArt").click(function(){
@@ -114,6 +114,11 @@ function moveUrl(num) {
                         <li><h6>Artist :</h6> ${art.id }</li>
                         <li><h6>Genre :</h6> ${art.genre }</li>
                     </ul>
+
+                    <c:if test="${art.id == id }">
+                    <a class="btn" href="updateArtForm.do?no=${art.no }">수정</a>
+                    </c:if>
+                    
                     <a class="btn" id='deleteArt'>삭제</a>
                     	<!-- Modal -->
   							<div class="modal fade" id="myModal" role="dialog">
