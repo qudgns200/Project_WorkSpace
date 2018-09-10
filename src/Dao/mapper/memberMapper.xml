@@ -131,7 +131,7 @@
 	</update>
 
 	<delete id="deleteArt" parameterType="java.util.HashMap">
-	
+		delete from art where no=#{no} and id=#{id};
 	</delete>
 
 	<select id="selectRequestLec" parameterType="java.util.HashMap" resultType="java.util.HashMap">
@@ -258,6 +258,10 @@
 <!-- 강의 승인시 update 쿼리 추가 -->
 	<select id="updateApproveLec" parameterType="lecture">
 	update lecture set state = #{state} where no = #{no};
+	</select>
+	
+	<select id="selectPayByNo" parameterType="java.util.HashMap" resultType="pay">
+		select * from pay where no=#{no} and isCheck=#{isCheck};
 	</select>
 
 </mapper>

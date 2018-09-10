@@ -2,9 +2,11 @@ package Controller;
 
 import java.io.BufferedReader;
 
+
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 
@@ -33,6 +35,7 @@ public class kakaoController {
 	private String tid;
 	private String partner_order_id;
 	private String partner_user_id;
+	private int isCheck;
 	
 	private void cid(String cid) {
 		this.cid = cid;
@@ -45,6 +48,10 @@ public class kakaoController {
 	}
 	private void partner_user_id(String partner_user_id) {
 		this.partner_user_id = partner_user_id;
+	}
+	
+	private void isCheck(String isCheck) {
+		this.isCheck = Integer.parseInt(isCheck);
 	}
 	
 	@Autowired
@@ -61,6 +68,7 @@ public class kakaoController {
 		cid(request.getParameter("cid"));
 		partner_order_id(request.getParameter("partner_order_id"));
 		partner_user_id(request.getParameter("partner_user_id"));
+		isCheck(request.getParameter("isCheck"));
 		
 		try {
 			apiURL = "https://kapi.kakao.com/v1/payment/ready";
@@ -100,7 +108,7 @@ public class kakaoController {
 			
 			String inputLine;
 			StringBuffer res = new StringBuffer();
-
+			
 			while ((inputLine = br.readLine()) != null) {
 				res.append(inputLine);
 			}
@@ -148,8 +156,6 @@ public class kakaoController {
 			int responseCode = conn.getResponseCode();
 			
 			BufferedReader br;
-			
-			System.out.println("responseCode = " + responseCode);
 
 			if (responseCode == 200) {
 				br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
@@ -165,10 +171,16 @@ public class kakaoController {
 			}
 			
 			JSONParser parser = new JSONParser();
-			Object obj = parser.parse(res.toString());
-			JSONObject json = (JSONObject) obj;
+			JSONObject json = (JSONObject) parser.parse(res.toString());
 			
-			System.out.println(res.toString());
+			String amount = json.get("amount").toString();
+			
+			org.json.JSONObject jsonAmount = new org.json.JSONObject(amount);
+			String total = jsonAmount.get("total").toString();
+			
+			SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd"); // String으로 넘어오기 때문에 형 변환!
+			String payDateString = (String) json.get("approved_at");
+			Date payDate = dateformat.parse(payDateString);
 			
 			pay pay = new pay();
 			
@@ -177,23 +189,21 @@ public class kakaoController {
 			member member = new member();
 			member = memberService.selectOneMember(id);			
 			pay.setId(id);
-			pay.setIsCheck(0);
+			pay.setIsCheck(isCheck);
 			pay.setAddr(member.getAddr());
-			pay.setPhone(member.getPhone());
+			pay.setPhone(member.getPhone());	
 			pay.setName(member.getName());
-			int totalPrice = Integer.parseInt((String) json.get("total"));
+			int totalPrice = Integer.parseInt(total);
 			pay.setTotalPrice(totalPrice);
-			int payMethod = Integer.parseInt((String)json.get("payment_method_type"));
-			pay.setPayMethod(payMethod);
-			Date payDate = (Date)json.get("approved_at");
+			pay.setPayMethod(2);
 			pay.setPayDate(payDate);
+			pay.setOrderNumber(partner_order_id);
 			
 			int result = artService.insertArtPay(pay);
 			
 			if(result==1) {
 				art art = new art();
 				art = artService.selectOneArt(no);
-				
 				HashMap<String, Object> params2 = new HashMap<String, Object>();
 				params2.put("totalCount", (art.getTotalCount()-1));
 				params2.put("no", no);
@@ -204,7 +214,7 @@ public class kakaoController {
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
-		return "mySellFormA0.do";
+		return "redirect:mySellFormA0.do";
 	}
 	
 }

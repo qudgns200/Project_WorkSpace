@@ -32,5 +32,9 @@ public interface boardService {
 	public boardComment selectBoardLatestcomment();
 	public qnaComment selectQnaLatestcomment();
 	public int selectOneById(HashMap<String, Object>params);
+	
+	//댓글 관련 추가(삭제)
+	public int deleteBoardComment(int no);
+	public int deleteQnaComment(int no);
 
 }

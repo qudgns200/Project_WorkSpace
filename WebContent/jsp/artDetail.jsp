@@ -34,28 +34,51 @@
 <script src="js/bootstrap.js"></script>
 <script src="js/jquery.custom.js"></script>
 
-<script src="js/comment.js?ver=0.30"></script>
+<script src="js/comment.js?ver=0.4"></script>
 <script type="text/javascript">
 /**
  * 초기 페이지 로딩시 댓글 불러오기
  */
 $(function(){
 	
-    getCommentList(0, 'art', $('#currentId').val());
+	if('${deleteText}'==1)
+		alert("결제 중인 정보가 있습니다. 삭제가 불가합니다.");
+	
+    getCommentList(0, 'art', $('#currentId').val());	
     
-    if($('#sellCheck').val()==0 || $('#isCheck').val()==0)
+    if($('#sellCheck').val()==0 || $('#isCheck').val()==0 || '${art.totalCount }'==0 || $('#sameId').val()==1)
     	$('#paySpace').hide();
-    	
-    if($(sameId).val()==1) {
-    	$('#deleteSection').show();
-    	$('#paySpace').hide();
-    } else{
-    	$('#deleteSection').hide();
-    }
+    else $('#paySpace').show();
     
+
+<!-- 모달 사용하기 -->
+<!-- 1. 수정일 때 modalCheck 값 1 -->
+<!-- 2. 삭제일 때 modalCheck 값 2 -->
     
+	if($('#sameId').val()==1) {
+		 $("#deleteArt").show();
+	}
+	else { 
+		$("#deleteArt").hide();
+	}
+    $("#deleteArt").click(function(){
+    	$("#modalHeader").text("삭제 여부 확인");
+    	$("#modalBody").text("삭제하시겠습니까?");
+    	$("#modalButton").text("삭제");
+        $("#myModal").modal();
+    });
+
 });
 </script>
+
+<script type="text/javascript">
+function moveUrl(num) {
+	var payMethod = $("input[name=payMethod]:checked").val();
+	
+	location.href="lecturePayForm.do?no=" + num + "&payMethod=" + payMethod;
+}
+</script>
+
 </head>
 
 <body>
@@ -76,7 +99,7 @@ $(function(){
         ================================================== -->
 		<div class="span12 blog">
 
-		<form id="form" action="artPayForm.do">
+		<form id="form" action="artPayForm.do" method = "post">
             <div class="row">
                 <div class="span6">
 				<img src="download.do?no=${art.no }">
@@ -91,6 +114,29 @@ $(function(){
                         <li><h6>Artist :</h6> ${art.id }</li>
                         <li><h6>Genre :</h6> ${art.genre }</li>
                     </ul>
+                    <a class="btn" id='deleteArt'>삭제</a>
+                    	<!-- Modal -->
+  							<div class="modal fade" id="myModal" role="dialog">
+    						<div class="modal-dialog">
+     					<!-- Modal content-->
+      						<div class="modal-content">
+        					<div class="modal-header">
+         					 <button type="button" class="close" data-dismiss="modal">×</button>
+         					 <h4 class="modal-title" id="modalHeader"></h4>
+        						</div>
+        						<div class="modal-body">
+         						 <p id="modalBody"></p>
+        						</div>
+       						 <div class="modal-footer">
+       						 	 <button type="button" id="modalButton" class="btn btn-default" onclick="location.href='deleteArt.do?no=${art.no}'"></button>
+         						 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+       						 </div>
+      						 </div>
+      
+    						 </div>
+  							 </div>
+  						<!--  모달 종료 -->
+                    
 					<!--  컨트롤러에서 받아 온 값을 결제 폼 페이지로 넘겨 주기 위한 히든 타입 태그 -->
 					<input type="hidden" name="no" value="${art.no }">
 					<input type="hidden" name="artDate" value=<fmt:formatDate pattern="yyyy-MM-dd" value="${art.artDate}"/>>
@@ -107,10 +153,6 @@ $(function(){
 						<input type="radio" name="payMethod" value="2">카카오페이
                     	<input type="submit" id="deliveryValues" class="btn" value="결제하기">
                     </div>
-					<!--  글 삭제 부분 -->
-                    <div id="deleteSection">
-                    	 <a class="btn btn-sq-sm btn-warning">글 삭제</a>
-                    </div>
                 </div>
             </div>
 
@@ -120,14 +162,7 @@ $(function(){
       	 <h5 class="title-bg" style="padding-bottom: 12px;">Content</h5>
 				 ${art.content }
     	</div>
-
-
-</form>
 	<br>
-	<div class="span12">
-       <h5 class="title-bg" style="padding-bottom: 12px;">Content</h5>
-			 ${art.content }
-    </div>
   
 
 				<!-- comment Area

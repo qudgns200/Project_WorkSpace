@@ -15,6 +15,7 @@
 <link rel="stylesheet" href="css/bootstrap-responsive.css">
 <link rel="stylesheet" href="css/jquery.lightbox-0.5.css">
 <link rel="stylesheet" href="css/custom-styles.css">
+<link rel="stylesheet" href="css/style.css">
 
 <!--[if lt IE 9]>
     <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
@@ -30,16 +31,17 @@
 
 <!-- JS
 ================================================== -->
-<script src="http://code.jquery.com/jquery-latest.js" type="text/javascript"></script>
+<!-- // jQuery UI CSS파일  -->
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css" type="text/css" />  
+<!-- // jQuery 기본 js파일 -->
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>  
+<!-- // jQuery UI 라이브러리 js파일 -->
+<script src="http://code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script>  
 <script src="js/bootstrap.js"></script>
 <script src="js/jquery.custom.js"></script>
-<script src="https://code.jquery.com/jquery-3.3.1.min.js"
-	integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-	crossorigin="anonymous"></script>
-<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
-<script src="//code.jquery.com/jquery.min.js"></script>
-<script src="//code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
-
+<!-- Thumbnail 
+================================================== -->
+<link rel="stylesheet" href="css/fileImage.css?ver=0.1">
 
 <script type="text/javascript">
 $(document).ready(function() {
@@ -310,8 +312,18 @@ $(document).ready(function() {
 						<div class="input-prepend">
 							<div class="input-group date">
 								<span class="add-on"><i class="icon-calendar"></i></span> 
-								<input type="text" class="form-control" id="datepicker1" name="birth"
-									placeholder="생년월일을 입력해주세요.">
+								<input type="text" id="datepicker1" name="birth" placeholder="생년월일을 입력해주세요."/>
+  								<script>
+  								$( function() {
+    								$( "#datepicker1" ).datepicker({
+    									changeMonth: true,
+    									changeYear: true,
+    									nextText: '다음 달',
+    									prevText: '이전 달',
+    									dayNamesShort: [ "일", "월", "화", "수", "목", "금", "토" ]
+    								});
+  								} );
+  								</script>
 							</div>
 						</div>
 
@@ -461,7 +473,18 @@ $(document).ready(function() {
 						<div class="input-prepend">
 							<div class="input-group date">
 								<span class="add-on"><i class="icon-calendar"></i></span> 
-								<input type="text" class="form-control" id="datepicker2" name="birth" placeholder="생년월일을 입력해주세요.">
+								<input type="text" id="datepicker2" name="birth" placeholder="생년월일을 입력해주세요."/>
+  								<script>
+  								$( function() {
+    								$( "#datepicker2" ).datepicker({
+    									changeMonth: true,
+    									changeYear: true,
+    									nextText: '다음 달',
+    									prevText: '이전 달',
+    									dayNamesShort: [ "일", "월", "화", "수", "목", "금", "토" ]
+    								});
+  								} );
+  								</script>
 							</div>
 						</div>
 
@@ -472,10 +495,25 @@ $(document).ready(function() {
 						</div>
 
 						<!--file upload-->
+<!-- 						<div class="input-prepend"> -->
+<!-- 							<span class="add-on"> <i class="icon-user"></i> -->
+<!-- 							</span> <input class="uProfile" name="uProfile" type="file"> -->
+<!-- 						</div> -->
+						<!-- 썸네일 이미지 업로드 부분 -->
+						<div class="filebox bs3-primary preview-image">
+                            <input class="upload-name" value="대표이미지를 설정하세요!!" disabled="disabled" style="width: 200px;">
+
+                            <label for="input_file">업로드</label> 
+                          <input type="file" id="input_file" class="upload-hidden" name="uProile"> 
+                        </div>
+						<!-- ====================================================== -->
+						
+						
+						
 						<div class="input-prepend">
 							<span class="add-on"> <i class="icon-user"></i>
-							</span> <input class="uProfile" name="uProfile" type="file">
-						</div>
+							</span> <input class="uProfile" name="uFile" type="file">
+						</div>	
 							<br>
 
 							<div class="input-prepend">
@@ -502,6 +540,6 @@ $(document).ready(function() {
 	<!-- Footer Area
         ================================================== -->
 	<%@include file="footer.jsp"%>
-<script type="text/javascript" src="js/datePicker.js"></script>
+<script src="js/fileImage.js"></script>
 </body>
 </html>

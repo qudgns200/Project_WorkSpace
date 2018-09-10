@@ -34,7 +34,12 @@
 <script src="js/bootstrap.js"></script>
 <script src="js/jquery.flexslider.js"></script>
 <script src="js/jquery.custom.js"></script>
-
+<!-- // jQuery UI CSS파일  -->
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css" type="text/css" />  
+<!-- // jQuery 기본 js파일 -->
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>  
+<!-- // jQuery UI 라이브러리 js파일 -->
+<script src="http://code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script>  
 
 <!-- For NaverEditor
 ================================================== --> 
@@ -153,8 +158,7 @@ function addArtist(name) {
         </div>
  		</div>   	
 <!--     	모달 사용 끗!!! -->
-       
-		
+      
         <div class="span4 contact"><!--Begin page content column-->
 
 <!-- 			강의관련 내용 입력 부분 -->
@@ -255,10 +259,81 @@ function addArtist(name) {
                 <div class="input-prepend">
                     <div class="input-group date">
                         <span class="add-on"><i class="icon-calendar"></i></span>
-                        <input type="text" class="form-control date-picker1" name="startDate" style="height: 20px;" placeholder="개강일 선택">
+                        <input type="text" class="form-control" id="datepicker1" name="startDate" style="height: 20px;" placeholder="개강일 선택">
                         <span class="add-on"><i class="icon-calendar"></i></span>
-                        <input type="text" class="form-control date-picker2" name="endDate" style="height: 20px;" placeholder="종강일 선택">                         
-                    </div>                    
+                        <input type="text" class="form-control" id="datepicker2" name="endDate" style="height: 20px;" placeholder="종강일 선택">                         
+                    </div>  
+                    <script>	
+  							var rangeDate = 31; // set limit day
+  							var setSdate, setEdate;
+  							$("#datepicker1").datepicker({
+  							    dateFormat: 'yy-mm-dd',
+  							    minDate: 0,
+  							  	changeMonth: true,
+								nextText: '다음 달',
+								prevText: '이전 달',
+								monthNamesShort: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+  							    dayNamesMin: ['일','월','화','수','목','금','토'],
+  							    onSelect: function(selectDate){
+  							        var stxt = selectDate.split("-");
+  							            stxt[1] = stxt[1] - 1;
+  							        var sdate = new Date(stxt[0], stxt[1], stxt[2]);
+ 								    var edate = new Date(stxt[0], stxt[1], stxt[2]);
+  							            edate.setDate(sdate.getDate() + rangeDate);
+  								        
+  							        $('#datepicker2').datepicker('option', {
+  							            minDate: selectDate,
+  							            beforeShow : function () {
+  							                $("#datepicker2").datepicker( "option", "maxDate", edate );                
+  							                setSdate = selectDate;
+  							                console.log(setSdate)
+  							        }});
+  							      //to 설정
+  								    }
+  								    //from 선택되었을 때
+  								});
+  								            
+  								$("#datepicker2").datepicker({ 
+  								    dateFormat: 'yy-mm-dd',
+  	  							  	changeMonth: true,
+  									nextText: '다음 달',
+  									prevText: '이전 달',
+  									monthNamesShort: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+  							      	dayNamesMin: ['일','월','화','수','목','금','토'],
+  								    onSelect : function(selectDate){
+  								        setEdate = selectDate;
+  								        console.log(setEdate)
+  								    }
+  								});
+  								$('#savebutton').on('click', function(e){
+  								    if($('input#datepicker1').val() == ''){
+  								        alert('시작일을 선택해주세요.');
+  								        $('input#datepicker1').focus();
+  								        return false;
+  								    }else if($('input#datepicker2').val() == ''){
+  								        alert('종료일을 선택해주세요.');
+  								        $('input#datepicker2').focus();
+  								        return false;
+  								    }
+
+  								    var t1 = $('input#datepicker1').val().split("-");
+  								    var t2 = $('input#datepicker2').val().split("-");
+  								    var t1date = new Date(t1[0], t1[1], t1[2]);
+  								    var t2date = new Date(t2[0], t2[1], t2[2]);
+  								    var diff = t2date - t1date;
+  								    var currDay = 24 * 60 * 60 * 1000;
+  								    if(parseInt(diff/currDay) > rangeDate){
+  								        alert('로그 조회 기간은 ' + rangeDate + '일을 초과할 수 없습니다.');        
+  								        return false;
+  								    }
+
+  								    alert("성공")
+  								});
+  								//조회 버튼 클릭			
+  								
+  								
+  								
+  					</script>                  
                 </div>                        
                                 
                 <div class="input-prepend">

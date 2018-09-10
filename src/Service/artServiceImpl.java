@@ -62,7 +62,7 @@ public class artServiceImpl implements artService{
 	@Override
 	public int insertArtPay(pay pay) {
 		// TODO Auto-generated method stub
-		return 0;
+		return artDao.insertArtPay(pay);
 	}
 
 	@Override

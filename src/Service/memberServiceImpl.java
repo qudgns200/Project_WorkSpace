@@ -262,7 +262,10 @@ public class memberServiceImpl implements memberService {
 	@Override
 	public int deleteArt(int no, String id) {
 		// TODO Auto-generated method stub
-		return 0;
+		HashMap<String, Object> params =  new HashMap<String, Object>();
+		params.put("no", no);
+		params.put("id", id);
+		return memberDao.deleteArt(params);
 	}
 
 	@Override
@@ -374,6 +377,12 @@ public class memberServiceImpl implements memberService {
 		lecture.setNo(no);
 		lecture.setState(state);
 		return memberDao.updateApproveLec(lecture);
+	}
+
+	@Override
+	public List<pay> selectPayByNo(HashMap<String, Integer> params) {
+		// TODO Auto-generated method stub
+		return memberDao.selectPayByNo(params);
 	}
 	
 	

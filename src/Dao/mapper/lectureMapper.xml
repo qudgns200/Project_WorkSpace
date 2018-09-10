@@ -6,9 +6,9 @@
   <mapper namespace="Dao.lectureDao">
 
 	<insert parameterType="lecture" id="insertLecture"> 
-		INSERT INTO lecture (title, genre, startDate, endDate, numberPeople, guestID, artistID, place, content, file, state, maxPeople) 
+		INSERT INTO lecture (title, genre, startDate, endDate, numberPeople, guestID, artistID, place, content, file, state, maxPeople, price) 
 		VALUES (#{title}, #{genre}, #{startDate}, #{endDate}, 0, #{guestID}, 
-				#{artistID}, #{place}, #{content}, #{file}, #{state}, #{maxPeople});
+				#{artistID}, #{place}, #{content}, #{file}, #{state}, #{maxPeople}, #{price});
 	</insert>
 	
 	<select id="selectRecentLectureA" resultType="lecture">

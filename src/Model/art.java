@@ -19,10 +19,8 @@ public class art {
 	private int state;
 	private int totalCount;
 	private String file;
-<<<<<<< HEAD
 	private String nickname;
-=======
->>>>>>> origin/master
+
 	
 	public int getNo() {
 		return no;
@@ -96,23 +94,18 @@ public class art {
 	public void setFile(String file) {
 		this.file = file;
 	}
-<<<<<<< HEAD
 	public String getNickname() {
 		return nickname;
 	}
 	public void setNickname(String nickname) {
 		this.nickname = nickname;
 	}
-=======
->>>>>>> origin/master
+
 	@Override
 	public String toString() {
 		return "art [no=" + no + ", title=" + title + ", genre=" + genre + ", content=" + content + ", sellCheck="
 				+ sellCheck + ", price=" + price + ", isCheck=" + isCheck + ", id=" + id + ", artDate=" + artDate
-<<<<<<< HEAD
 				+ ", state=" + state + ", totalCount=" + totalCount + ", file=" + file + ", nickname=" + nickname + "]";
-=======
-				+ ", state=" + state + ", totalCount=" + totalCount + ", file=" + file + "]";
->>>>>>> origin/master
+
 	}
 }

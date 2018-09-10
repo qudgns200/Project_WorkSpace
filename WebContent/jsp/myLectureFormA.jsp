@@ -79,14 +79,14 @@ var myLectureFormA = function(){ // 강의 내역 페이지 요청 함수
 					pay = "<div id='modalButton'><a href='#myModal' role='button' class='btn btn-inverse' data-toggle='modal'>결제하기</a></div>" + 
 				          "<div class='modal hide fade' id='myModal' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true' style='display: none;'>" + 
 			        	  "<div class='modal-header'>" +
-			              "<button type='button' class='close' data-dismiss='modal' aria-hidden='true'>×</button>" +
+			              "<button type='button' class='결제하기' data-dismiss='modal' aria-hidden='true'>×</button>" +
 			              "<h5 id='myModalLabel'>결제방법을 선택하세요.</h5>" +
 			        	  "</div>" +
 			       	 	  "<div class='modal-body'>" +
 			              "<input type='radio' name='payMethod' value='1'>카드결제" + 
 			              "<input type='radio' name='payMethod' value='2'>카카오페이" +
 			              "<div class='modal-footer'><button class='btn'" +
-			              "data-dismiss='modal' aria-hidden='true' onclick='moveUrl(" + attendList.no + ")'>Close</button></div></div>";
+			              "data-dismiss='modal' aria-hidden='true' onclick='moveUrl(" + attendList.no + ")'>결제하기</button></div></div>";
 				}
 				
 				str1 += '<td>' + attendList.genre + '</td><td><span>' + aTag + 

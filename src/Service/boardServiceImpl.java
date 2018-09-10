@@ -38,7 +38,7 @@ public class boardServiceImpl implements boardService{
 	@Override
 	public int deleteBoard(int no) {
 		// TODO Auto-generated method stub
-		return 0;
+		return boardDao.deleteBoard(no);
 	}
 
 	@Override
@@ -92,7 +92,7 @@ public class boardServiceImpl implements boardService{
 	@Override
 	public int deleteQna(int no) {
 		// TODO Auto-generated method stub
-		return 0;
+		return boardDao.deleteQna(no);
 	}
 
 	@Override
@@ -135,6 +135,18 @@ public class boardServiceImpl implements boardService{
 	public int selectOneById(HashMap<String, Object> params) {
 		// TODO Auto-generated method stub
 		return boardDao.selectOneById(params);
+	}
+
+	@Override
+	public int deleteBoardComment(int no) {
+		// TODO Auto-generated method stub
+		return boardDao.deleteBoardComment(no);
+	}
+
+	@Override
+	public int deleteQnaComment(int no) {
+		// TODO Auto-generated method stub
+		return boardDao.deleteQnaComment(no);
 	}
 
 }

@@ -176,16 +176,18 @@ public class boardController {
 	}
 
 	@RequestMapping("selectOneArt.do") // 작품 상세페이지로 이동
-	public String selectOneArt(@RequestParam int no, Model model, HttpSession session) {
+	public String selectOneArt(@RequestParam int no, @RequestParam(defaultValue="0") String deleteText, Model model, HttpSession session) {
 		// 해당 작품 정보와 댓글 정보를 담고 상세 페이지로 이동함
 		// art 객체 : 상세 정보
 		// comment 객체 : 해당 작품에 달린 댓글들
 		String id = (String)session.getAttribute("id");
 		art art = new art();
+
 		art = artService.selectOneArt(no);
 		model.addAttribute(art);
 		model.addAttribute("currentId", id);
-		
+		model.addAttribute("deleteText", deleteText);
+
 		if(id.equals(art.getId()))
 			model.addAttribute("sameId", 1);
 		
@@ -235,8 +237,6 @@ public class boardController {
 		
 	}	
 
-	}
-
 	@RequestMapping("artPayForm.do") // 결제 폼 요청
 	public String artPayForm(HttpServletRequest request, HttpSession session, Model model) throws ParseException {
 
@@ -247,11 +247,12 @@ public class boardController {
 		art art = new art();
 		SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd");
 		int no = Integer.parseInt(request.getParameter("no"));
+		Date date1 = dateformat.parse((request.getParameter("artDate")));
+		int price = Integer.parseInt(request.getParameter("price"));
+		
 		art.setNo(no);
 		art.setContent(request.getParameter("conetent"));
-		Date date1 = dateformat.parse((request.getParameter("artDate")));
 		art.setArtDate(date1);
-		int price = Integer.parseInt(request.getParameter("price"));
 		art.setPrice(price);
 		art.setId("id");
 		art.setGenre("genre");
@@ -282,21 +283,26 @@ public class boardController {
 
 		pay pay = new pay();
 		int no = Integer.parseInt(request.getParameter("no"));
+		int isCheck = Integer.parseInt(request.getParameter("isCheck"));
+		int amount = Integer.parseInt(request.getParameter("amount"));
+		
 		pay.setNo(no);
 		pay.setId(request.getParameter("customer_uid"));
-		int isCheck = Integer.parseInt(request.getParameter("isCheck"));
 		pay.setIsCheck(isCheck);
-		pay.setIsCheck(0);
 		pay.setAddr(request.getParameter("buyer_addr"));
 		pay.setPhone(request.getParameter("buyer_tel"));
 		pay.setName(request.getParameter("buyer_name"));
-		int amount = Integer.parseInt(request.getParameter("amount"));
 		pay.setTotalPrice(amount);
 		pay.setPayMethod(1);
 		pay.setState(1);
 		pay.setOrderNumber(request.getParameter("merchant_uid"));
 
+		System.out.println(pay);
+		
 		int result = artService.insertArtPay(pay);
+		
+		System.out.println("result : " + result);
+		
 		if(result==1) {
 			art art = new art();
 			art = artService.selectOneArt(no);
@@ -322,7 +328,6 @@ public class boardController {
 		lecture lecture = new lecture();
 		lecture = lectureService.selectOneLecture(no);
 
-
 		// member 객체 생성하여 주문자 정보 가져오기
 		member member = new member();
 		member = memberService.selectOneMember(id);
@@ -333,12 +338,12 @@ public class boardController {
 		String orderNumber = "lecture" + no + "_" + id + "_" + new Date().getTime();
 
 		// 각 정보들 모델에 담아서 결제 폼으로 이동!
-//		model.addAttribute(member);
+		model.addAttribute(member);
 		model.addAttribute(lecture);
 		model.addAttribute("orderNumber", orderNumber);
 		model.addAttribute("payMethod", payMethod);
 
-		return "artPayForm";
+		return "lecturePayForm";
 	}
 
 	@RequestMapping("lecturePay.do") // 결제 액션 실행
@@ -627,7 +632,10 @@ public class boardController {
 	}
 
 	@RequestMapping("deleteBoard.do")
-	public void deleteBoard() {
+	public String deleteBoard(@RequestParam int no) {
+		boardService.deleteBoard(no);
+		boardService.deleteBoardComment(no);
+		return "redirect:boardForm.do";
 	}
 
 	@RequestMapping("boardComment.do")
@@ -732,7 +740,10 @@ public class boardController {
 	}
 
 	@RequestMapping("deleteQna.do")
-	public void deleteQna() {
+	public String deleteQna(@RequestParam int no) {
+		boardService.deleteQna(no);
+		boardService.deleteQnaComment(no);
+		return "redirect:qnaForm.do";
 	}
 
 	@RequestMapping("qnaComment.do")
