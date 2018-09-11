@@ -12,7 +12,6 @@ $(document).ready(function() {
             // Old IE 파일명 추출
             var filename = $(this).val().split('/').pop().split('\\').pop();
         };
-
         $(this).siblings('.upload-name').val(filename);
     });
 
@@ -20,6 +19,8 @@ $(document).ready(function() {
     var imgTarget = $('.preview-image .upload-hidden');
 
     imgTarget.on('change', function(){
+    	
+    	$('#originalThumb').hide();			// 추가 (썸네일 변경시, 원래 썸네일 이미지 숨기기)
         var parent = $(this).parent();
         parent.children('.upload-display').remove();
 

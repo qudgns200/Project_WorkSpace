@@ -200,19 +200,14 @@ public class artistController {
 
 		memberService.insertArt(art, ufile);
 
-		//		 알림 소스 추가
+		//	알림 소스 (09.10 수정) 
 		HashMap<String, Object> params = new HashMap<>();
 		params.put("id", id);
-		HashMap<String, Object> followerList = artistService.selectFollower(params, 0);
-		System.out.println(followerList);
-//		for (int i = 0; i < followerList.size(); i++) {
-//			mainService.insertAlarm("writeArt", followerList.get("id")., id);
-//		}
-		
-//		for (String str : followerList) {			// following하는 아티스트가 글 작성시, follower들에게 알림 보내기
-//			mainService.insertAlarm("writeArt", str, id);
-//		}
-		// 알림 소스
+		List<String> followerList = artistDao.selectFollower(params);
+		for (String str : followerList) {			// following하는 아티스트가 글 작성시, follower들에게 알림 보내기
+			mainService.insertAlarm("writeArt", str, id);
+		}
+		// 알림 소스 (09.10 수정)
 
 		return "redirect:artistMyPage.do";
 	}
@@ -291,11 +286,20 @@ public class artistController {
 	public void deleteLikes() {}
 
 	@RequestMapping("updateArtForm.do") 
-	public void updateArtForm() {}
+	public ModelAndView updateArtForm(int no) {
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("art", artService.selectOneArt(no));
+		mav.setViewName("updateArtForm");
+		return mav;
+	}
 	
 	@RequestMapping("updateArt.do") 
 	public void updateArt() {}
+<<<<<<< HEAD
 	
+=======
+
+>>>>>>> origin/master
 	@RequestMapping("deleteArt.do")
 	public String deleteArt(@RequestParam int no, HttpSession session) {
 		String id = (String)session.getAttribute("id");
