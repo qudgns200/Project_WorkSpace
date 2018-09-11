@@ -27,9 +27,7 @@ public class artistServiceImpl implements artistService{
 	}
 
 	@Override
-<<<<<<< HEAD
 	public HashMap<String, Object> selectFollower(HashMap<String, Object> params, int page) {
-		
 		HashMap<String, Object> result = new HashMap<>();
 		
 		if(page != 0) {
@@ -44,17 +42,23 @@ public class artistServiceImpl implements artistService{
 		result.put("followerList", artistDao.selectFollower(params));
 		
 		return result;
-=======
-	public List<String> selectFollower(String id) {
-		// TODO Auto-generated method stub
-		return artistDao.selectFollower(id);
->>>>>>> origin/master
 	}
 
 	@Override
-	public List<String> selectFollowing(String id) {
+	public HashMap<String, Object> selectFollowing(HashMap<String, Object> params, int page) {
 		// TODO Auto-generated method stub
-		return artistDao.selectFollowing(id);
+		HashMap<String, Object> result = new HashMap<>();
+		
+		result.put("current", page);
+		result.put("start", mainService.getStartPage(page));
+		result.put("end", mainService.getEndPage(page));
+		result.put("last", getFollowingLastPage(params));
+		
+		params.put("skip", mainService.getSkip(page, 10));
+		params.put("qty", 10);
+		result.put("followingList", artistDao.selectFollowing(params));
+		
+		return result;
 	}
 
 	@Override
@@ -82,15 +86,15 @@ public class artistServiceImpl implements artistService{
 	}
 
 	@Override
-	public int deleteLikesArt(HashMap<String, Object> params) {
+	public int deleteLikesArt(likes likes) {
 		// TODO Auto-generated method stub
-		return artistDao.deleteLikesArt(params);
+		return artistDao.deleteLikesArt(likes);
 	}
 
 	@Override
-	public int deleteLikesLecture(HashMap<String, Object> params) {
+	public int deleteLikesLecture(likes likes) {
 		// TODO Auto-generated method stub
-		return artistDao.deleteLikesLecture(params);
+		return artistDao.deleteLikesLecture(likes);
 	}
 
 	@Override
@@ -132,5 +136,11 @@ public class artistServiceImpl implements artistService{
 	public int getFollowerLastPage(HashMap<String, Object> params) {
 		// TODO Auto-generated method stub
 		return (artistDao.getFollowerCount(params) - 1) / 10 + 1;
+	}
+	
+	@Override
+	public int getFollowingLastPage(HashMap<String, Object> params) {
+		// TODO Auto-generated method stub
+		return (artistDao.getFollowingCount(params) - 1) / 10 + 1;
 	}
 }

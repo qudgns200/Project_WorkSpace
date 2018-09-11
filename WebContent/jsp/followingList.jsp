@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>팔로워 목록</title>
+<title>팔로잉 목록</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <!-- CSS
@@ -49,34 +49,34 @@
 function getList() {
 	$.ajax({
 		type : 'get',
-		url : 'followerList.do',
-		data : {'page' : $('#page').val(), 'follower' : $('#follower').val()},
+		url : 'followingList.do',
+		data : {'page' : $('#page').val(), 'following' : $('#following').val()},
 		dataType : 'json',
 		success : function(data) {
 			$('#tbody').html('');
 			$('#memberPaging').html('');
-			$.each(data.follower.followerList, function(i, follower) {
+			$.each(data.following.followingList, function(i, following) {
 				$('#tbody').append("<tr>"
-								+ "<td><a href='#' id='all'>" + follower + "</a></td>"
-								+ "<td><button>메시지</buttion></td>"
+								+ "<td><a href='#' class='all'>" + following + "</a></td>"
+								+ "<td><button class='isFrom'>메시지</buttion></td>"
 								+ "</tr>");
 			});
 			var htmlStr = '';
 			htmlStr += '<ul>';
-				if(data.follower.start != 1) {
+				if(data.following.start != 1) {
 					htmlStr += '<li><a href="javascript:goPage(1);">처음</a>'
-								+ '<a href="javascript:goPage('+ (data.follower.start - 10) +');">이전</a></li>';
+								+ '<a href="javascript:goPage('+ (data.following.start - 10) +');">이전</a></li>';
 				}
-				for(i = data.follower.start; i <= data.follower.end; i++) {
-					if(i == data.follower.current) {
+				for(i = data.following.start; i <= data.following.end; i++) {
+					if(i == data.following.current) {
 						htmlStr += '<li class="active"><a>' + i + '</a></li>';
-					} else if(i != data.follower.current && i <= data.follower.last) {
+					} else if(i != data.following.current && i <= data.following.last) {
 						htmlStr += '<li><a href="javascript:goPage('+ i +');">' + i + '</a></li>';
 					}
 				}
-				if((data.follower.end) < (data.follower.last)) {
-					htmlStr += '<li><a href="javascript:goPage('+ (data.follower.end + 1) +');">다음</a>'
-					+ '<a href="javascript:goPage('+ data.follower.last +');">끝</a></li>';
+				if((data.following.end) < (data.following.last)) {
+					htmlStr += '<li><a href="javascript:goPage('+ (data.following.end + 1) +');">다음</a>'
+					+ '<a href="javascript:goPage('+ data.following.last +');">끝</a></li>';
 				}
 			htmlStr += '</ul>'
 			$('#memberPaging').append(htmlStr);
@@ -94,6 +94,19 @@ function goPage(pageNum) {
 
 $(document).ready(function() {
 	getList();
+	
+	$(document).on("click", ".isFrom", function() {
+		var width = 800,
+		height = 500;
+		var left = (screen.availWidth - width) / 2;
+		var top = (screen.availHeight - height) / 2;
+		var specs = "width=" + width;
+		specs += ",height=" + height;
+		specs += ",left=" + left;
+		specs += ",top=" + top;
+		
+		window.open("logMessagePage.do?isFrom=" + $('.all').eq($(".isFrom").index(this)).text(), "팝업", specs);
+	});
 });
 </script>
 </head>
@@ -109,7 +122,7 @@ $(document).ready(function() {
 		<div class="row">
 
 			<div class="span12">
-				<h2 class="title-bg">팔로워 목록</h2>
+				<h2 class="title-bg">팔로잉 목록</h2>
 			</div>
 
 
@@ -122,9 +135,10 @@ $(document).ready(function() {
 						<div class="container">
 							<!--                             <div class="row the-grid">-->
 							<div class="col-md-12">
-								<h3>팔로워 목록</h3>
+								<h3>팔로잉 목록</h3>
 								<div class="table-responsive">
 									<hr>
+
 									<div class="fixed-table-container">
 										<div class="fixed-table-body">
 											<!-- <div class="table-responsive">-->
@@ -162,7 +176,7 @@ $(document).ready(function() {
 
 		<form>
 			<input type="hidden" id="page" value="1">
-			<input type="hidden" id="follower" value="${follower }">
+			<input type="hidden" id="following" value="${following }">
 		</form>
 </body>
 </html>

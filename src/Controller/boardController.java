@@ -188,6 +188,7 @@ public class boardController {
 		model.addAttribute(art);
 		model.addAttribute("currentId", id);
 		model.addAttribute("deleteText", deleteText);
+		model.addAttribute("likesCheck", artistService.selectLikesArt(id));
 
 		if(id.equals(art.getId()))
 			model.addAttribute("sameId", 1);
