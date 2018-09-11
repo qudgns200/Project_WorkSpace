@@ -270,18 +270,31 @@ public class artistController {
 		
 		return null;
 	}
-
 	
-//	@RequestMapping("followingList.do")
-//	public ModelAndView followingList(HttpSession session) {
-//		ModelAndView mav = new ModelAndView();
-//		String id = (String) session.getAttribute("id");
-//
-//		mav.addObject("followingList", artistService.selectFollowing(id));
-//		mav.setViewName("searchMessage");
-//
-//		return mav;
-//	}
+	@RequestMapping("followingList.do")
+	   public String followingList(HttpServletRequest req, HttpServletResponse resp, String following, Model model) 
+	         throws IOException {
+	      if(req.getParameter("page") == null) {
+	         model.addAttribute("following", following);
+	         
+	         return "followingList";
+	      }
+
+	      JSONObject jsonObject = new JSONObject();
+	      int page = Integer.parseInt(req.getParameter("page"));
+	      String id = req.getParameter("following");
+	      HashMap<String, Object> params = new HashMap<>();
+	      
+	      params.put("id", id);
+	      
+	      jsonObject.put("following", artistService.selectFollowing(params, page));
+	      
+	      resp.setContentType("text/html; charset=UTF-8");
+	      PrintWriter pw = resp.getWriter();
+	      pw.println(jsonObject);
+	      
+	      return null;
+	}
 
 	@RequestMapping("insertLikes.do") 
 	public String insertLikes(HttpSession session, int no, int isCheck) {

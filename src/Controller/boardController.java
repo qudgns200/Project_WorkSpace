@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import Dao.artistDao;
 import Model.art;
 import Model.artComment;
 import Model.attendants;
@@ -60,6 +61,10 @@ public class boardController {
 
 	@Autowired
 	private mainService mainService;
+	
+	@Autowired
+	private artistDao artistDao;
+	
 
 	@RequestMapping("artistForm.do")
 	public ModelAndView artistForm() {
@@ -503,13 +508,13 @@ public class boardController {
 		lecture.setPrice(price);
 		lectureService.insertLecture(lecture, ufile);
 
-		// 알림 소스 추가
-		// List<String> followerList = artistService.selectFollower(id);
-		// for (String str : followerList) { // following하는 아티스트가 강의 개설시, follower들에게 알림
-		// 보내기
-		// mainService.insertAlarm("writeLecture", str, id);
-		// }
-		// 알림 소스
+			//		알림 소스 (09.10 수정) 
+			HashMap<String, Object> params = new HashMap<>();
+			params.put("id", id);
+			List<String> followerList = artistDao.selectFollower(params);
+			for (String str : followerList) {			// following하는 아티스트가 글 작성시, follower들에게 알림 보내기
+				mainService.insertAlarm("writeLecture", str, id);
+			}
 
 		return "redirect:myLectureFormA0.do";
 	}
