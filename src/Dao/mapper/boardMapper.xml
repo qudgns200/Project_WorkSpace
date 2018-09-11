@@ -24,8 +24,8 @@
 	</select>
 
 	<insert id="insertBoardComment" parameterType="boardComment">
-		insert into boardComment(no, id, content, time, groupNo, childNode, groupOrder)
-		values (#{no}, #{id}, #{content}, default, #{groupNo}, #{childNode}, #{groupOrder})
+		insert into boardComment(no, id, content, time, groupNo, childNode, groupOrder, writer)
+		values (#{no}, #{id}, #{content}, default, #{groupNo}, #{childNode}, #{groupOrder}, #{writer})
 	</insert>
 	
 	<select id="selectBoardComment" parameterType="java.util.HashMap" resultType="boardComment">
@@ -55,8 +55,8 @@
 	</select>
 	
 	<insert id="insertQnaComment" parameterType="qnaComment">
-		insert into qnaComment(no, id, content, time, groupNo, childNode, groupOrder)
-		values (#{no}, #{id}, #{content}, default, #{groupNo}, #{childNode}, #{groupOrder})
+		insert into qnaComment(no, id, content, time, groupNo, childNode, groupOrder, writer)
+		values (#{no}, #{id}, #{content}, default, #{groupNo}, #{childNode}, #{groupOrder}, #{writer})
 	</insert>
 	
 	<select id="selectQnaComment" parameterType="java.util.HashMap" resultType="qnaComment">

@@ -9,8 +9,6 @@
 <title>자유글쓰기</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-
-
 <!-- CSS
 ================================================== -->
 <link href='http://fonts.googleapis.com/css?family=Oswald'
@@ -60,7 +58,10 @@ $(document).ready(function(){
 	var modalBody="";
 	var modalButton="";
 	
-	if($("#currentId").val()!='${qna.id }') {
+	if($("#currentId").val()=='${qna.id }' || $("#currentId").val()=='admin') {
+		 $("#modifyBoard").show();
+		 $("#deleteBoard").show();
+	} else {
 		 $("#modifyBoard").hide();
 		 $("#deleteBoard").hide();
 	}
@@ -185,13 +186,13 @@ $(document).ready(function(){
 				</div>
 			</div>
 		</div>
-		
-		<!-- Footer Area
-        ================================================== -->
-		<%@include file="footer.jsp"%>
 		</div>
 		<!-- /.row -->
 	</div>
-<!-- End Container -->
+<!-- End Container -->		
+		<!-- Footer Area
+        ================================================== -->
+		<%@include file="footer.jsp"%>
+
 </body>
 </html>

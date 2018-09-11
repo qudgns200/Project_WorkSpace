@@ -14,7 +14,7 @@ public interface lectureService {
 
 	public	HashMap<String, Object>	searchLecture	(HashMap<String, Object>params, int page);	//수정
 	public	int	insertLecture	(lecture lecture, MultipartFile file);
-	public	int	updateLecture	(int no);
+	public	int	updateLecture	(lecture lecture, MultipartFile file);
 	public	int	deleteLecture	(int no);
 	public	lecture	selectOneLecture	(int no);
 	public	int	insertAttendants	(int no, String id);
@@ -30,5 +30,7 @@ public interface lectureService {
 	public	List<lectureComment>	selectLectureComment (HashMap<String, Object> params);
 	public	lectureComment	selectLectureLatestcomment();
 	public List<attendants> selectAttendants(int no);
+	
+	public int deleteLectureComment(int no);
 	
 }

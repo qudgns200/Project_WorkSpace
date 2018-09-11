@@ -45,7 +45,7 @@
 <script src="js/jquery.prettyPhoto.js"></script>
 <script src="js/jquery.flexslider.js"></script>
 <script src="js/jquery.custom.js"></script>
-<script src="js/comment.js?ver=0.27"></script>
+<script src="js/comment.js?ver=0.28"></script>
 <style>
 #map img {
 	max-width: none;
@@ -136,8 +136,8 @@ $(function(){
 	</div>
 </li>
      </ul>
-		<!-- 모집 중일 때만 신청 버튼 생성 -->
-     <c:if test="${lecture.state == 1 }"> 
+<!-- 모집 중일 때만 신청 버튼 생성 -->
+     <c:if test="${lecture.state == 1 } &&  ${currentId != lecture.artistID  }"  > 
         <div id="modalButton">
         	<a href="#myModal" role="button" class="btn btn-inverse" data-toggle="modal">강의 신청</a>
         </div>
@@ -156,9 +156,37 @@ $(function(){
             <button class="btn" data-dismiss="modal" aria-hidden="true">취소</button>
         </div>
  		</div>   	
-<!--  모달 사용 끗!!! -->
      </c:if>
-     
+<!--  신청 모달 사용 끗!!! -->
+
+<!-- 글 작성자가 수정하기 위한 버튼 -->
+     <c:if test="${currentId == lecture.guestID  }"  > 
+       		<button class="btn btn-inverse" onclick="location.href='updateLectureForm.do?no=${lecture.no}'">수정</button>
+     </c:if>
+<!--  수정 모달 사용 끗!!! --> 
+
+<!-- 글 작성자가 강의 삭제하기 위한 모달 -->
+     <c:if test="${currentId == lecture.guestID  }"  > 
+        <div id="modalDeleteButton">
+        	<a href="#myModalDelete" role="button" class="btn btn-inverse" data-toggle="modal">삭제</a>
+        </div>
+        <div class="modal hide fade" id="myModalDelete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+        <div class="modal-body">
+            <table class="display" id="Tables">
+            	<thead>
+            		<tr>
+            			<th style="background-color: #eeeeee; text-align: center;">삭제하시겠습니까?</th>
+            		</tr>
+            	</thead>
+            </table>
+        </div>
+        <div class="modal-footer">
+       		<button class="btn btn-inverse" onclick="location.href='deleteLecture.do?no=${lecture.no}'">삭제</button>
+            <button class="btn" data-dismiss="modal" aria-hidden="true">취소</button>
+        </div>
+ 		</div>   	
+     </c:if>
+<!--  삭제 모달 사용 끗!!! -->      
 </div>
 </div>
 
@@ -194,10 +222,10 @@ $(function(){
 				</section>
 			</div><!-- End gallery-single-->
 		</div><!-- End container row -->
-
+	</div> <!-- End Container -->
 <!--    Footer section -->
 <%@include file="footer.jsp"%>
-	</div> <!-- End Container -->
+
 </body>
 
 </html>

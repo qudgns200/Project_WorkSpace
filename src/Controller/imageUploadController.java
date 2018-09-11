@@ -34,8 +34,6 @@ public class imageUploadController {
 	         //파일 기본경로
 	         String dftFilePath = request.getSession().getServletContext().getRealPath("/");
 	         
-	         System.out.println("기본경로 : " + dftFilePath);
-	         
 //	         String dftFilePath = "C:/Project/Project/WebContent/";
 	         //파일 기본경로 _ 상세경로
 	         String filePath = dftFilePath + "resources" + File.separator + "photoUpload" + File.separator;
@@ -74,8 +72,6 @@ public class imageUploadController {
 	         sFileInfo += "&sFileName="+ filename;;
 //	         sFileInfo += "&sFileURL="+"/Project/WebContent/resources/photoUpload/"+realFileNm;
 	         sFileInfo += "&sFileURL=" + "http://localhost:8080/Project/resources/photoUpload/" +realFileNm;
-	         
-	         System.out.println(sFileInfo);
 	         
 	         PrintWriter out = response.getWriter();
 

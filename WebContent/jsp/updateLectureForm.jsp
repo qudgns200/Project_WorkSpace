@@ -1,11 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    <%@ taglib prefix="c"   uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="c"   uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title>강의 신청 페이지</title>
+<title>강의 수정 페이지</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 
@@ -54,6 +55,11 @@
 ================================================== -->
 <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css"/>
 
+<!-- calendar
+================================================== -->
+<link rel="stylesheet" href="css/calendar.css"/>
+<script type="text/javascript" src="js/calendar.js?ver=0.1"></script>
+
 <!--  권한 체크하여 강사 선택 버튼 숨기기 -->
 <!-- ======================================================== -->
 <script type="text/javascript">
@@ -86,8 +92,8 @@ $(document).ready(function() {
 <!-- ======================================================== -->
 <script type="text/javascript">
 function addArtist(name) {
+
 	 $("#selectedArtist").val(name);
-	 $("#artistID").val(name);
 }
 </script>
 
@@ -106,13 +112,13 @@ function addArtist(name) {
     <div class="row"><!--Container row-->
         
         <div class="span12">
-				<h2 class="title-bg">강의 개설 페이지</h2>
+				<h2 class="title-bg">강의 수정 페이지</h2>
 		</div>
         
         <div class="span4 contact">
 				<!--Begin page content column-->
-				<p class="lead">개설을 원하는 하는 강의를 직접 신청하세요.</p>			
-				<div class="alert alert-block">정확한 커리큘럼이 정해진 강의만 신청해주세요.</div>
+				<p class="lead">수정할 항목들에 대한 내용을 입력해주세요.</p>			
+				<div class="alert alert-block"></div>
         
                <input type="hidden" id="checkIsCheck" value="${isCheck}">
                 
@@ -122,7 +128,7 @@ function addArtist(name) {
         	<a href="#myModal" role="button" class="btn btn-inverse" data-toggle="modal">강사 선택</a>
         </div>
         <div>
-        <input type="text" id='selectedArtist' name="artistID">
+        <input type="text" id='selectedArtist' name="artistID" value="${lecture.artistID }">
          
         </div>
         </div>
@@ -142,7 +148,7 @@ function addArtist(name) {
             	<tbody>
             		<c:forEach items="${artistList }" var="list">
             		<tr class="odd gradeX">
-                    	<td><a data-dismiss="modal" onclick="addArtist('${list.id }')" >${list.id }</a></td>
+                    	<td><a  data-dismiss="modal" onclick="addArtist('${list.name }')" >${list.name }</a></td>
                     </tr> 
                     </c:forEach>
             	</tbody>
@@ -158,17 +164,16 @@ function addArtist(name) {
 
 <!-- 			강의관련 내용 입력 부분 -->
            <div class="span8 container">
-            <form action="addLecture.do" id="contact-form" enctype=multipart/form-data method="post">
-                <input type="hidden" id="artistID" name="artistID">
+            <form action="updateLecture.do" id="contact-form" enctype=multipart/form-data method="post">
+               
                 <div class="input-prepend">
 				    <span class="add-on"><i class="icon-pencil"></i></span>
-				    <input class="span6" id="prependedInput" name="title" type="text" size="16" style="height: 20px;"
-							placeholder="강의명을 입력하세요.">
+				    <input class="span6" id="prependedInput" name="title" type="text" size="16" style="height: 20px;" placeholder="강의명을 입력하세요." value="${lecture.title }">
 				</div>                 
                   
                 <div class="input-prepend">
 				    <span class="add-on"><i class="icon-map-marker"></i></span>					
-							<input class="span5" type="text" name="place" id="sample5_address" style="height: 20px;" placeholder="강의 장소를 입력하세요.">
+							<input class="span5" type="text" name="place" id="sample5_address" style="height: 20px;" placeholder="강의 장소를 입력하세요." value="${lecture.place }">
                             <input class="btn btn-small btn-inverse" type="button" onclick="sample5_execDaumPostcode()" value="주소 검색" style="text-align: center; margin: 0 auto; height: 30px;"><br>
                             <div id="map" style="width:580px;height:250px;margin-top:10px;display:none"></div>
 
@@ -254,9 +259,12 @@ function addArtist(name) {
                 <div class="input-prepend">
                     <div class="input-group date">
                         <span class="add-on"><i class="icon-calendar"></i></span>
-                        <input type="text" class="form-control" id="datepicker1" name="startDate" style="height: 20px;" placeholder="개강일 선택">
+                        <input type="text" class="form-control" id="datepicker1" name="startDate" style="height: 20px;" placeholder="개강일 선택"
+                        value="<fmt:formatDate pattern="yyyy-MM-dd" value="${lecture.startDate}"/>">
+                        			
                         <span class="add-on"><i class="icon-calendar"></i></span>
-                        <input type="text" class="form-control" id="datepicker2" name="endDate" style="height: 20px;" placeholder="종강일 선택">                         
+                        <input type="text" class="form-control" id="datepicker2" name="endDate" style="height: 20px;" placeholder="종강일 선택"
+                        value="<fmt:formatDate pattern="yyyy-MM-dd" value="${lecture.endDate}"/>">                         
                     </div>  
                     <script>	
   							var rangeDate = 31; // set limit day
@@ -333,34 +341,39 @@ function addArtist(name) {
                                 
                 <div class="input-prepend">
                 	<span class="add-on"><i class="icon-user"></i></span>
-                    <input class="span6" id="prependedInput" name="maxPeople" size="16" type="text" style="height: 20px;" placeholder="모집할 인원을 입력하세요.">
-                </div>    
-                
+                    <input class="span6" id="prependedInput" name="maxPeople" size="16" type="text" style="height: 20px;" placeholder="모집할 인원을 입력하세요." value="${lecture.maxPeople }">
+                </div>                                                   
                 <div class="input-prepend">
                 	<span class="add-on"><i class="icon-user"></i></span>
-                    <input class="span6" id="prependedInput" name="price" size="16" type="text" style="height: 20px;" placeholder="수강료를 입력하세요.">
-                </div>                                                
-                
+                    <input class="span6" id="prependedInput" name="price" size="16" type="text" style="height: 20px;" placeholder="수강료를 입력하세요." value="${lecture.price }">
+                </div>  
                 <div class="input-prepend">
 					<span class="add-on"><i class="icon-pencil"></i>강의내용</span><br>						
-               		<textarea id="content" name="content" placeholder="작품내용을 입력하세요." style="width: 400px; height: 400px;"></textarea>
+               		<textarea id="content" name="content" placeholder="작품내용을 입력하세요." style="width: 400px; height: 400px;">${lecture.content }</textarea>
                 </div>
 				
 				
 				<div class="row">
 					<div class="span7">
 				<!-- 썸네일 이미지 업로드 부분 -->
+
 				<div class="filebox bs3-primary preview-image">
-                   <input class="upload-name" value="대표이미지를 설정하세요!!" disabled="disabled" style="width: 200px;">
+				 <div id="originalThumb" 
+                  style="display: inline-block; width: 54px; padding: 2px; vertical-align: middle;
+                   border: 1px solid #ddd; border-radius: 5px; background-color: #fff;">
+                  <img src="download.do?no=${lecture.no }&lecture='a'" style="display: block; max-width: 100%; width: 100%/9; height: auto;">
+                  </div>
+                   <input class="upload-name" value="${lecture.file }" disabled="disabled" style="width: 200px;">
                    
                     <label for="input_file">업로드</label> 
-                    <input type="file" id="input_file" class="upload-hidden" name="ufile"> 
+                    <input type="file" id="input_file" class="upload-hidden" name="ufile" value="${lecture.file }"> 
                 </div>
 				<!-- ====================================================== -->
-				
-				
+						<input type="hidden" name="state" value="${lecture.state }">
+						<input type="hidden" name="numberPeople" value="${lecture.numberPeople }">	
+						<input type="hidden" name="no" value="${lecture.no }">
 						<input type="button" class="btn btn-warning pull-right" value="취소">
-						<input type="submit" id="savebutton" class="btn btn-success pull-right" value="전송">				
+						<input type="submit" id="savebutton" class="btn btn-success pull-right" value="수정">				
 				</div>
 				</div>
             </form>

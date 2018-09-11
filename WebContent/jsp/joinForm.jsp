@@ -374,22 +374,7 @@ $(document).ready(function() {
 						<div class="input-prepend">
 							<div class="input-group date">
 								<span class="add-on"><i class="icon-calendar"></i></span> 
-<<<<<<< HEAD
 								<input type="text" name="birth" placeholder="생년월일을 입력해주세요." value=""/>
-=======
-								<input type="text" id="datepicker1" name="birth" placeholder="생년월일을 입력해주세요."/>
-  								<script>
-  								$( function() {
-    								$( "#datepicker1" ).datepicker({
-    									changeMonth: true,
-    									changeYear: true,
-    									nextText: '다음 달',
-    									prevText: '이전 달',
-    									dayNamesShort: [ "일", "월", "화", "수", "목", "금", "토" ]
-    								});
-  								} );
-  								</script>
->>>>>>> origin/master
 							</div>
 						</div>
 						<span class="birthCheck"></span>
@@ -539,22 +524,7 @@ $(document).ready(function() {
 						<div class="input-prepend">
 							<div class="input-group date">
 								<span class="add-on"><i class="icon-calendar"></i></span> 
-<<<<<<< HEAD
 								<input type="text" name="birth" placeholder="생년월일을 입력해주세요."/>
-=======
-								<input type="text" id="datepicker2" name="birth" placeholder="생년월일을 입력해주세요."/>
-  								<script>
-  								$( function() {
-    								$( "#datepicker2" ).datepicker({
-    									changeMonth: true,
-    									changeYear: true,
-    									nextText: '다음 달',
-    									prevText: '이전 달',
-    									dayNamesShort: [ "일", "월", "화", "수", "목", "금", "토" ]
-    								});
-  								} );
-  								</script>
->>>>>>> origin/master
 							</div>
 						</div>
 						<span class="birthCheck"></span>
@@ -572,17 +542,9 @@ $(document).ready(function() {
 <!-- 						</div> -->
 						<!-- 썸네일 이미지 업로드 부분 -->
 						<div class="filebox bs3-primary preview-image">
-<<<<<<< HEAD
                             <input class="upload-name" value="프로필사진" disabled="disabled" style="width: 200px;">
-
                             <label for="input_file">업로드</label> 
                           <input type="file" id="input_file" class="upload-hidden" name="uProfile"> 
-=======
-                            <input class="upload-name" value="대표이미지를 설정하세요!!" disabled="disabled" style="width: 200px;">
-
-                            <label for="input_file">업로드</label> 
-                          <input type="file" id="input_file" class="upload-hidden" name="uProile"> 
->>>>>>> origin/master
                         </div>
 						<!-- ====================================================== -->
 						
@@ -590,11 +552,7 @@ $(document).ready(function() {
 						
 						<div class="input-prepend">
 							<span class="add-on"> <i class="icon-user"></i>
-<<<<<<< HEAD
 							</span> <input name="uFile" type="file">
-=======
-							</span> <input class="uProfile" name="uFile" type="file">
->>>>>>> origin/master
 						</div>	
 							<br>
 

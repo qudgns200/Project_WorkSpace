@@ -48,8 +48,8 @@
 	</insert>
 	
 	<insert id="insertArtComment" parameterType="artComment">
-		insert into artComment(no, id, content, time, groupNo, childNode, groupOrder)
-		values (#{no}, #{id}, #{content}, default, #{groupNo}, #{childNode}, #{groupOrder})
+		insert into artComment(no, id, content, time, groupNo, childNode, groupOrder, writer)
+		values (#{no}, #{id}, #{content}, default, #{groupNo}, #{childNode}, #{groupOrder}, #{writer})
 	</insert>
 
 	<select id="selectArtComment" parameterType="java.util.HashMap" resultType="artComment">
@@ -110,6 +110,10 @@
 	<update id="updateGroupOrder" parameterType="java.util.HashMap">
 		update ${comment} set groupOrder = groupOrder + 1 where groupNo = #{groupNo} and groupOrder <![CDATA[>=]]> #{groupOrder};
 	</update>
+	
+	<delete id="deleteArtComment" parameterType="int">
+		delete from artComment where no=#{no};
+	</delete>
 
 </mapper>
 

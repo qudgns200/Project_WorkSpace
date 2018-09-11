@@ -33,8 +33,8 @@
 	crossorigin="anonymous"></script>
 <script src="js/bootstrap.js"></script>
 <script src="js/jquery.custom.js"></script>
+<script src="js/comment.js?ver=0.6"></script>
 
-<script src="js/comment.js?ver=0.4"></script>
 <script type="text/javascript">
 /**
  * 초기 페이지 로딩시 댓글 불러오기
@@ -164,7 +164,6 @@ function moveUrl(num) {
     	</div>
 	<br>
   
-
 				<!-- comment Area
         ================================================== -->
 				<section class="comments span12">

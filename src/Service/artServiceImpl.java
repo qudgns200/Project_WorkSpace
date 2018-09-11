@@ -118,5 +118,11 @@ public class artServiceImpl implements artService{
 	public int updateGroupOrder(HashMap<String, Object> params) {
 		return artDao.updateComment(params);
 	}
+
+	@Override
+	public int deleteArtComment(int no) {
+		// TODO Auto-generated method stub
+		return artDao.deleteArtComment(no);
+	}
 	
 }

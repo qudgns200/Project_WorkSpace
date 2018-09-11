@@ -25,6 +25,7 @@ import Dao.artistDao;
 import Model.art;
 import Model.follow;
 import Model.pay;
+import Service.artService;
 import Service.artistService;
 import Service.mainService;
 import Service.memberService;
@@ -43,6 +44,9 @@ public class artistController {
 	
 	@Autowired
 	artistDao artistDao;
+	
+	@Autowired
+	artService artService;
 		
 	//아티스트 개인 페이지 이동 (아티스트용)
 	@RequestMapping("artistMyPage.do") 
@@ -292,8 +296,33 @@ public class artistController {
 	@RequestMapping("updateArt.do") 
 	public void updateArt() {}
 	
-	@RequestMapping("deleteArt.do") 
-	public void deleteArt() {}
+	@RequestMapping("deleteArt.do")
+	public String deleteArt(@RequestParam int no, HttpSession session) {
+		String id = (String)session.getAttribute("id");
+		List<pay> payList = new ArrayList<pay>();
+
+		HashMap<String, Integer> params = new HashMap<String, Integer>();
+		params.put("no", no);
+		params.put("isCheck", 0);
+
+		payList = memberService.selectPayByNo(params);
+
+		if (payList != null) {
+			for (int i = 0; i < payList.size(); i++) {
+				if (payList.get(i).getIsCheck() != 5) {
+					return "redirect:selectOneArt.do?no=" + no + "&deleteText=1";
+				}
+			}
+		}
+		
+		int result = memberService.deleteArt(no, id);
+
+		if(result==1) {
+			artService.deleteArtComment(no);
+			return "redirect:artForm.do";
+		}
+		else return "redirect:selectOneArt.do?no=" + no;
+	}
 	
 	@RequestMapping("searchID.do") 
 	public void searchID() {}
@@ -317,32 +346,6 @@ public class artistController {
   			mav.setViewName("artistPage");
   			return mav;
   		}
-
-	@RequestMapping("deleteArt.do")
-	public String deleteArt(@RequestParam int no, HttpSession session) {
-		String id = (String)session.getAttribute("id");
-		List<pay> payList = new ArrayList<pay>();
-
-		HashMap<String, Integer> params = new HashMap<String, Integer>();
-		params.put("no", no);
-		params.put("isCheck", 0);
-
-		payList = memberService.selectPayByNo(params);
-
-		if (payList != null) {
-			for (int i = 0; i < payList.size(); i++) {
-				if (payList.get(i).getIsCheck() != 5) {
-					return "redirect:selectOneArt.do?no=" + no + "&deleteText=1";
-				}
-			}
-		}
-		
-		int result = memberService.deleteArt(no, id);
-
-		if(result==1)
-		return "redirect:artForm.do";
-		else return "redirect:selectOneArt.do?no=" + no;
-	}
 
 	@RequestMapping("mySellFormA0.do")
 	public String mySellFormA0(HttpSession session) {

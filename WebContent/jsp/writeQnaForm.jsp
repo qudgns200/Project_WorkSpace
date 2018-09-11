@@ -129,11 +129,11 @@ function checkNull() {
     
     </div> <!-- End Container -->  
     
-
+ </div>  
     <!-- Footer Area
         ================================================== -->
     <%@include file="footer.jsp"%>
- </div>  
+
     
 </body>
 </html>

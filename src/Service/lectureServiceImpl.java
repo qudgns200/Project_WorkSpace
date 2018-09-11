@@ -59,15 +59,30 @@ public class lectureServiceImpl implements lectureService{
 	}
 
 	@Override
-	public int updateLecture(int no) {
+	public int updateLecture(lecture lecture, MultipartFile file) {
 		// TODO Auto-generated method stub
-		return 0;
+		String path = "C:/Project/Project/WebContent/resources/Thumnail/lectureImage/";
+
+		File dir = new File(path);
+		if(!dir.exists())
+			dir.mkdirs(); //지정 경로에 폴더가 없을 시 폴더 생성 요청
+		
+		String fileName=new Date().getTime() + "_" + file.getOriginalFilename();
+		File attachFile = new File(path + fileName);
+		try {
+			file.transferTo(attachFile);
+			lecture.setFile(fileName);
+		} catch (IllegalStateException | IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return lectureDao.updateLecture(lecture);
 	}
 
 	@Override
 	public int deleteLecture(int no) {
 		// TODO Auto-generated method stub
-		return 0;
+		return lectureDao.deleteLecture(no);
 	}
 
 	@Override
@@ -157,5 +172,10 @@ public class lectureServiceImpl implements lectureService{
 		return lectureDao.selectAttendants(no);
 	}
 
-	
+	@Override
+	public int deleteLectureComment(int no) {
+		// TODO Auto-generated method stub
+		return lectureDao.deleteLectureComment(no);
+	}
+
 }

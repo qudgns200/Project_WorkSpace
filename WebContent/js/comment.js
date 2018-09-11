@@ -6,13 +6,13 @@ var init = {
 	cCnt : 0,
 	startComment : 0,
 	temp : 0,
-	groupNoName : "",
 	groupNoTemp : 0,
 	pageText : "",
 	listText : "",
 	insertText : "",
 	id : ""
 }
+var writer = new Array();
 
 //무한 스크롤
 $(window).scroll(function () {
@@ -26,7 +26,7 @@ $(window).scroll(function () {
  */
 function getCommentList(num, text, id){
 	init.id = id;
-	
+		
 	if(text=='art') {
 		init.pageText = text;
 		init.listText = "selectArtComment.do";
@@ -81,33 +81,32 @@ function getCommentList(num, text, id){
             if(data.length > 0){
                 for(i=init.startComment; i<init.skip; i++){
                 	var sendData = data[i]; //해당 객체를 넘겨주기 위해 생성
+                	writer[i] = data[i].id;
                 	
                 	//시간 출력 위한 Date 정리///////////////////////////////////////////////////////////////////////////////////
                 	var writeDate = (data[i].time.year+1900) + "." + (data[i].time.month+1) + "." + (data[i].time.date) + " " + 
-                						data[i].time.hours + ":" + data[i].time.minutes + ":" + data[0].time.seconds;
-                	
+                						data[i].time.hours + ":" + data[i].time.minutes + ":" + data[i].time.seconds;
                 	
                 	if(data[i].childNode==0) {
-                		groupNoName=data[i].id;
                 		groupNoTemp=data[i].groupNo;
                 		html +="<li id=comment" + data[i].commentNo + ">";
                 		html += "<span class='comment-name'>"+ data[i].id + "</span>" +
                 				"<span> / </span>" +
                 				"<span class='comment-date'>" + writeDate + "</span>" + 
                 				"<span> / </span>";
-                		html += commentInput(sendData);
+                		html += commentInput(sendData, i);
                 		html += "<ul id='groupNo" + data[i].groupNo + "'></ul></li>";
                 		$("#commentList").append(html);
                 	}
                 	else {
                 		html +="<li id=comment" + data[i].commentNo + ">";
-                		html += "<span class='comment-name'>"+ groupNoName + "에 대한 답글" + "</span>" +
+                		html += "<span class='comment-name'>"+ data[i].writer + "에 대한 답글" + "</span>" +
                 				"<span> / </span>" +
                 				"<span class='comment-name'>" + data[i].id + "</span>" +
                 				"<span> / </span>" +
                 				"<span class='comment-date'>" + writeDate + "</span>" +
                 				"<span> / </span>";
-                		html += commentInput(sendData);
+                		html += commentInput(sendData, i);
                 		html += "</li>";
                 		var ulLoc = "#groupNo" + groupNoTemp;
                 		$(ulLoc).append(html);
@@ -131,11 +130,11 @@ function getCommentList(num, text, id){
 /*
  * 댓글 등록하기(Ajax)
  */
-function fn_comment(childNode, groupNo, groupOrder, commentNo, writer){
+function fn_comment(childNode, groupNo, groupOrder, commentNo, i){
 	
 	var reText = "#reText" + commentNo;
 	var spanText = "#span" + commentNo;
-	var writer = writer;
+	var writer1 = writer[i];
 	
 	if(childNode!=0)
 		var content = $(reText).val();
@@ -155,7 +154,8 @@ function fn_comment(childNode, groupNo, groupOrder, commentNo, writer){
         	"content" : content,
         	"childNode" : childNode,
         	"groupNo" : groupNum,
-        	"groupOrder" : groupOrder
+        	"groupOrder" : groupOrder,
+        	"writer" : writer1	
         },
         dataType:'json',
         success : function(data){
@@ -171,20 +171,20 @@ function fn_comment(childNode, groupNo, groupOrder, commentNo, writer){
                 			"<span> / </span>" +
                 			"<span class='comment-date'>" + writeDate + "</span>" +
                 			"<span> / </span>";
-            		html += commentInput(sendData);
+            		html += commentInput(sendData, 0);
                 	html += "<ul id='groupNo" + data[0].groupNo + "'></ul></li>";
                 	$("#commentList").prepend(html);
                 	$("#comment").val(""); //댓글 입력창 초기화
             	} else {
             		var commentAfter = "#groupNo" + groupNo;
                 	html +="<li id=comment" + data[0].commentNo + ">";
-                	html += "<span id='span" + data[0].commentNo + "' class='comment-name'>"+ writer + "에 대한 답글" + "</span>" +
+                	html += "<span id='span" + data[0].commentNo + "' class='comment-name'>"+ data[0].writer + "에 대한 답글" + "</span>" +
                 			"<span> / </span>" +
                 			"<span class='comment-name'>" + data[0].id + "</span>" +
                 			"<span> / </span>" +
                 			"<span class='comment-date'>" + writeDate + "</span>" +
                 			"<span> / </span>";
-                	html += commentInput(sendData);
+                	html += commentInput(sendData, 0);
                 	html += "</li>";
                 	$(commentAfter).append(html);
                 	$(reText).val("");
@@ -200,9 +200,9 @@ function fn_comment(childNode, groupNo, groupOrder, commentNo, writer){
 }
 
 //추가 폼 공통 양식(답글 / 수정 / 삭제)
-function commentInput(data) {
+function commentInput(data, i) {
 	var html="";
-	
+
     html += "<a id='aRe" + data.commentNo + "' onclick='recommentForm(" + data.commentNo + ")'>답글</a>&nbsp";
     if(init.id==data.id) {
     html += "<a id='aMo" + data.commentNo + "' onclick='modifyForm(" + data.commentNo + ")'>수정</a>&nbsp";
@@ -216,7 +216,7 @@ function commentInput(data) {
     html +="<div class='recommentDiv' id='recomment" + data.commentNo + "' style='display:none'>";
 	html +="<textarea style='width:500px' rows='3' cols='10' id='reText" + data.commentNo + "' name='reText' placeholder='댓글을 입력하세요'></textarea>&nbsp";
 	
-	html +="<a onClick='fn_comment(" + (data.childNode+1) + ", " + data.groupNo + ", " + data.groupOrder + ", " + data.commentNo + ", " + data.id + ")' class='btn btn-sq-sm btn-success'>답글 쓰기</a>"
+	html +="<a onClick='fn_comment(" + (data.childNode+1) + ", " + data.groupNo + ", " + data.groupOrder + ", " + data.commentNo + ", " + i + ")' class='btn btn-sq-sm btn-success'>답글 쓰기</a>"
     
 	html +="</div>";
     /////////////////////////
@@ -284,6 +284,7 @@ function fn_commentUpdate(commentNo) {
  * toggle 사용하여 답글 / 취소 수행
  */
 function recommentForm(commentNoStr) {
+	
 	var no = "#recomment" + commentNoStr;
 	var aNo = "#aRe" + commentNoStr
 	
