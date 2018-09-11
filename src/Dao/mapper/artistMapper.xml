@@ -4,10 +4,6 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
   <mapper namespace="Dao.artistDao">
-<<<<<<< HEAD
-  
-=======
->>>>>>> origin/master
   <insert id="insertFollow" parameterType="follow">
   	insert into follow values(#{follower},#{following},#{id});
   </insert>
@@ -27,10 +23,6 @@
   <delete id="deleteFollow" parameterType="follow">
   	delete from follow where (following=#{following} and id=#{id}) or (follower=#{id} and id=#{following});
   </delete>
-<<<<<<< HEAD
-
-=======
->>>>>>> origin/master
   <insert id="insertLikes" parameterType="likes">
   	insert into likes values(#{no},#{id},#{isCheck});
   </insert>
@@ -46,10 +38,7 @@
   <delete id="deleteLikesLecture" parameterType="likes">
   	delete from likes where no=#{no} and id=#{id} and isCheck=1;
   </delete>
-<<<<<<< HEAD
   
-=======
->>>>>>> origin/master
   <select id="selectGenreArtist" parameterType="String" resultType="String"></select>
   
    <select id="searchArtist" parameterType="java.util.HashMap" resultType="member">

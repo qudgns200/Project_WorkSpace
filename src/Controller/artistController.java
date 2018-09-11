@@ -1,6 +1,7 @@
 package Controller;
 
 import java.io.IOException;
+
 import java.io.PrintWriter;
 import java.rmi.ServerException;
 import java.util.ArrayList;
@@ -24,14 +25,10 @@ import org.springframework.web.servlet.ModelAndView;
 import Dao.artistDao;
 import Model.art;
 import Model.follow;
-<<<<<<< HEAD
 import Model.likes;
 import Model.pay;
 
-=======
-import Model.pay;
 import Service.artService;
->>>>>>> origin/master
 import Service.artistService;
 import Service.mainService;
 import Service.memberService;
@@ -50,12 +47,10 @@ public class artistController {
 	
 	@Autowired
 	artistDao artistDao;
-<<<<<<< HEAD
-=======
 	
 	@Autowired
 	artService artService;
->>>>>>> origin/master
+
 		
 	//아티스트 개인 페이지 이동 (아티스트용)
 	@RequestMapping("artistMyPage.do") 
@@ -209,13 +204,6 @@ public class artistController {
 
 		memberService.insertArt(art, ufile);
 
-<<<<<<< HEAD
-		//		 알림 소스 추가
-//		List<String> followerList = artistService.selectFollower(id);
-//		for (String str : followerList) {			// following하는 아티스트가 글 작성시, follower들에게 알림 보내기
-//			mainService.insertAlarm("writeArt", str, id);
-//		}
-=======
 		//	알림 소스 (09.10 수정) 
 		HashMap<String, Object> params = new HashMap<>();
 		params.put("id", id);
@@ -223,9 +211,6 @@ public class artistController {
 		for (String str : followerList) {			// following하는 아티스트가 글 작성시, follower들에게 알림 보내기
 			mainService.insertAlarm("writeArt", str, id);
 		}
-		// 알림 소스 (09.10 수정)
->>>>>>> origin/master
-
 		return "redirect:artistMyPage.do";
 	}
 
@@ -284,35 +269,8 @@ public class artistController {
 		pw.println(jsonObject);
 		
 		return null;
-<<<<<<< HEAD
 	}
 
-	@RequestMapping("followingList.do")
-	public String followingList(HttpServletRequest req, HttpServletResponse resp, String following, Model model) 
-			throws IOException {
-		if(req.getParameter("page") == null) {
-			model.addAttribute("following", following);
-			
-			return "followingList";
-		}
-
-		JSONObject jsonObject = new JSONObject();
-		int page = Integer.parseInt(req.getParameter("page"));
-		String id = req.getParameter("following");
-		HashMap<String, Object> params = new HashMap<>();
-		
-		params.put("id", id);
-		
-		jsonObject.put("following", artistService.selectFollowing(params, page));
-		
-		resp.setContentType("text/html; charset=UTF-8");
-		PrintWriter pw = resp.getWriter();
-		pw.println(jsonObject);
-		
-		return null;
-=======
->>>>>>> origin/master
-	}
 	
 //	@RequestMapping("followingList.do")
 //	public ModelAndView followingList(HttpSession session) {
@@ -339,12 +297,6 @@ public class artistController {
 		return "redirect:selectOneArt.do?no=" + no;
 	}
 
-<<<<<<< HEAD
-=======
-	@RequestMapping("insertLikes.do") 
-	public void insertLikes() {}
-
->>>>>>> origin/master
 	@RequestMapping("likesList.do") 
 	public void likesList() {}
 
@@ -372,14 +324,7 @@ public class artistController {
 	
 	@RequestMapping("updateArt.do") 
 	public void updateArt() {}
-<<<<<<< HEAD
-	
-<<<<<<< HEAD
-=======
-=======
 
->>>>>>> origin/master
->>>>>>> origin/master
 	@RequestMapping("deleteArt.do")
 	public String deleteArt(@RequestParam int no, HttpSession session) {
 		String id = (String)session.getAttribute("id");

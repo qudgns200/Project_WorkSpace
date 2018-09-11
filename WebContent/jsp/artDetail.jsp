@@ -114,7 +114,7 @@ function moveUrl(num) {
                         <li><h6>Artist :</h6> ${art.id }</li>
                         <li><h6>Genre :</h6> ${art.genre }</li>
                     </ul>
-<<<<<<< HEAD
+
                     <c:if test="${likesCheck.isEmpty() }">
                        <a class="btn" onclick="location.href='insertLikes.do?no=${art.no}&isCheck=0'">좋아요</a>
                     </c:if>
@@ -132,13 +132,13 @@ function moveUrl(num) {
                     		</c:if>
                     	</c:if>
                     </c:forEach>
-=======
+
 
                     <c:if test="${art.id == id }">
                     <a class="btn" href="updateArtForm.do?no=${art.no }">수정</a>
                     </c:if>
                     
->>>>>>> origin/master
+
                     <a class="btn" id='deleteArt'>삭제</a>
                     	<!-- Modal -->
   							<div class="modal fade" id="myModal" role="dialog">

@@ -263,19 +263,11 @@
 	<update id="userAuth" parameterType="String">
 		update member set authStatus = 1 where email = #{email};
 	</update>
-<<<<<<< HEAD
-
-	<select id="selectPayByNo" parameterType="java.util.HashMap" resultType="pay">
-		select * from pay where no=#{no} and isCheck=#{isCheck};
-	</select>
-
-=======
 	
 	<select id="selectPayByNo" parameterType="java.util.HashMap" resultType="pay">
 		select * from pay where no=#{no} and isCheck=#{isCheck};
 	</select>
-	
->>>>>>> origin/master
+
 </mapper>
 
 
