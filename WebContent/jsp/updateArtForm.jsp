@@ -185,10 +185,12 @@
 
 					<div id="artSell" class="btn-group" data-toggle="buttons" style="text-align: center; margin: 0 auto;">
 						<label class="btn btn-warning active"> 
-						<input type="radio" value="1" name="sellCheck" id="option1" autocomplete="off">판매요청
+						<input type="radio" value="1" name="sellCheck" id="option1" autocomplete="off"
+						${art.sellCheck == '1' ? 'checked' : '' }>판매요청
 						</label> 
 						<label class="btn btn-inverse"> 
-						<input type="radio" value="0" name="sellCheck" id="option2" autocomplete="off" checked>판매거부
+						<input type="radio" value="0" name="sellCheck" id="option2" autocomplete="off"
+						${art.sellCheck == '0' ? 'checked' : '' }>판매거부
 						</label>
 					</div>
 					
@@ -196,12 +198,14 @@
 
 					<div class="input-prepend" id="priceDiv">
 						<span class="add-on"><i class="fab fa-monero"></i></span> 
-						<input class="span6" id="focusedInput" type="text" size="16" name="price" placeholder="판매가를 입력하세요.">
+						<input class="span6" id="focusedInput" type="text" size="16" 
+						value="${art.price }" name="price" placeholder="판매가를 입력하세요.">
 					</div>
 
 					<div class="input-prepend" id="countDiv">
 						<span class="add-on"><i class="fab fa-monero"></i></span> 
-						<input class="span6" id="focusedInput" type="text" size="16" name="totalCount" placeholder="판매개수를 입력하세요.">
+						<input class="span6" id="focusedInput" type="text" size="16" 
+						value="${art.totalCount }" name="totalCount" placeholder="판매개수를 입력하세요.">
 					</div>
 <!-- 					작품 등록 부분 끝 -->
 
@@ -218,7 +222,7 @@
 					<div class="input-prepend"  class="span8">
 						<span class="add-on"><i class="icon-pencil"></i>작품내용</span><br>
 						<textarea id="content" name="content" placeholder="작품내용을 입력하세요." style="width: 400px; height: 400px;">
-						</textarea>
+						${art.content }</textarea>
 					</div>
 				
 
@@ -227,8 +231,14 @@
 						
 						<!-- 썸네일 이미지 업로드 부분 -->
 						<div class="filebox bs3-primary preview-image">
-                            <input class="upload-name" value="대표이미지를 설정하세요!!" disabled="disabled" style="width: 200px;">
+						<div id="originalThumb" 
+						style="display: inline-block; width: 54px; padding: 2px; vertical-align: middle;
+    					border: 1px solid #ddd; border-radius: 5px; background-color: #fff;">
+						<img src="download.do?no=${art.no }" 
+						style="display: block; max-width: 100%; width: 100%/9; height: auto;">
+						</div>
 
+                            <input class="upload-name" value="${art.file }" disabled="disabled" style="width: 200px;">
                             <label for="input_file">업로드</label> 
                           <input type="file" id="input_file" class="upload-hidden" name="ufile"> 
                         </div>
@@ -252,7 +262,7 @@
 	<!-- Footer Area
         ================================================== -->
     <%@include file="footer.jsp"%>
-<script src="js/fileImage.js"></script>
+<script src="js/fileImage.js?ver=0.4"></script>
 </body>
 </html>
 
