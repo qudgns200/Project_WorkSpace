@@ -120,11 +120,11 @@
     </div><!-- End container row -->
     
     </div> <!-- End Container -->
-
+    </div>
     <!-- Footer Area
         ================================================== -->
     <%@include file="footer.jsp"%>
-    </div>
+
     
 </body>
 </html>

@@ -1,7 +1,6 @@
 package Controller;
 
 import java.io.IOException;
-
 import java.io.PrintWriter;
 import java.rmi.ServerException;
 import java.util.ArrayList;
@@ -25,9 +24,14 @@ import org.springframework.web.servlet.ModelAndView;
 import Dao.artistDao;
 import Model.art;
 import Model.follow;
+<<<<<<< HEAD
 import Model.likes;
 import Model.pay;
 
+=======
+import Model.pay;
+import Service.artService;
+>>>>>>> origin/master
 import Service.artistService;
 import Service.mainService;
 import Service.memberService;
@@ -46,6 +50,12 @@ public class artistController {
 	
 	@Autowired
 	artistDao artistDao;
+<<<<<<< HEAD
+=======
+	
+	@Autowired
+	artService artService;
+>>>>>>> origin/master
 		
 	//아티스트 개인 페이지 이동 (아티스트용)
 	@RequestMapping("artistMyPage.do") 
@@ -199,11 +209,22 @@ public class artistController {
 
 		memberService.insertArt(art, ufile);
 
+<<<<<<< HEAD
 		//		 알림 소스 추가
 //		List<String> followerList = artistService.selectFollower(id);
 //		for (String str : followerList) {			// following하는 아티스트가 글 작성시, follower들에게 알림 보내기
 //			mainService.insertAlarm("writeArt", str, id);
 //		}
+=======
+		//	알림 소스 (09.10 수정) 
+		HashMap<String, Object> params = new HashMap<>();
+		params.put("id", id);
+		List<String> followerList = artistDao.selectFollower(params);
+		for (String str : followerList) {			// following하는 아티스트가 글 작성시, follower들에게 알림 보내기
+			mainService.insertAlarm("writeArt", str, id);
+		}
+		// 알림 소스 (09.10 수정)
+>>>>>>> origin/master
 
 		return "redirect:artistMyPage.do";
 	}
@@ -263,6 +284,7 @@ public class artistController {
 		pw.println(jsonObject);
 		
 		return null;
+<<<<<<< HEAD
 	}
 
 	@RequestMapping("followingList.do")
@@ -288,6 +310,8 @@ public class artistController {
 		pw.println(jsonObject);
 		
 		return null;
+=======
+>>>>>>> origin/master
 	}
 	
 //	@RequestMapping("followingList.do")
@@ -315,6 +339,12 @@ public class artistController {
 		return "redirect:selectOneArt.do?no=" + no;
 	}
 
+<<<<<<< HEAD
+=======
+	@RequestMapping("insertLikes.do") 
+	public void insertLikes() {}
+
+>>>>>>> origin/master
 	@RequestMapping("likesList.do") 
 	public void likesList() {}
 
@@ -333,11 +363,23 @@ public class artistController {
 	}
 
 	@RequestMapping("updateArtForm.do") 
-	public void updateArtForm() {}
+	public ModelAndView updateArtForm(int no) {
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("art", artService.selectOneArt(no));
+		mav.setViewName("updateArtForm");
+		return mav;
+	}
 	
 	@RequestMapping("updateArt.do") 
 	public void updateArt() {}
+<<<<<<< HEAD
 	
+<<<<<<< HEAD
+=======
+=======
+
+>>>>>>> origin/master
+>>>>>>> origin/master
 	@RequestMapping("deleteArt.do")
 	public String deleteArt(@RequestParam int no, HttpSession session) {
 		String id = (String)session.getAttribute("id");
@@ -359,8 +401,10 @@ public class artistController {
 		
 		int result = memberService.deleteArt(no, id);
 
-		if(result==1)
-		return "redirect:artForm.do";
+		if(result==1) {
+			artService.deleteArtComment(no);
+			return "redirect:artForm.do";
+		}
 		else return "redirect:selectOneArt.do?no=" + no;
 	}
 	

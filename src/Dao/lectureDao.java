@@ -12,7 +12,7 @@ public interface lectureDao {
 
 	public List<lecture> searchLecture(HashMap<String, Object> params); //수정
 	public int	insertLecture(lecture lecture);
-	public int	updateLecture(int no);
+	public int	updateLecture(lecture lecture);
 	public int	deleteLecture(int no);
 	public lecture	selectOneLecture(int no);
 	public int	insertAttendants(attendants attendants);
@@ -32,5 +32,7 @@ public interface lectureDao {
 	public int searchLectureCount(HashMap<String, Object> params); //추가
 	public int updateLecturePeople(lecture lecture); //추가
 	public List<attendants> selectAttendants(int no); //추가
+	
+	public int deleteLectureComment(int no);
 	
 }

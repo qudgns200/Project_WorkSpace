@@ -10,6 +10,20 @@
 		VALUES (#{title}, #{genre}, #{startDate}, #{endDate}, 0, #{guestID}, 
 				#{artistID}, #{place}, #{content}, #{file}, #{state}, #{maxPeople}, #{price});
 	</insert>
+
+	<update id="updateLecture" parameterType="lecture">
+	update lecture set title=#{title},genre=#{genre},startDate=#{startDate},
+	endDate=#{endDate}, numberPeople=#{numberPeople}, guestID=#{guestID}, artistID=#{artistID}, place=#{place},content=#{content},file=#{file}, 
+	writeDate=default, state=#{state}, maxPeople=#{maxPeople}, price=#{price} where no=#{no};
+	</update>
+
+	<select id="selectOneLecture" resultType="lecture" parameterType="int">
+	select * from lecture where no=#{no}
+	</select>
+	
+	<delete id="deleteLecture" parameterType="int">
+		delete from lecture where no=#{no};
+	</delete>
 	
 	<select id="selectRecentLectureA" resultType="lecture">
 	select * from lecture where guestID is null order by writeDate desc limit 5
@@ -36,8 +50,8 @@
 	</select>
 	
 	<insert id="insertLectureComment" parameterType="lectureComment">
-		insert into lectureComment(no, id, content, time, groupNo, childNode, groupOrder)
-		values (#{no}, #{id}, #{content}, default, #{groupNo}, #{childNode}, #{groupOrder})
+		insert into lectureComment(no, id, content, time, groupNo, childNode, groupOrder, writer)
+		values (#{no}, #{id}, #{content}, default, #{groupNo}, #{childNode}, #{groupOrder}, #{writer})
 	</insert>
 
 	<select id="selectLectureComment" parameterType="java.util.HashMap" resultType="lectureComment">
@@ -85,16 +99,6 @@
 	</if>
 	</select>
 	
-	<select id="selectOneLecture" resultType="lecture" parameterType="int">
-	select * from lecture where no=#{no}
-	</select>
-	
-	<update id="updateLecture" parameterType="lecture">
-	update lecture set title=#{title},genre=#{genre},startDate=#{startDate},
-	endDate=#{endDate}, numberPeople=#{numberPeople}, place=#{place},content=#{content},file=#{file}, 
-	writeDate=default, state=#{state}, maxPeople=#{maxPeople}, price=#{price} where no=#{no};
-	</update>
-	
 	<update id="updateLecturePeople" parameterType="lecture">
 	update lecture set
 	<if test="state!=0">state = #{state},</if>
@@ -110,7 +114,9 @@
 	select * from attendants where no = #{no}
 	</select>
 	
-	
+	<delete id="deleteLectureComment" parameterType="int">
+		delete from lectureComment where no=#{no};
+	</delete>
 	
 	
 

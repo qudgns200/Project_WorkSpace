@@ -34,4 +34,6 @@ public interface artService {
 	//그룹 넘버가 null 이 아닐 때 수행 -> 댓글, 답글 입력 시 그룹 내 순서 번호 수정
 	public int updateGroupOrder(HashMap<String, Object> params); 
 	
+	public int deleteArtComment(int no);
+	
 }

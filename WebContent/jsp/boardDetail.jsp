@@ -59,7 +59,10 @@ $(document).ready(function(){
 	var modalBody="";
 	var modalButton="";
 	
-	if($("#currentId").val()!='${board.id }') {
+	if($("#currentId").val()=='${board.id }' || $("#currentId").val()=='admin') {
+		 $("#modifyBoard").show();
+		 $("#deleteBoard").show();
+	} else {
 		 $("#modifyBoard").hide();
 		 $("#deleteBoard").hide();
 	}
@@ -184,14 +187,14 @@ $(document).ready(function(){
 				</div>
 			</div>
 		</div>
-
-
-		<!-- Footer Area
-        ================================================== -->
-		<%@include file="footer.jsp"%>
 		</div>
 		<!-- /.row -->
 	</div>
 <!-- End Container -->
+
+		<!-- Footer Area
+        ================================================== -->
+		<%@include file="footer.jsp"%>
+
 </body>
 </html>

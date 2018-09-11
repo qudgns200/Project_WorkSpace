@@ -137,7 +137,7 @@ var lang_kor = {
                                 	<c:forEach var="list" items="${boardList}">
                                 		<tr>
                                 			<td>${list.no }</td>
-                                			<td><a href="selectOneBoard.do?no=${list.no}">${list.title }</a></td>
+                                			<td><a href="selectOneBoard.do?no=${list.no }">${list.title }</a></td>
                                 			<td>${list.id }</td>
                                 			<td><fmt:formatDate pattern="yyyy-MM-dd" value="${list.writeDate }"/></td>
                                 		</tr>
@@ -158,11 +158,11 @@ var lang_kor = {
     </div> <!-- End Container -->
 	</div>
 	</div>
-
+  	</div>
     <!-- Footer Area
         ================================================== -->
     <%@include file="footer.jsp"%>
-    	</div>
+  
 
     <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="//cdn.datatables.net/plug-ins/f2c75b7247b/integration/bootstrap/3/dataTables.bootstrap.js" ></script>

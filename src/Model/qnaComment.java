@@ -12,7 +12,7 @@ public class qnaComment {
 	private int groupNo; //댓글 묶음 번호
 	private int childNode; //댓글, 답글 깊이 여부
 	private int groupOrder; //댓글 묶음 내 순서
-		
+	private String writer;
 	public int getNo() {
 		return no;
 	}
@@ -61,10 +61,18 @@ public class qnaComment {
 	public void setGroupOrder(int groupOrder) {
 		this.groupOrder = groupOrder;
 	}
+	public String getWriter() {
+		return writer;
+	}
+	public void setWriter(String writer) {
+		this.writer = writer;
+	}
 	@Override
 	public String toString() {
 		return "qnaComment [no=" + no + ", id=" + id + ", content=" + content + ", time=" + time + ", commentNo="
-				+ commentNo + ", groupNo=" + groupNo + ", childNode=" + childNode + ", groupOrder=" + groupOrder + "]";
+				+ commentNo + ", groupNo=" + groupNo + ", childNode=" + childNode + ", groupOrder=" + groupOrder
+				+ ", writer=" + writer + "]";
 	}
-
+		
+	
 }

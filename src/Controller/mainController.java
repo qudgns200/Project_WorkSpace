@@ -603,6 +603,10 @@ public class mainController {
 		jsonObj.put("alarmList", mainService.selectAlarm(alarm));
 		pw.println(jsonObj);
 	}
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/master
 } // public class의 끝.
 
 //	@RequestMapping("isCheckMember.do")

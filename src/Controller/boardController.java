@@ -60,7 +60,7 @@ public class boardController {
 
 	@Autowired
 	private mainService mainService;
-	
+
 	@RequestMapping("artistForm.do")
 	public ModelAndView artistForm() {
 		ModelAndView mav = new ModelAndView();
@@ -177,11 +177,12 @@ public class boardController {
 	}
 
 	@RequestMapping("selectOneArt.do") // 작품 상세페이지로 이동
-	public String selectOneArt(@RequestParam int no, @RequestParam(defaultValue="0") String deleteText, Model model, HttpSession session) {
+	public String selectOneArt(@RequestParam int no, @RequestParam(defaultValue = "0") String deleteText, Model model,
+			HttpSession session) {
 		// 해당 작품 정보와 댓글 정보를 담고 상세 페이지로 이동함
 		// art 객체 : 상세 정보
 		// comment 객체 : 해당 작품에 달린 댓글들
-		String id = (String)session.getAttribute("id");
+		String id = (String) session.getAttribute("id");
 		art art = new art();
 
 		art = artService.selectOneArt(no);
@@ -190,9 +191,9 @@ public class boardController {
 		model.addAttribute("deleteText", deleteText);
 		model.addAttribute("likesCheck", artistService.selectLikesArt(id));
 
-		if(id.equals(art.getId()))
+		if (id.equals(art.getId()))
 			model.addAttribute("sameId", 1);
-		
+
 		return "artDetail";
 	}
 
@@ -224,6 +225,7 @@ public class boardController {
 		artComment.setContent(request.getParameter("content"));
 		artComment.setGroupNo(groupNo);
 		artComment.setChildNode(childNode);
+		artComment.setWriter(request.getParameter("writer"));
 
 		artService.insertArtComment(artComment);
 
@@ -232,18 +234,17 @@ public class boardController {
 		JSONArray jsonArray = JSONArray.fromObject(artComment1);
 
 		response.getWriter().print(jsonArray);
-		
+
 		// 알림 소스 추가
 		String writerID = artService.selectOneArt(no).getId();
 		mainService.insertAlarm("artComment", writerID, id);
-		
-	}	
 
+	}
 
 	@RequestMapping("artPayForm.do") // 결제 폼 요청
 	public String artPayForm(HttpServletRequest request, HttpSession session, Model model) throws ParseException {
 
-		String id = (String)session.getAttribute("id"); //세션에서 id 가져오기
+		String id = (String) session.getAttribute("id"); // 세션에서 id 가져오기
 
 		// art 자료 객체 생성하여 value 대입
 		// String 으로 넘어온 값들 모델 클래스 자료형에 맞게 형변환!
@@ -252,7 +253,7 @@ public class boardController {
 		int no = Integer.parseInt(request.getParameter("no"));
 		Date date1 = dateformat.parse((request.getParameter("artDate")));
 		int price = Integer.parseInt(request.getParameter("price"));
-		
+
 		art.setNo(no);
 		art.setContent(request.getParameter("conetent"));
 		art.setArtDate(date1);
@@ -288,7 +289,7 @@ public class boardController {
 		int no = Integer.parseInt(request.getParameter("no"));
 		int isCheck = Integer.parseInt(request.getParameter("isCheck"));
 		int amount = Integer.parseInt(request.getParameter("amount"));
-		
+
 		pay.setNo(no);
 		pay.setId(request.getParameter("customer_uid"));
 		pay.setIsCheck(isCheck);
@@ -301,16 +302,16 @@ public class boardController {
 		pay.setOrderNumber(request.getParameter("merchant_uid"));
 
 		System.out.println(pay);
-		
+
 		int result = artService.insertArtPay(pay);
-		
+
 		System.out.println("result : " + result);
-		
-		if(result==1) {
+
+		if (result == 1) {
 			art art = new art();
 			art = artService.selectOneArt(no);
 			HashMap<String, Object> params2 = new HashMap<String, Object>();
-			params2.put("totalCount", (art.getTotalCount()-1));
+			params2.put("totalCount", (art.getTotalCount() - 1));
 			params2.put("no", no);
 			memberService.updateArt(params2);
 		}
@@ -321,11 +322,12 @@ public class boardController {
 		jsonObj.put("result", result);
 		response.getWriter().println(jsonObj);
 	}
-	
-	@RequestMapping("lecturePayForm.do") // 결제 폼 요청
-	public String lecturePayForm(@RequestParam int no, @RequestParam int payMethod, HttpSession session, Model model) throws ParseException {
 
-		String id = (String)session.getAttribute("id"); //세션에서 id 가져오기
+	@RequestMapping("lecturePayForm.do") // 결제 폼 요청
+	public String lecturePayForm(@RequestParam int no, @RequestParam int payMethod, HttpSession session, Model model)
+			throws ParseException {
+
+		String id = (String) session.getAttribute("id"); // 세션에서 id 가져오기
 
 		// 넘겨온 no 로 해당 강의 정보 출력
 		lecture lecture = new lecture();
@@ -464,6 +466,8 @@ public class boardController {
 	@RequestMapping("addLecture.do") // lecture 테이블에 insert 요청
 	public String addLecture(HttpServletRequest request, @RequestParam MultipartFile ufile, HttpSession session) {
 
+		System.out.println(request.getParameter("artistID"));
+
 		String id = (String) session.getAttribute("id");
 		lecture lecture = new lecture();
 		if (request.getParameter("artistID") == null) {
@@ -495,24 +499,28 @@ public class boardController {
 		int num = Integer.parseInt(request.getParameter("maxPeople")); // String으로 넘어오기 때문에 형 변환!
 		lecture.setMaxPeople(num);
 		lecture.setContent(request.getParameter("content"));
+		int price = Integer.parseInt(request.getParameter("price"));
+		lecture.setPrice(price);
 		lectureService.insertLecture(lecture, ufile);
-		
-		//		 알림 소스 추가
-//		List<String> followerList = artistService.selectFollower(id);
-//		for (String str : followerList) {			// following하는 아티스트가 강의 개설시, follower들에게 알림 보내기
-//			mainService.insertAlarm("writeLecture", str, id);
-//		}
+
+		// 알림 소스 추가
+		// List<String> followerList = artistService.selectFollower(id);
+		// for (String str : followerList) { // following하는 아티스트가 강의 개설시, follower들에게 알림
+		// 보내기
+		// mainService.insertAlarm("writeLecture", str, id);
+		// }
 		// 알림 소스
-		
+
 		return "redirect:myLectureFormA0.do";
 	}
 
 	@RequestMapping("selectOneLecture.do") // 강의 상세페이지로 이동
-	public String selectOneLecture(@RequestParam int no, Model model, HttpSession session, @RequestParam(required=false) Integer msg) {
-		String id = (String)session.getAttribute("id");
+	public String selectOneLecture(@RequestParam int no, Model model, HttpSession session,
+			@RequestParam(required = false) Integer msg) {
+		String id = (String) session.getAttribute("id");
 		lecture lecture = lectureService.selectOneLecture(no);
 		model.addAttribute(lecture);
-		if (msg!=null) {
+		if (msg != null) {
 			model.addAttribute("msg", msg);
 		}
 		model.addAttribute("currentId", id);
@@ -520,7 +528,8 @@ public class boardController {
 	}
 
 	@RequestMapping("lectureComment.do")
-	public void lectureComment(HttpServletResponse response, HttpServletRequest request, HttpSession session) throws IOException {
+	public void lectureComment(HttpServletResponse response, HttpServletRequest request, HttpSession session)
+			throws IOException {
 		response.setCharacterEncoding("UTF-8");
 
 		int no = Integer.parseInt(request.getParameter("no"));
@@ -557,15 +566,89 @@ public class boardController {
 	}
 
 	@RequestMapping("updateLectureForm.do")
-	public void updateLectureForm() {
+	public void updateLectureForm(HttpSession session, @RequestParam int no, Model model) {
+		String id = (String) session.getAttribute("id");
+
+		lecture lecture = new lecture();
+		lecture = lectureService.selectOneLecture(no);
+
+		model.addAttribute("lecture", lecture);
+		model.addAttribute("currentId", id);
 	}
 
 	@RequestMapping("updateLecture.do")
-	public void updateLecture() {
+	public String updateLecture(HttpServletRequest request, HttpSession session, @RequestParam MultipartFile ufile) {
+		String id = (String) session.getAttribute("id");
+		member member = new member();
+		member = memberService.selectOneMember(id);
+
+		int no = Integer.parseInt(request.getParameter("no"));
+		lecture lectureOrigin = new lecture();
+		lectureOrigin = lectureService.selectOneLecture(no);
+		int state = 0;
+		int numberPeople = 0;
+		if (lectureOrigin.getArtistID().equals(request.getParameter("artistID"))) {
+			state = Integer.parseInt(request.getParameter("state"));
+			numberPeople = Integer.parseInt(request.getParameter("numberPeople"));
+		} else {
+			state = 3;
+			numberPeople = 0;
+		}
+		lecture lecture = new lecture();
+		lecture.setNo(no);
+		lecture.setState(state);
+		lecture.setArtistID(request.getParameter("artistID"));
+		lecture.setGuestID(id);
+		lecture.setNumberPeople(numberPeople);
+		SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd"); // String으로 넘어오기 때문에 형 변환!
+		lecture.setTitle(request.getParameter("title"));
+		lecture.setPlace(request.getParameter("place"));
+		lecture.setGenre(request.getParameter("genre"));
+		try {
+			// String으로 넘어오기 때문에 형 변환!
+			Date date1;
+			date1 = dateformat.parse((request.getParameter("startDate")));
+			lecture.setStartDate(date1);
+			Date date2 = dateformat.parse((request.getParameter("endDate"))); // String으로 넘어오기 때문에 형 변환!
+			lecture.setEndDate(date2);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		int num = Integer.parseInt(request.getParameter("maxPeople")); // String으로 넘어오기 때문에 형 변환!
+		lecture.setMaxPeople(num);
+		lecture.setContent(request.getParameter("content"));
+		int result = lectureService.updateLecture(lecture, ufile);
+
+		if (result == 1) {
+			if (member.getIsCheck() == 2) return "redirect:myLectureFormA0.do";
+			else return "redirect:myLectureFormG0.do";
+		}
+		else return "redirect:selectOneLecture.do?no=" + no;
 	}
 
 	@RequestMapping("deleteLecture.do")
-	public void deleteLecture() {
+	public String deleteLecture(@RequestParam int no, HttpSession session) {
+		String id = (String) session.getAttribute("id");
+		String url;
+
+		lecture lecture = new lecture();
+		lecture = lectureService.selectOneLecture(no);
+
+		if (lecture.getArtistID().equals(lecture.getGuestID()))
+			url = "redirect:myLectureFormA0.do";
+		else
+			url = "redirect:myLectureFormA0.do";
+
+		int result = lectureService.deleteLecture(no);
+
+		if (result == 1) {
+			lectureService.deleteLectureComment(no);
+			return url;
+		} else
+			return "redirect:selectOneLecture.do?no=" + no;
+
 	}
 
 	@RequestMapping("lectureAttendForm.do")
@@ -575,7 +658,7 @@ public class boardController {
 	@RequestMapping("lectureAttend.do")
 	public ModelAndView lectureAttend(int no, HttpSession session) {
 		ModelAndView mav = new ModelAndView();
-		String id = (String)session.getAttribute("id");
+		String id = (String) session.getAttribute("id");
 		mav.addObject("no", no);
 		mav.setViewName("redirect:selectOneLecture.do");
 		List<attendants> attList = new ArrayList<>();
@@ -587,10 +670,10 @@ public class boardController {
 				break;
 			}
 		}
-		if (dif==1) {					// 이미 신청한 강의일 경우
+		if (dif == 1) { // 이미 신청한 강의일 경우
 			mav.addObject("msg", 1);
 			return mav;
-		}else {							// 신청 완료
+		} else { // 신청 완료
 			mav.addObject("msg", 0);
 			lectureService.updateLecturePeople(no);
 			lectureService.insertAttendants(no, id);
@@ -608,7 +691,7 @@ public class boardController {
 
 	@RequestMapping("searchBoard.do")
 	public void searchBoard() {
-		
+
 	}
 
 	@RequestMapping("writeBoardForm.do") // 자유게시판 글쓰기 이동
@@ -621,9 +704,9 @@ public class boardController {
 		// 아이디 체크 후 함수 호출
 		// 관리자 : boardService.selectNotice
 		// 게스트 : boardService.selectBoard
-		
+
 		String id = (String) session.getAttribute("id");
-		
+
 		board board = new board();
 		board.setTitle(request.getParameter("title"));
 		board.setContent(request.getParameter("content"));
@@ -638,10 +721,10 @@ public class boardController {
 
 	@RequestMapping("selectOneBoard.do") // 자유게시글 상세페이지
 	public String selectOneBoard(@RequestParam int no, Model model, HttpSession session) {
-		String id = (String)session.getAttribute("id");
+		String id = (String) session.getAttribute("id");
 		board board = new board();
 		board = boardService.selectOneBoard(no);
-		
+
 		model.addAttribute("board", board);
 		model.addAttribute("currentId", id);
 		return "boardDetail";
@@ -663,7 +746,8 @@ public class boardController {
 	}
 
 	@RequestMapping("boardComment.do")
-	public void boardComment(HttpServletResponse response, HttpServletRequest request, HttpSession session) throws IOException {
+	public void boardComment(HttpServletResponse response, HttpServletRequest request, HttpSession session)
+			throws IOException {
 		response.setCharacterEncoding("UTF-8");
 
 		int no = Integer.parseInt(request.getParameter("no"));
@@ -700,16 +784,18 @@ public class boardController {
 	}
 
 	@RequestMapping("qnaForm.do") // QnA게시판 이동
-	public void qnaForm(Model model) {
+	public void qnaForm(Model model, HttpSession session) {
+		String id = (String) session.getAttribute("id");
 		List<qna> qnaList = new ArrayList<qna>();
 		qnaList = boardService.selectQna();
 		model.addAttribute("qnaList", qnaList);
+		model.addAttribute("currentId", id);
 	}
 
 	@RequestMapping("selectOneQna.do") // qna 상세페이지 이동
 	public String selectOneQna(@RequestParam int no, Model model, HttpSession session) {
-		
-		String id = (String)session.getAttribute("id");
+
+		String id = (String) session.getAttribute("id");
 		qna qna = new qna();
 		qna = boardService.selectOneQna(no);
 		model.addAttribute("qna", qna);
@@ -718,20 +804,26 @@ public class boardController {
 	}
 
 	@RequestMapping("searchQna.do")
-	public void searchQna(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		
-		qna qna = new qna();
-		
-		int no = Integer.parseInt(request.getParameter("no"));
-		
-		qna = boardService.selectOneQna(no);
-		
-		if(qna.getPw().equals(request.getParameter("pw"))) {
+	public void searchQna(HttpServletRequest request, HttpServletResponse response, HttpSession session)
+			throws IOException {
+
+		String id = (String) session.getAttribute("id");
+
+		if (id.equals("admin"))
 			response.getWriter().print(1);
+		else {
+			qna qna = new qna();
+
+			int no = Integer.parseInt(request.getParameter("no"));
+
+			qna = boardService.selectOneQna(no);
+
+			if (qna.getPw().equals(request.getParameter("pw"))) {
+				response.getWriter().print(1);
+			} else
+				response.getWriter().print(0);
 		}
-		else
-			response.getWriter().print(0);
-		
+
 	}
 
 	@RequestMapping("writeQnaForm.do") // QnA게시판 글쓰기 이동
@@ -742,7 +834,7 @@ public class boardController {
 	public String writeQna(HttpServletRequest request, HttpSession session) {
 		qna qna = new qna();
 		String id = (String) session.getAttribute("id");
-		
+
 		qna.setTitle(request.getParameter("title"));
 		qna.setId(id);
 		qna.setContent(request.getParameter("content"));
@@ -771,7 +863,8 @@ public class boardController {
 	}
 
 	@RequestMapping("qnaComment.do")
-	public void qnaComment(HttpServletResponse response, HttpServletRequest request, HttpSession session) throws IOException {
+	public void qnaComment(HttpServletResponse response, HttpServletRequest request, HttpSession session)
+			throws IOException {
 		response.setCharacterEncoding("UTF-8");
 
 		int no = Integer.parseInt(request.getParameter("no"));
@@ -797,17 +890,15 @@ public class boardController {
 		qnaComment.setContent(request.getParameter("content"));
 		qnaComment.setGroupNo(groupNo);
 		qnaComment.setChildNode(childNode);
-		
+
 		boardService.insertQnaComment(qnaComment);
 
 		qnaComment1 = boardService.selectQnaLatestcomment();
-		
+
 		JSONArray jsonArray = JSONArray.fromObject(qnaComment1);
 
 		response.getWriter().print(jsonArray);
 	}
-
-
 
 	// 추가 매핑///////////////////////////////////////////////////////////
 	@RequestMapping("selectArtComment.do")
@@ -853,9 +944,10 @@ public class boardController {
 		JSONArray jsonArray = JSONArray.fromObject(array);
 		response.getWriter().println(jsonArray);
 	}
-	
+
 	@RequestMapping("selectBoardComment.do")
-	public void selectBoardComment(HttpServletRequest request, HttpServletResponse response, Model model) throws IOException {
+	public void selectBoardComment(HttpServletRequest request, HttpServletResponse response, Model model)
+			throws IOException {
 		response.setCharacterEncoding("UTF-8");
 
 		int no = Integer.parseInt(request.getParameter("no"));
@@ -866,16 +958,17 @@ public class boardController {
 
 		params.put("no", no);
 		params.put("skip", skip + 1);
-		params.put("startComment", startComment);		
+		params.put("startComment", startComment);
 		List array = new ArrayList<boardComment>();
 		array = boardService.selectBoardComment(params);
-		
+
 		JSONArray jsonArray = JSONArray.fromObject(array);
 		response.getWriter().println(jsonArray);
 	}
-	
+
 	@RequestMapping("selectQnaComment.do")
-	public void selectQnaComment(HttpServletRequest request, HttpServletResponse response, Model model) throws IOException {
+	public void selectQnaComment(HttpServletRequest request, HttpServletResponse response, Model model)
+			throws IOException {
 		response.setCharacterEncoding("UTF-8");
 
 		int no = Integer.parseInt(request.getParameter("no"));
@@ -903,11 +996,11 @@ public class boardController {
 		int commentNo = Integer.parseInt(request.getParameter("commentNo"));
 		String text = request.getParameter("text") + "Comment";
 
-			HashMap<String, Object> params = new HashMap<String, Object>();
-			params.put("no", no);
-			params.put("content", "삭제된 댓글입니다.");
-			params.put("commentNo", commentNo);
-			params.put("comment", text);
+		HashMap<String, Object> params = new HashMap<String, Object>();
+		params.put("no", no);
+		params.put("content", "삭제된 댓글입니다.");
+		params.put("commentNo", commentNo);
+		params.put("comment", text);
 
 		artService.deleteComment(params);
 		response.getWriter().println("success");
@@ -920,7 +1013,7 @@ public class boardController {
 		int no = Integer.parseInt(request.getParameter("no"));
 		int commentNo = Integer.parseInt(request.getParameter("commentNo"));
 		String text = request.getParameter("text") + "Comment";
-		
+
 		HashMap<String, Object> params = new HashMap<String, Object>();
 		params.put("no", no);
 		params.put("content", request.getParameter("context"));
@@ -931,20 +1024,20 @@ public class boardController {
 
 		response.getWriter().println("success");
 	}
-	
+
 	@RequestMapping("payResult.do")
 	public ModelAndView payResult(int no, String orderNumber, int dif) {
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("pay", memberService.selectOnePay(orderNumber));
-		if (dif==1) { 										// art정보 요청시
-		mav.addObject("art", artService.selectOneArt(no));	
-		}if (dif==2) {										// lecture정보 요청시
-		mav.addObject("lecture", lectureService.selectOneLecture(no));	
+		if (dif == 1) { // art정보 요청시
+			mav.addObject("art", artService.selectOneArt(no));
+		}
+		if (dif == 2) { // lecture정보 요청시
+			mav.addObject("lecture", lectureService.selectOneLecture(no));
 		}
 		mav.addObject("dif", dif);
 		mav.setViewName("payResult");
 		return mav;
 	}
-	
-	
+
 }// public class의 끝.

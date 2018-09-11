@@ -33,8 +33,8 @@
 	crossorigin="anonymous"></script>
 <script src="js/bootstrap.js"></script>
 <script src="js/jquery.custom.js"></script>
+<script src="js/comment.js?ver=0.6"></script>
 
-<script src="js/comment.js?ver=0.4"></script>
 <script type="text/javascript">
 /**
  * 초기 페이지 로딩시 댓글 불러오기
@@ -58,7 +58,7 @@ $(function(){
 	if($('#sameId').val()==1) {
 		 $("#deleteArt").show();
 	}
-	else { 
+	else {
 		$("#deleteArt").hide();
 	}
     $("#deleteArt").click(function(){
@@ -114,6 +114,7 @@ function moveUrl(num) {
                         <li><h6>Artist :</h6> ${art.id }</li>
                         <li><h6>Genre :</h6> ${art.genre }</li>
                     </ul>
+<<<<<<< HEAD
                     <c:if test="${likesCheck.isEmpty() }">
                        <a class="btn" onclick="location.href='insertLikes.do?no=${art.no}&isCheck=0'">좋아요</a>
                     </c:if>
@@ -131,6 +132,13 @@ function moveUrl(num) {
                     		</c:if>
                     	</c:if>
                     </c:forEach>
+=======
+
+                    <c:if test="${art.id == id }">
+                    <a class="btn" href="updateArtForm.do?no=${art.no }">수정</a>
+                    </c:if>
+                    
+>>>>>>> origin/master
                     <a class="btn" id='deleteArt'>삭제</a>
                     	<!-- Modal -->
   							<div class="modal fade" id="myModal" role="dialog">
@@ -181,7 +189,6 @@ function moveUrl(num) {
     	</div>
 	<br>
   
-
 				<!-- comment Area
         ================================================== -->
 				<section class="comments span12">

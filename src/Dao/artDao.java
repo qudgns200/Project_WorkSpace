@@ -31,4 +31,6 @@ public interface artDao {
 	public int selectGroupNo(HashMap<String, Object> params);
 	public int maxGroupOrder(HashMap<String, Object> params);
 	public int updateGroupOrder(HashMap<String, Object> params);
+	
+	public int deleteArtComment(int no);
 }
