@@ -30,7 +30,7 @@ public interface memberDao {
 	public int	insertArt(art art);
 	public List<art>	selectArtistArt(String id);
 	
-	public int	updateArt(HashMap<String, Object> params); // 수정
+	public int	updateArt(art art); // 수정
 	public int	deleteArt(HashMap<String, Object> params); // 수정
 	public List<HashMap<String, Object>>	selectRequestLec(HashMap<String, Object>params);
 	public List<HashMap<String, Object>>	selectApproveLec(HashMap<String, Object>params);

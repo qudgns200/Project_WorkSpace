@@ -177,15 +177,14 @@ public class artistController {
 			HttpSession session) {
 		// 입력된 데이터들을 art 객체로 받아서 테이블에 insert
 		art art = new art();
-
 		int isCheck = Integer.parseInt(request.getParameter("isCheck"));
 		art.setIsCheck(isCheck);
 		String id = (String) session.getAttribute("id");
 		art.setId(id);
-		art.setTitle(request.getParameter("title"));
 		art.setContent(request.getParameter("content"));
 
 		if (isCheck == 1) {
+			art.setTitle(request.getParameter("title"));
 			int state = 0;
 			art.setGenre(request.getParameter("genre"));
 			int sellCheck = Integer.parseInt(request.getParameter("sellCheck"));
@@ -201,7 +200,9 @@ public class artistController {
 				art.setState(state);
 			}
 		}
-
+		else {
+			art.setTitle(request.getParameter("boardTitle"));
+		}
 		memberService.insertArt(art, ufile);
 
 		//	알림 소스 (09.10 수정) 
@@ -336,7 +337,44 @@ public class artistController {
 	}
 	
 	@RequestMapping("updateArt.do") 
-	public void updateArt() {}
+	public String updateArt(HttpServletRequest req, @RequestParam("ufile")MultipartFile ufile, HttpSession session) {
+		// 입력된 데이터를 art 객체로 받아서 테이블에 update
+		art art = new art();
+		int no = Integer.parseInt(req.getParameter("no"));
+		art.setNo(no);
+		int isCheck = Integer.parseInt(req.getParameter("isCheck"));
+		art.setIsCheck(isCheck);
+		String id = (String) session.getAttribute("id");
+		art.setId(id);
+		art.setContent(req.getParameter("content"));
+		
+		if (isCheck ==1) {
+			art.setTitle(req.getParameter("title"));
+			int state = 2;
+			art.setGenre(req.getParameter("genre"));
+			int sellCheck = Integer.parseInt(req.getParameter("sellCheck"));
+			art.setSellCheck(sellCheck);
+			if (sellCheck == 1) {
+				art.setPrice(Integer.parseInt(req.getParameter("price")));
+				int totalCount = Integer.parseInt(req.getParameter("totalCount"));
+				art.setTotalCount(totalCount);
+					state = 1;
+				if (totalCount==0) {
+					state = 0;
+				}
+			}
+			art.setState(state);
+		}
+		else {
+			art.setTitle(req.getParameter("boardTitle"));
+			art.setSellCheck(-1);			// java에서 int형의 default값을 '0'으로 넘기는 것을 피하기 위해 '-1' 임의 세팅
+			art.setPrice(-1);
+			art.setState(-1);
+			art.setTotalCount(-1);
+		}
+		memberService.updateArt(art, ufile);
+		return "redirect:selectOneArt.do?no="+no;
+	}
 
 	@RequestMapping("deleteArt.do")
 	public String deleteArt(@RequestParam int no, HttpSession session) {

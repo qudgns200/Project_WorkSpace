@@ -7,9 +7,10 @@
 	
 	<select id="searchArt" parameterType="java.util.HashMap" resultType="art">
 	select * from art a join member m using(id) 
-	where m.isCheck = 2 and 1 = 0 
+	<where>
+	m.isCheck = 2 and a.isCheck = 1 
 	<if test="title!=null and content==null">
-	or title like '%${searchWord}%' 
+	and title like '%${searchWord}%' 
 	</if>
 	<if test="content!=null and title==null">
 	or a.content like '%${searchWord}%' 
@@ -20,10 +21,10 @@
 	<if test="title!=null and content!=null">
 	or (title like '%${searchWord}%' or a.content like '%${searchWord}%')
 	</if>	 
-	<if test="type==0">or 1 = 1</if>
 	<if test="genre!=''">
 	and genre = '${genre}'
 	</if>
+	</where>
 	order by artDate desc limit ${skip}, ${qty}
 	</select>
 

@@ -121,13 +121,21 @@
 		select * from art where id=#{id} order by artDate desc
 	</select>
 	
-	<update id="updateArt" parameterType="java.util.HashMap">
-		<if test="totalCount!=null">
-			update art set totalCount=#{totalCount} where no=#{no};
-		</if>
-		<if test="totalCount==null">
-			update art set title=#{title}, file=#{file}, content=#{content} where no=#{no};
-		</if>
+<!-- 	09.11 수정  -->
+	<update id="updateArt" parameterType="art">
+	update art 
+	<set>
+	<if test="isCheck!=-1">isCheck=#{isCheck}, </if>
+	<if test="id!=null">id=#{id}, </if>
+	<if test="title!=null">title=#{title}, </if>
+	<if test="content!=null">content=#{content}, </if>
+	<if test="genre!=null">genre=#{genre}, </if>
+	<if test="sellCheck!=-1">sellCheck=#{sellCheck}, </if>
+	<if test="price!=-1">price=#{price}, </if>
+	<if test="totalCount!=-1">totalCount=#{totalCount}, </if>
+	<if test="state!=-1">state=#{state}</if>
+	</set>
+	where no=#{no}
 	</update>
 
 	<delete id="deleteArt" parameterType="java.util.HashMap">
