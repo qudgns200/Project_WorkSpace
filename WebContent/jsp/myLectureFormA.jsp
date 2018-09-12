@@ -7,7 +7,6 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <title>Piccolo Theme</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <!-- CSS
 ================================================== -->
 <link href='http://fonts.googleapis.com/css?family=Oswald'
@@ -128,7 +127,7 @@ var myLectureFormA = function(){ // 강의 내역 페이지 요청 함수
 			
 			$('#attendPaging').append(str1Paging); // 강의신청 목록 페이징 처리- 테이블에 붙이기
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-			var str2 = "<tr>";
+			var str2 = '<tr>';
 			$.each(data.gatherList, function(index, gatherList){ 		// 모집 중인 강의 목록
 				
 				var imageUrl =  '<img src="download.do?no=' + gatherList.no + '&lecture=a" width=50 height=50>';
