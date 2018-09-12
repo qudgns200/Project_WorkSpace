@@ -14,6 +14,7 @@ import Dao.lectureDao;
 import Model.attendants;
 import Model.lecture;
 import Model.lectureComment;
+import Model.pay;
 
 @Service
 public class lectureServiceImpl implements lectureService{

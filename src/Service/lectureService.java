@@ -9,6 +9,7 @@ import org.springframework.web.multipart.MultipartFile;
 import Model.attendants;
 import Model.lecture;
 import Model.lectureComment;
+import Model.pay;
 
 public interface lectureService {
 

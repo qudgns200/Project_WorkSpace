@@ -45,7 +45,7 @@
 	<!-- 작품 구매 정보 입력 -->
 	<insert id="insertArtPay" parameterType="pay">
 		insert into pay (no, id, isCheck, addr, phone, name, totalPrice, payMethod, state, payDate ,orderNumber) 
-		values (#{no}, #{id}, #{isCheck}, #{addr}, #{phone}, #{name}, #{totalPrice}, #{payMethod}, #{state}, default, #{orderNumber});
+		values (#{no}, #{id}, 0, #{addr}, #{phone}, #{name}, #{totalPrice}, #{payMethod}, #{state}, default, #{orderNumber});
 	</insert>
 	
 	<insert id="insertArtComment" parameterType="artComment">

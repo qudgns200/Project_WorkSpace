@@ -23,9 +23,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import Model.art;
+import Model.lecture;
 import Model.member;
 import Model.pay;
 import Service.artService;
+import Service.lectureService;
 import Service.memberService;
 
 @Controller
@@ -58,6 +60,8 @@ public class kakaoController {
 	private memberService memberService;
 	@Autowired
 	private artService artService;
+	@Autowired
+	private lectureService lectureService;
 	
 	@RequestMapping("kakaoPayment.do")
 	public void kakaoPayment(HttpServletResponse response, HttpServletRequest request) {
@@ -69,6 +73,8 @@ public class kakaoController {
 		partner_order_id(request.getParameter("partner_order_id"));
 		partner_user_id(request.getParameter("partner_user_id"));
 		isCheck(request.getParameter("isCheck"));
+		
+		System.out.println("isCheck = " + isCheck);
 		
 		try {
 			apiURL = "https://kapi.kakao.com/v1/payment/ready";
@@ -187,7 +193,8 @@ public class kakaoController {
 			String id = (String)session.getAttribute("id");
 			
 			member member = new member();
-			member = memberService.selectOneMember(id);			
+			member = memberService.selectOneMember(id);	
+			pay.setNo(no);
 			pay.setId(id);
 			pay.setIsCheck(isCheck);
 			pay.setAddr(member.getAddr());
@@ -198,6 +205,7 @@ public class kakaoController {
 			pay.setPayMethod(2);
 			pay.setPayDate(payDate);
 			pay.setOrderNumber(partner_order_id);
+<<<<<<< HEAD
 			
 			int result = artService.insertArtPay(pay);
 			
@@ -212,6 +220,27 @@ public class kakaoController {
 				art.setTotalCount((originalArt.getTotalCount()-1));
 				art.setNo(no);
 				memberService.updateArt(art, null);
+=======
+			pay.setState(1);
+			
+			int result;
+			if(isCheck == 0) {
+				result = artService.insertArtPay(pay);
+				if(result==1) {
+					art art = new art();
+					art = artService.selectOneArt(no);
+					HashMap<String, Object> params2 = new HashMap<String, Object>();
+					params2.put("totalCount", (art.getTotalCount()-1));
+					params2.put("no", no);
+					
+					memberService.updateArt(params2);
+				}
+			} else {
+				result = memberService.insertLecturePay(pay);
+				if(result==1) {	
+					memberService.updateApproveLec(no,6);
+				}
+>>>>>>> origin/master
 			}
 			
 		} catch (Exception e) {

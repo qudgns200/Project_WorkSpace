@@ -270,7 +270,7 @@ public class memberServiceImpl implements memberService {
 	@Override
 	public int insertLecturePay(pay pay) {
 		// TODO Auto-generated method stub
-		return 0;
+		return memberDao.insertLecturePay(pay);
 	}
 
 	@Override
@@ -430,4 +430,5 @@ public class memberServiceImpl implements memberService {
 	public int userAuth(String email) throws Exception {
 		return memberDao.userAuth(email);
 	}
+
 }

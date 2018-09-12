@@ -104,11 +104,12 @@
 	</select>
 	
 	<select id="selectOnePay" parameterType="String" resultType="pay">
-	select * from pay where orderNumber = #{orderNumber}
+		select * from pay where orderNumber = #{orderNumber}
 	</select>
 	
 	<insert id="insertLecturePay" parameterType="pay">
-	
+		insert into pay(no, id, isCheck, addr, phone, name, totalPrice, payMethod, state, payDate, orderNumber)
+		values (#{no}, #{id}, #{isCheck}, #{addr}, #{phone}, #{name}, #{totalPrice}, #{payMethod}, #{state}, default, #{orderNumber});
 	</insert>
 	
 	<insert id="insertArt" parameterType="art" >
@@ -265,7 +266,7 @@
 	
 <!-- 강의 승인시 update 쿼리 추가 -->
 	<select id="updateApproveLec" parameterType="lecture">
-	update lecture set state = #{state} where no = #{no};
+		update lecture set state = #{state} where no = #{no};
 	</select>
 	
 	<update id="userAuth" parameterType="String">

@@ -292,12 +292,10 @@ public class boardController {
 
 		pay pay = new pay();
 		int no = Integer.parseInt(request.getParameter("no"));
-		int isCheck = Integer.parseInt(request.getParameter("isCheck"));
 		int amount = Integer.parseInt(request.getParameter("amount"));
-
+		
 		pay.setNo(no);
 		pay.setId(request.getParameter("customer_uid"));
-		pay.setIsCheck(isCheck);
 		pay.setAddr(request.getParameter("buyer_addr"));
 		pay.setPhone(request.getParameter("buyer_tel"));
 		pay.setName(request.getParameter("buyer_name"));
@@ -305,8 +303,6 @@ public class boardController {
 		pay.setPayMethod(1);
 		pay.setState(1);
 		pay.setOrderNumber(request.getParameter("merchant_uid"));
-
-		System.out.println(pay);
 
 		int result = artService.insertArtPay(pay);
 
@@ -371,7 +367,7 @@ public class boardController {
 		pay.setId(request.getParameter("customer_uid"));
 		// int isCheck = Integer.parseInt(request.getParameter("isCheck"));
 		// pay.setIsCheck(isCheck);
-		pay.setIsCheck(0);
+		pay.setIsCheck(1);
 		pay.setAddr(request.getParameter("buyer_addr"));
 		pay.setPhone(request.getParameter("buyer_tel"));
 		pay.setName(request.getParameter("buyer_name"));
@@ -381,8 +377,10 @@ public class boardController {
 		pay.setState(1);
 		pay.setOrderNumber(request.getParameter("merchant_uid"));
 
-		int result = artService.insertArtPay(pay);
-
+		int result = memberService.insertLecturePay(pay);
+		if(result==1) {	
+			memberService.updateApproveLec(no,6);
+		}
 		// DB입력 성공/실패 여부 확인 후 JSON으로 바꿔주고
 		// 다시 페이지로 전달
 		JSONObject jsonObj = new JSONObject();
