@@ -43,7 +43,7 @@
 		or 1 = 1
 		</if>
 		and content is not null
-		and (isCheck = 3 || isCheck = 4)
+		and isCheck = 3
 		limit #{skip}, #{qty};
 	</select>
 	

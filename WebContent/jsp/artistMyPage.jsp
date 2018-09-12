@@ -67,8 +67,10 @@
                     <button class="btn btn-small btn-inverse" type="button">프로필 수정</button>
                     <button class="btn btn-small btn-inverse" type="button">회원탈퇴</button><br>
 
-                    <h5>게시글 : ${artCount }&nbsp;&nbsp;&nbsp;<a href="followerList.do?follower=${id }">팔로워 : num</a>&nbsp;&nbsp;&nbsp;
-                    <a href="followingList.do?following=${id }">팔로잉 : num</a>&nbsp;&nbsp;&nbsp;<a>좋아요 :num</a></h5>
+                    <h5>게시글 : ${artCount }&nbsp;&nbsp;&nbsp;
+                    <a href="followerList.do?follower=${id }">팔로워 : num</a>&nbsp;&nbsp;&nbsp;
+                    <a href="followingList.do?following=${id }">팔로잉 : num</a>&nbsp;&nbsp;&nbsp;
+                    <a href="likesList.do?likesID=${id }">좋아요 :num</a></h5>
                 </div>
             </div>
 

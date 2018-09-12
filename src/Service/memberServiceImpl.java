@@ -78,8 +78,8 @@ public class memberServiceImpl implements memberService {
 	public int insertMember(member member, MultipartFile Profile, MultipartFile File) throws Exception {
 		// TODO Auto-generated method stub
 		System.out.println("서비스80");
-//		String path = "C:/Project/Project/image/";
-		String path = "C:/Users/cho/workspace/Project/image/";
+		String path = "C:/Project/Project/image/";
+//		String path = "C:/Users/cho/workspace/Project/image/";
 		
 		File dir = new File(path);
 	

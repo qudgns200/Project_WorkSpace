@@ -12,12 +12,12 @@ import Model.member;
 public interface artistDao {
 
 	public int	insertFollow(follow follow);
-	public List<String>	selectFollower(HashMap<String, Object> params);
-	public List<String>	selectFollowing(HashMap<String, Object> params);
+	public List<String>	selectFollower(HashMap<String, Object> params); // 수정
+	public List<String>	selectFollowing(HashMap<String, Object> params); // 수정
 	public int	deleteFollow(follow follow);
 	public int	insertLikes(likes likes);
-	public List<art>	selectLikesArt(String id);
-	public List<lecture>	selectLikesLecture(String id);
+	public List<art>	selectLikesArt(HashMap<String, Object> params); // 수정
+	public List<lecture>	selectLikesLecture(HashMap<String, Object> params); // 수정
 	public int	deleteLikesArt(likes likes);
 	public int	deleteLikesLecture(likes likes);
 	public List<String>	selectGenreArtist(String genre);
@@ -29,4 +29,6 @@ public interface artistDao {
 
 	public int getFollowerCount(HashMap<String, Object>params); // 추가
 	public int getFollowingCount(HashMap<String, Object>params); // 추가
+	public int getLikesArtCount(HashMap<String, Object>params); // 추가
+	public int getLikesLectureCount(HashMap<String, Object>params); // 추가
 }

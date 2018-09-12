@@ -54,9 +54,8 @@
 			success : function(data) {
 				$('#messageData').remove();
 				var str = '<ul class="dropdown-menu scrollable-menu" role="menu" id="messageData">' +
-					'<div><h6 style="text-align:center; color:yellow"><a href="#" id="search">메시지 보내기</a></h6></div>';
+					'<div><h6><a href="#" id="search" style="text-align:center; color:yellow">메시지 보내기</a></h6></div>';
 				$.each(data.messageList, function(index, message) {
-// 					if (index < 6) {
 						if ($("#session").val() === message.isTo) {
 							str += '<li><a href="#" class="isFrom">' + message.isFrom + '</a>'
 								+ '&nbsp;&nbsp; <button class="delete">삭제</button></li>';
@@ -72,10 +71,8 @@
 									+ '&nbsp;&nbsp; <button class="delete">삭제</button></li>';
 							}
 						}
-// 					}
-// 					else return false;
 				}) // each의 끝
-				str += '<div><a style="text-align:center; color:white" href="messageList.do">더 보기</a></div>' + '</ul>';
+				str += '</ul>';
 				$('#messageList').append(str);
 			} // success의 끝
 		}) // ajax의 끝

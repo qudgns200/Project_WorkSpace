@@ -9,11 +9,11 @@ import org.springframework.stereotype.Service;
 import Dao.artistDao;
 import Model.art;
 import Model.follow;
-import Model.lecture;
 import Model.likes;
 @Service
 public class artistServiceImpl implements artistService{
-
+	int count = 2;
+	
 	@Autowired
 	private artistDao artistDao;
 	
@@ -74,15 +74,34 @@ public class artistServiceImpl implements artistService{
 	}
 
 	@Override
-	public List<art> selectLikesArt(String id) {
+	public List<art> selectLikesArt(HashMap<String, Object> params) {
 		// TODO Auto-generated method stub
-		return artistDao.selectLikesArt(id);
+		if(params.get("check") != null) {
+			count++;
+			params.put("qty", mainService.getSkip(count, 4));
+		} else {
+			count = 2;
+			params.put("qty", mainService.getSkip(count, 4));
+		}
+
+		return artistDao.selectLikesArt(params);
 	}
 
 	@Override
-	public List<lecture> selectLikesLecture(String id) {
+	public HashMap<String, Object> selectLikesLecture(HashMap<String, Object> params, int page) {
 		// TODO Auto-generated method stub
-		return artistDao.selectLikesLecture(id);
+		HashMap<String, Object> result = new HashMap<>();
+		
+		result.put("current", page);
+		result.put("start", mainService.getStartPage(page));
+		result.put("end", mainService.getEndPage(page));
+		result.put("last", getLikesLectureLastPage(params));
+		
+		params.put("skip", mainService.getSkip(page, 10));
+		params.put("qty", 10);
+		result.put("likesList", artistDao.selectLikesLecture(params));
+		
+		return result;
 	}
 
 	@Override
@@ -142,5 +161,17 @@ public class artistServiceImpl implements artistService{
 	public int getFollowingLastPage(HashMap<String, Object> params) {
 		// TODO Auto-generated method stub
 		return (artistDao.getFollowingCount(params) - 1) / 10 + 1;
+	}
+	
+	@Override
+	public int getLikesArtLastPage(HashMap<String, Object> params) {
+		// TODO Auto-generated method stub
+		return (artistDao.getLikesArtCount(params) - 1) / 10 + 1;
+	}
+	
+	@Override
+	public int getLikesLectureLastPage(HashMap<String, Object> params) {
+		// TODO Auto-generated method stub
+		return (artistDao.getLikesLectureCount(params) - 1) / 10 + 1;
 	}
 }

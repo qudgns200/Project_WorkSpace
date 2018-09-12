@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import Dao.artistDao;
 import Model.art;
 import Model.artComment;
 import Model.attendants;
@@ -60,6 +61,9 @@ public class boardController {
 
 	@Autowired
 	private mainService mainService;
+	
+	@Autowired
+	private artistDao artistDao;
 
 	@RequestMapping("artistForm.do")
 	public ModelAndView artistForm() {
@@ -184,12 +188,15 @@ public class boardController {
 		// comment 객체 : 해당 작품에 달린 댓글들
 		String id = (String) session.getAttribute("id");
 		art art = new art();
+		HashMap<String, Object> params = new HashMap<>();
+		
+		params.put("id", id);
 
 		art = artService.selectOneArt(no);
 		model.addAttribute(art);
 		model.addAttribute("currentId", id);
 		model.addAttribute("deleteText", deleteText);
-		model.addAttribute("likesCheck", artistService.selectLikesArt(id));
+		model.addAttribute("likesCheck", artistService.selectLikesArt(params));
 
 		if (id.equals(art.getId()))
 			model.addAttribute("sameId", 1);

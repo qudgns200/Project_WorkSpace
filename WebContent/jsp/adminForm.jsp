@@ -41,14 +41,11 @@
 <!-- <script src="http://code.jquery.com/jquery-1.8.3.min.js"></script> -->
 <script src="js/bootstrap.js"></script>
 <script src="js/jquery.custom.js"></script>
-<!-- <script src="https://code.jquery.com/jquery-3.3.1.min.js" -->
-<!-- 	integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" -->
-<!-- 	crossorigin="anonymous"></script> -->
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 
 <!-- table
 ================================================== -->
-<script>
+<script type="text/javascript">
 function getSearchList() {
 	$.ajax({
 		type : 'get',
@@ -64,7 +61,7 @@ function getSearchList() {
 				$('#tbody').append("<tr>"
 									+ "<td><input type='checkbox' class='checkthis'></td>"
 									+ "<td>" + count + "</td>"
-									+ "<td><a href='#' id='search'>" + member.id + "</a></td>"
+									+ "<td><a href='javascript:;' id='search'>" + member.id + "</a></td>"
 									+ "<td>" + member.name + "</td>"
 									+ "<td>" + member.phone + "</td>"
 									+ "<td>" + member.addr + "</td>"
@@ -117,7 +114,7 @@ function getList() {
 				$('#tbody').append("<tr>"
 									+ "<td><input type='checkbox' class='checkthis'></td>"
 									+ "<td>" + count + "</td>"
-									+ "<td><a href='#' id='all'>" + member.id + "</a></td>"
+									+ "<td><a href='javascript:;' class='all'>" + member.id + "</a></td>"
 									+ "<td>" + member.name + "</td>"
 									+ "<td>" + member.phone + "</td>"
 									+ "<td>" + member.addr + "</td>"
@@ -278,129 +275,120 @@ function goArtistPage(pageNum) {
 	getArtistList();
 }
 
-	$(document).ready(function() {
-		$("#memberList").hide();
+$(document).ready(function() {
+	$("#memberList").hide();
+	$("#artistList").hide();
+	
+	$("#manage").click(function() {
+		$("#memberList").show();
 		$("#artistList").hide();
-		
-		$("#manage").click(function() {
-			$("#memberList").show();
-			$("#artistList").hide();
-		});
-		$("#approval").click(function() {
-			$("#artistList").show();
-			$("#memberList").hide();
-		});
-		
-		$("#mytable #checkall").click(function() {
-			if ($("#mytable #checkall").prop('checked')) {
-				$("#mytable input[type=checkbox]").each(function() {
-					$(this).prop("checked", true);
-				});
-
-			} else {
-				$("#mytable input[type=checkbox]").each(function() {
-					$(this).prop("checked", false);
-				});
-			}
-		});
-
-		$("[data-toggle=tooltip]").tooltip();
-		
-		$("#tbody").on("click", "#search", function() {
-			alert("테스트");
-			if(confirm("선택한 회원을 정지시키겠습니까?")) {
-				$.ajax({
-					type : 'get',
-					url : 'blackList.do',
-					data : {'id' : $(this).text()},
-					dataType : 'json',
-					success : function(data) {
-						if(data.result) {
-							alert("이용정지되었습니다.");
-							getSearchList();
-						}
-					},
-					error : function(xhr, status, error) {
-						alert("수정 실패");
-					}
-				});
-			}
-		});
-		
-		$("#tbody").on("click", "#all", function() {
-			alert("테스트");
-			if(confirm("선택한 회원을 정지시키겠습니까?")) {
-				$.ajax({
-					type : 'get',
-					url : 'blackList.do',
-					data : {'id' : $(this).text()},
-					dataType : 'json',
-					success : function(data) {
-						if(data.result) {
-							alert("이용정지되었습니다.");
-							getList();
-						}
-					},
-					error : function(xhr, status, error) {
-						alert("수정 실패");
-					}
-				});
-			}
-		});
-		
-		$("#artistTbody").on("click", ".artist", function() {
-			var width=800, height=500;
-			var left = (screen.availWidth - width)/2;
-			var top = (screen.availHeight - height)/2;
-			var specs = "width=" + width;
-			specs += ",height=" + height;
-			specs += ",left=" + left;
-			specs += ",top=" + top;
-			
-			window.open("approveView.do?id=" + $(this).text() + "&index=" + $(".artist").index($(this)), "팝업", specs);
-		});
 	});
+	$("#approval").click(function() {
+		$("#artistList").show();
+		$("#memberList").hide();
+	});
+	
+	$("#mytable #checkall").click(function() {
+		if ($("#mytable #checkall").prop('checked')) {
+			$("#mytable input[type=checkbox]").each(function() {
+				$(this).prop("checked", true);
+			});
+
+		} else {
+			$("#mytable input[type=checkbox]").each(function() {
+				$(this).prop("checked", false);
+			});
+		}
+	});
+	
+// 	$("[data-toggle=tooltip]").tooltip();
+	
+	$("#tbody").on("click", "#search", function() {
+		if(confirm("선택한 회원을 정지시키겠습니까?")) {
+			$.ajax({
+				type : 'get',
+				url : 'blackList.do',
+				data : {'id' : $(this).text()},
+				dataType : 'json',
+				success : function(data) {
+					if(data.result) {
+						alert("이용정지되었습니다.");
+						getSearchList();
+					}
+				},
+				error : function(xhr, status, error) {
+					alert("수정 실패");
+				}
+			});
+		}
+	});
+	
+	$("#tbody").on("click", ".all", function() {
+		if(confirm("선택한 회원을 정지시키겠습니까?")) {
+			$.ajax({
+				type : 'get',
+				url : 'blackList.do',
+				data : {'id' : $(this).text()},
+				dataType : 'json',
+				success : function(data) {
+					if(data.result) {
+						alert("이용정지되었습니다.");
+						getList();
+					}
+				},
+				error : function(xhr, status, error) {
+					alert("수정 실패");
+				}
+			});
+		}
+	});
+	
+	$("#artistTbody").on("click", ".artist", function() {
+		var width=800, height=500;
+		var left = (screen.availWidth - width)/2;
+		var top = (screen.availHeight - height)/2;
+		var specs = "width=" + width;
+		specs += ",height=" + height;
+		specs += ",left=" + left;
+		specs += ",top=" + top;
+		
+		window.open("approveView.do?id=" + $(this).text() + "&index=" + $(".artist").index($(this)), "팝업", specs);
+	});
+});
 </script>
 <!-- table end-->
 </head>
 <body>
 	<div class="color-bar-1"></div>
 	<div class="color-bar-2 color-bg"></div>
-
-	<div class="container main-container">
-
+	
+	<div class="container main-container"> <!-- main-container 시작 -->
 		<!-- 	header section -->
 		<%@include file="header.jsp"%>
-
-		<div class="row">
-
+		
+		<div class="row"> <!-- row 시작 -->
 			<div class="span12">
 				<h2 class="title-bg">회원관리 페이지</h2>
 			</div>
-
-
 			<!-- Table Items ================================================== -->
-			<div class="span12">
-
+			<div class="span12"> <!-- span12 시작 -->
 				<ul id="filterOptions" class="gallery-cats clearfix; pull-right">
-					<li class="active"><a href="#" class="all" id="manage">회원 관리 페이지</a></li>
+					<li class="active"><a href="javascript:;" id="manage">회원 관리 페이지</a></li>
 					<li><a href="#" class="design" id="approval">아티스트 승인 페이지</a></li>
 				</ul>
-
-				<div class="row the-grid" id="memberList">
-					<div class="span12 contact">
+				
+				<div class="row the-grid" id="memberList"> <!-- memberList 시작 -->
+					<div class="span12 contact"> <!-- contact 시작 -->
 						<!--Begin page content column-->
 						<div class="container">
-							<!--                             <div class="row the-grid">-->
-							<div class="col-md-12">
+							<div class="col-md-12"> <!-- col-md-12 시작 -->
 								<h3>전체 회원목록</h3>
-								<div class="table-responsive">
-
+								<div class="table-responsive"> <!-- responsive 시작 -->
 									<form class="form-inline">
 										<div class="input-prepend">
 											<span class="add-on"><i class="icon-th-list"></i></span> 
 											<select class="form-control; span2" id="searchType" name="find">
-												<option selected="" id="type">검색조건선택</option>
+												<option selected>검색조건선택</option>
 												<option value="id">아이디</option>
 												<option value="name">이름</option>
 												<option value="nickname">닉네임</option>
@@ -417,9 +405,7 @@ function goArtistPage(pageNum) {
 										</div>
 									</form>
 									<hr>
-
-
-									<div class="fixed-table-container">
+									<div class="fixed-table-container"> <!-- fixed 시작 -->
 										<div class="fixed-table-body">
 											<!-- <div class="table-responsive">-->
 											<table id="mytable" class="table table-bordred table-striped">
@@ -440,35 +426,28 @@ function goArtistPage(pageNum) {
 												<tbody id="tbody"></tbody>
 											</table>
 										</div>
-									</div>
-								</div>
-							</div>
-						</div>
+									</div> <!-- fixed 끝 -->
+								</div> <!-- responsive 끝 -->
+							</div> <!-- col-md-12 끝 -->
+						</div> <!-- container 끝 -->
 						
 						<!-- Pagination -->
 						<div class="pagination" id="memberPaging"></div>
 						<!-- End gallery list-->
-
-					</div>
-					<!-- End Container -->
-
-
-				</div>
-				<!--End page content column-->
-
-				<div class="row the-grid" id="artistList">
-					<div class="span12 contact">
-						<div class="container">
-							<!--                             <div class="row the-grid"> -->
-							<div class="col-md-12">
+					</div> <!-- contact 끝 -->
+				</div> <!-- memberList 끝 -->
+				
+				<div class="row the-grid" id="artistList"> <!-- artistList 시작 -->
+					<div class="span12 contact"> <!-- contact 시작 -->
+						<div class="container"> <!-- container 시작 -->
+							<div class="col-md-12"> <!-- col-md-12 시작 -->
 								<h3>아티스트 목록</h3>
-								<div class="table-responsive">
-
+								<div class="table-responsive"> <!-- responsive 시작 -->
 									<form class="form-inline">
 										<div class="input-prepend">
 											<span class="add-on"><i class="icon-th-list"></i></span> <select
 												class="form-control; span2" id="searchArtistType" name="find">
-												<option selected="">검색조건선택</option>
+												<option selected>검색조건선택</option>
 												<option value="id">아이디</option>
 												<option value="name">이름</option>
 												<option value="nickname">닉네임</option>
@@ -479,22 +458,12 @@ function goArtistPage(pageNum) {
 										</div>
 									</form>
 									<hr>
-
-
-									<div class="fixed-table-container">
+									
+									<div class="fixed-table-container"> <!-- fixed 시작 -->
 										<div class="fixed-table-body">
 											<div class="table-responsive">
 												<table id="mytable"
 													class="table table-bordred table-striped">
-													<button class="btn btn-danger pull-right" data-title="Edit"
-														data-target="#edit">
-														<span class="icon-remove-circle"></span>거절
-													</button>
-													<button class="btn btn-primary pull-right"
-														data-title="Edit" data-target="#edit">
-														<span class="icon-ok-sign"></span>승인
-													</button>
-
 													<thead>
 														<th><input type="checkbox" id="checkall" /></th>
 														<th>No</th>
@@ -511,101 +480,21 @@ function goArtistPage(pageNum) {
 												</table>
 											</div>
 										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-
-
-
-						<div class="modal fade" id="edit" tabindex="-1" role="dialog"
-							aria-labelledby="edit" aria-hidden="true">
-							<div class="modal-dialog">
-								<div class="modal-content">
-									<div class="modal-header">
-										<button type="button" class="close" data-dismiss="modal"
-											aria-hidden="true">
-											<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-										</button>
-										<h4 class="modal-title custom_align" id="Heading">Edit
-											Your Detail</h4>
-									</div>
-									<div class="modal-body">
-										<div class="form-group">
-											<input class="form-control " type="text" placeholder="Mohsin">
-										</div>
-										<div class="form-group">
-
-											<input class="form-control " type="text" placeholder="Irshad">
-										</div>
-										<div class="form-group">
-											<textarea rows="2" class="form-control"
-												placeholder="CB 106/107 Street # 11 Wah Cantt Islamabad Pakistan"></textarea>
-
-
-										</div>
-									</div>
-									<div class="modal-footer ">
-										<button type="button" class="btn btn-warning btn-lg"
-											style="width: 100%;">
-											<span class="glyphicon glyphicon-ok-sign"></span> Update
-										</button>
-									</div>
-								</div>
-								/.modal-content
-							</div>
-							/.modal-dialog
-						</div>
-
-
-						<div class="modal fade" id="delete" tabindex="-1" role="dialog"
-							aria-labelledby="edit" aria-hidden="true">
-							<div class="modal-dialog">
-								<div class="modal-content">
-									<div class="modal-header">
-										<button type="button" class="close" data-dismiss="modal"
-											aria-hidden="true">
-											<span class="icon-remove" aria-hidden="true"></span>
-										</button>
-										<h4 class="modal-title custom_align" id="Heading">삭제 경고창</h4>
-									</div>
-									<div class="modal-body">
-
-										<div class="alert alert-danger">
-											<span class="icon-warning-sign"></span>해당 회원을 삭제하시겠습니까?
-										</div>
-
-									</div>
-									<div class="modal-footer ">
-										<button type="button" class="btn btn-success">
-											<span class="icon-ok"></span> Yes
-										</button>
-										<button type="button" class="btn btn-default"
-											data-dismiss="modal">
-											<span class="icon-remove"></span> No
-										</button>
-									</div>
-								</div>
-								/.modal-content
-							</div>
-							/.modal-dialog
-						</div>
-
+									</div> <!-- fixed 끝 -->
+								</div> <!-- responsive 끝 -->
+							</div> <!-- col-md-12 끝 -->
+						</div> <!-- container 끝 -->
+						
 						<div class="pagination" id="artistPaging"></div>
-
-					</div>
-				</div>
-			</div>
-			<!-- End container row -->
-
-		</div>
-		<!-- End Container -->
-
+					</div> <!-- contact 끝 -->
+				</div> <!-- artistList 끝 -->
+				
+			</div> <!-- span12 끝 -->
+		</div> <!-- row 끝 -->
 		<!-- 	Footer section -->
 		<%@include file="footer.jsp"%>
-
-		<form>
-			<input type="hidden" id="page" value="1">
-		</form>
+	</div> <!-- main-container 끝 -->
+	<input type="hidden" id="page" value="1">
 </body>
 </html>
+						

@@ -103,8 +103,9 @@ $(document).ready(function() {
                     <button class="btn btn-small btn-inverse" type="button" 
                     id="isFrom" value="${artistID }">메시지</button><br>
                     
-                    <h5>게시글 : ${artCount }&nbsp;&nbsp;&nbsp;<a href="followerList.do?follower=${artistID }">팔로워 : num</a>&nbsp;&nbsp;&nbsp;
-                    	<a href="followingList.do?following=${artistID }">팔로잉 : num</a>&nbsp;&nbsp;&nbsp;좋아요 :num</h5>
+                    <h5>게시글 : ${artCount }&nbsp;&nbsp;&nbsp;
+                    <a href="followerList.do?follower=${artistID }">팔로워 : num</a>&nbsp;&nbsp;&nbsp;
+                    <a href="followingList.do?following=${artistID }">팔로잉 : num</a>&nbsp;&nbsp;&nbsp;
                 </div>
             </div>
 

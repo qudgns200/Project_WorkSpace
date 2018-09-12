@@ -58,7 +58,6 @@ function getList() {
 			$.each(data.follower.followerList, function(i, follower) {
 				$('#tbody').append("<tr>"
 								+ "<td><a href='#' id='all'>" + follower + "</a></td>"
-								+ "<td><button>메시지</buttion></td>"
 								+ "</tr>");
 			});
 			var htmlStr = '';

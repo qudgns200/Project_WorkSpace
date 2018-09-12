@@ -251,7 +251,23 @@ public class mainController {
 		}
 		
 		@RequestMapping("updateRefuseArtist.do")
-		public void updateRefuseArtist() {}
+		public void updateRefuseArtist(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+			String id = req.getParameter("id");
+			JSONObject jsonObject = new JSONObject();
+			boolean result;
+			
+			if(memberService.updateRefuseArtist(id) == 1) {
+				result = true;
+			} else {
+				result = false;
+			}
+			
+			jsonObject.put("result", result);
+			
+			resp.setContentType("text/html; charset=UTF-8");
+			PrintWriter pw = resp.getWriter();
+			pw.println(jsonObject);
+		}
 		
 		@RequestMapping("updateMemberForm.do")
 		public void updateMemberForm() {}

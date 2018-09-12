@@ -129,46 +129,46 @@ $(document).ready(function() {
 		
 // 	});
 	$('input[name=birth]').blur(function() {
-		var me = this;
-		$.ajax({
-			type : 'get',
-			url : 'check.do',
-			data : {'birth' : $(me).val()},
-			dataType : 'json',
-			success : function(data) {
-				if(!data.birthCheck) {			
-					$('.birthCheck').css('color', 'red');
-					$('.birthCheck').html('필수 입력 사항입니다.');
-					$(me).focus();
-				} else {
-					$('.birthCheck').html('');
-				}
-			},
-			error : function(status, error) {
-				alert(status);
-				alert(error);
-				alert('생년월일 : 잘못된 접근입니다.');
-			}
-		});
+// 		var me = this;
+// 		$.ajax({
+// 			type : 'get',
+// 			url : 'check.do',
+// 			data : {'birth' : $(me).val()},
+// 			dataType : 'json',
+// 			success : function(data) {
+// 				if(!data.birthCheck) {			
+// 					$('.birthCheck').css('color', 'red');
+// 					$('.birthCheck').html('필수 입력 사항입니다.');
+// 					$(me).focus();
+// 				} else {
+// 					$('.birthCheck').html('');
+// 				}
+// 			},
+// 			error : function(status, error) {
+// 				alert(status);
+// 				alert(error);
+// 				alert('생년월일 : 잘못된 접근입니다.');
+// 			}
+// 		});
 	});
 	$('input[name=birth]').change(function() {
-		var me = this;
-		$.ajax({
-			type : 'get',
-			url : 'check.do',
-			data : {'birth' : $(me).val()},
-			dataType : 'json',
-			success : function(data) {
-				if(data.birthCheck) {			
-					$('.birthCheck').html('');
-				}
-			},
-			error : function(status, error) {
-				alert(status);
-				alert(error);
-				alert('생년월일 : 잘못된 접근입니다.');
-			}
-		});
+// 		var me = this;
+// 		$.ajax({
+// 			type : 'get',
+// 			url : 'check.do',
+// 			data : {'birth' : $(me).val()},
+// 			dataType : 'json',
+// 			success : function(data) {
+// 				if(data.birthCheck) {			
+// 					$('.birthCheck').html('');
+// 				}
+// 			},
+// 			error : function(status, error) {
+// 				alert(status);
+// 				alert(error);
+// 				alert('생년월일 : 잘못된 접근입니다.');
+// 			}
+// 		});
 	});
 	$('input[name=nickname]').blur(function() {
 		var me = this;

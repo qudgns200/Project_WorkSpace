@@ -39,7 +39,7 @@ $(document).ready(function() {
 		$.ajax({
 			type : 'get',
 			url : 'updateApproveArtist.do',
-			data : {'id' : $('#id').val()},
+			data : {'id' : $('#artistID').val()},
 			dataType : 'json',
 			success : function(data) {
 				if(data.result) {
@@ -54,7 +54,22 @@ $(document).ready(function() {
 		});
 	});
 	$("#refuse").click(function() {
-		
+		$.ajax({
+			type : 'get',
+			url : 'updateRefuseArtist.do',
+			data : {'id' : $('#artistID').val()},
+			dataType : 'json',
+			success : function(data) {
+				if(data.result) {
+					self.close();
+					
+					$(opener.document).find("#artistTbody tr").eq($("#index").val()).remove();
+				}
+			},
+			error : function(xhr, status, error) {
+				alert("승인 오류");
+			}
+		});
 	});
 });
 </script>
@@ -97,11 +112,9 @@ $(document).ready(function() {
 
                     <!-- 			강의관련 내용 입력 부분 -->
                     <div class="span8 container">
-                        <form action="addLecture.do" id="contact-form">
-
                             <div class="input-prepend">
                                 <span class="add-on"><i class="icon-pencil"></i></span>
-                                <input class="span6" id="id" name="id" value="${member.id }" type="text" readonly="readonly" size="16">
+                                <input class="span6" id="artistID" name="id" value="${member.id }" type="text" readonly="readonly" size="16">
                             </div>
 
                             <div class="input-prepend">
@@ -138,10 +151,9 @@ $(document).ready(function() {
 
                             <div class="input-append">
                                 <span class="add-on"><i class="icon-upload"></i>포트폴리오</span>
-                                <input class="upload-name" value="아티스트 파일 클릭가능" id="fileName" name="fileName" style="text-align: center; margin: 0 auto;">
                             </div>
                             <div class="filebox preview-image">
-                                <input class="span6" id="prependedInput" name="nickname" value="${member.file }" type="text" readonly="readonly" size="16" >
+								<span><a href="download.do?id=${member.id }">${member.file }</a></span>
                             </div>
                             <br>
                            
@@ -151,23 +163,12 @@ $(document).ready(function() {
                             <textarea class="span7" id="content" name="${member.content }" type="text" readonly="readonly"></textarea>
                             <div class="row">
                                 <div class="span7">
-                                    <input type="button" class="btn btn-warning pull-right" value="목록으로"> 
-                                    <input type="submit" class="btn btn-success pull-right" value="아티스트 승인">
+                                    <input type="button" id="refuse" class="btn btn-warning pull-right" value="아티스트 거절"> 
+                                    <input type="button" id="approve" class="btn btn-success pull-right" value="아티스트 승인">
                                 </div>
                             </div>
-                        </form>
-
-
                     </div>
                     <!--End page content column-->
-	<input type="hidden" id="id" value="${member.id }">
-	<input type="hidden" id="index" value="${index }">
-	<img src="download.do?id=${member.id }">
-	<br> ${member.content }
-	<br>
-
-	<button id="approve">승인</button>
-	<button id="refuse">거절</button>
                 </div>
                 <!-- End container row -->
 			</div>
@@ -176,6 +177,6 @@ $(document).ready(function() {
 
             <!-- 	Footer section -->
             <%@include file="footer.jsp"%>
-
+			<input type="hidden" id="index" value="${index }">
 </body>
 </html>
