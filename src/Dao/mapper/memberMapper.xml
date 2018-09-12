@@ -159,14 +159,14 @@
 		and p.isCheck =0 and a.id = #{id} order by payDate desc
 		limit ${skipSold}, ${qty}
 	</select>
-<!-- 	수 정 -->
+<!-- 수 정 (09.12)-->
 	<select id="selectBuyingArt" parameterType="java.util.HashMap" resultType="java.util.HashMap">
 	select pay.no, pay.isCheck, art.title as 'artTitle', lecture.title as 'lecTitle',
 	art.id as 'artID', lecture.artistID as 'lecID', art.price as 'artPrice', lecture.price as 'lecPrice', totalPrice,
 	payMethod, pay.state, payDate, orderNumber
 	from pay join art join lecture 
 	on (pay.no=art.no and pay.isCheck=0) or (pay.no=lecture.no and pay.isCheck=1) 
-	where pay.id = #{id} group by pay.no order by payDate desc limit ${skipBuy}, ${qty} 
+	where pay.id = #{id} group by orderNumber order by payDate desc limit ${skipBuy}, ${qty} 
 	</select>
 
 	<update id="updateDelivery" parameterType="pay">
