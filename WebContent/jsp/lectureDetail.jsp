@@ -137,7 +137,7 @@ $(function(){
 </li>
      </ul>
 <!-- 모집 중일 때만 신청 버튼 생성 -->
-     <c:if test="${lecture.state == 1 } &&  ${currentId != lecture.artistID  }"  > 
+     <c:if test="${lecture.state == 1 } && ${currentId != lecture.artistID  }"  > 
         <div id="modalButton">
         	<a href="#myModal" role="button" class="btn btn-inverse" data-toggle="modal">강의 신청</a>
         </div>

@@ -16,10 +16,30 @@
 <link rel="stylesheet" href="css/jquery.lightbox-0.5.css">
 <link rel="stylesheet" href="css/custom-styles.css">
 
-<!--[if lt IE 9]>
-    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-    <link rel="stylesheet" href="css/style-ie.css"/>
-<![endif]-->
+<style type="text/css">
+h4{
+color: 	#2E8B57;
+font-weight: bold;
+/* background-color: grey; */
+}
+.table {
+border: 1px solid;
+}
+.table tr, th, td {
+border: 1px solid;
+}
+.table th > div {
+ 	text-align: center;
+}
+.table td > div {
+	text-align: center;
+    overflow:hidden;
+/* 	width: auto; */
+/* 	height: 50px; */
+/* 	text-overflow: ellipsis; */
+/* 	white-space: nowrap; */
+}
+</style>
 
 <!-- Favicons
 ================================================== -->
@@ -89,10 +109,10 @@ var myLectureFormA = function(){ // 강의 내역 페이지 요청 함수
 			              "data-dismiss='modal' aria-hidden='true' onclick='moveUrl(" + attendList.no + ")'>결제하기</button></div></div>";
 				}
 				
-				str1 += '<td>' + attendList.genre + '</td><td><span>' + aTag + 
-						imageUrl + '</a></span> &nbsp; <span>' + aTag + attendList.title + '</a></span></td><td>' +
-						attendList.artistID + '</td><td>' + attendList.startDate + ' ~ ' + attendList.endDate + '</td><td>' +
-						attendList.place + '</td><td>' + pay +'</td>';
+				str1 += '<td><div>' + attendList.genre + '</div></td><td><div><span>' + aTag + 
+						imageUrl + '</a></span> &nbsp; <span>' + aTag + attendList.title + '</a></span></div></td><td><div>' +
+						attendList.artistID + '</div></td><td><div>' + attendList.startDate + ' ~ ' + attendList.endDate + '</div></td><td><div>' +
+						attendList.place + '</div></td><td><div>' + pay +'</div></td>';
 				str1 += '</tr>';
 			}); // each
 			$('#attendList').append(str1); // 강의신청 목록- 테이블에 붙이기
@@ -136,11 +156,11 @@ var myLectureFormA = function(){ // 강의 내역 페이지 요청 함수
 				if(gatherList.state==1){state = '인원 모집 중';}
 				if(gatherList.state==2){state = '모집완료';}
 				if(gatherList.state==6){state = '결제완료';}
-				str2 += '<td>' + gatherList.genre + 
-						'</td><td><span>' + aTag + imageUrl + '</a></span> &nbsp; <span>' +
-						aTag + gatherList.title + '</a></span></td><td>' +
-						gatherList.artistID + '</td><td>' + gatherList.startDate + ' ~ ' + gatherList.endDate + '</td><td>' +
-						gatherList.place + '</td><td>' + state + '</td>';
+				str2 += '<td><div>' + gatherList.genre + 
+						'</div></td><td><div><span>' + aTag + imageUrl + '</a></span> &nbsp; <span>' +
+						aTag + gatherList.title + '</a></span></div></td><td><div>' +
+						gatherList.artistID + '</div></td><td><div>' + gatherList.startDate + ' ~ ' + gatherList.endDate + '</div></td><td><div>' +
+						gatherList.place + '</div></td><td><div>' + state + '</div></td>';
 				str2 += '</tr>';
 			}); // each
 			$('#gatherList').append(str2); // 모집 중인 강의- 테이블에 붙이기
@@ -189,12 +209,12 @@ var myLectureFormA = function(){ // 강의 내역 페이지 요청 함수
 				}
 				if(requestList.state==5){state = '승인거절';}
 				
-				str3 += '<td>' + requestList.genre + 
-						'</td><td><span>' + aTag + imageUrl + '</a></span> &nbsp; <span>' +
-						aTag + requestList.title + '</a></span></td><td>' +
-						requestList.startDate + ' ~ ' + requestList.endDate + '</td><td>' + requestList.place + '</td><td>' +
-						requestList.maxPeople + '</td><td>' + requestList.guestID + '</td><td>' +
-						state + '</td>';
+				str3 += '<td><div>' + requestList.genre + 
+						'</div></td><td><div><span>' + aTag + imageUrl + '</a></span> &nbsp; <span>' +
+						aTag + requestList.title + '</a></span></div></td><td><div>' +
+						requestList.startDate + ' ~ ' + requestList.endDate + '</div></td><td><div>' + requestList.place + '</div></td><td><div>' +
+						requestList.maxPeople + '</div></td><td><div>' + requestList.guestID + '</div></td><td><div>' +
+						state + '</div></td>';
 				str3 += '</tr>';
 			}); // each
 			$('#requestList').append(str3); // 요청 받은 강의목록- 테이블에 붙이기
@@ -234,13 +254,13 @@ var myLectureFormA = function(){ // 강의 내역 페이지 요청 함수
 				var imageUrl =  '<img src="download.do?no=' + approveList.no + '&lecture=a" width=50 height=50>';
 				var aTag = '<a href="selectOneLecture.do?no=' + approveList.no + '">';
 				
-				str4 += '<td>' + approveList.genre + 
-						'</td><td><span>' + aTag + imageUrl + '</a></span> &nbsp; <span>' +
-						aTag + approveList.title + '</a></span></td><td>' +
-						approveList.startDate + ' ~ ' + approveList.endDate + '</td><td>' + 
-						approveList.place + '</td><td>' +
-						approveList.numberPeople + '</td><td>' +
-						approveList.maxPeople + '</td><td>' + approveList.guestID + '</td>';
+				str4 += '<td><div>' + approveList.genre + 
+						'</div></td><td><div><span>' + aTag + imageUrl + '</a></span> &nbsp; <span>' +
+						aTag + approveList.title + '</a></span></div></td><td><div>' +
+						approveList.startDate + ' ~ ' + approveList.endDate + '</div></td><td><div>' + 
+						approveList.place + '</div></td><td><div>' +
+						approveList.numberPeople + '</div></td><td><div>' +
+						approveList.maxPeople + '</div></td><td><div>' + approveList.guestID + '</div></td>';
 				str4 += '</tr>';
 			}); // each
 			$('#approveList').append(str4); // 요청 수락한 강의목록- 테이블에 붙이기
@@ -316,36 +336,34 @@ var myLectureFormA = function(){ // 강의 내역 페이지 요청 함수
 
 	<h3 class="title-bg" style="margin-top: 0px;">강의 내역 조회</h3>
 	<h4>신청한 강의</h4>
-	<hr style="display: block; margin-top: 0.5em; margin-bottom: 0.5em; border-style: inset; border-width: 1px;">
 				<table class="table table-striped">
 					<thead>
 						<tr>
-							<th scope="col">장르</th>
-							<th scope="col">강의명</th>
-							<th scope="col">아티스트</th>
-							<th scope="col">강의기간</th>
-							<th scope="col">장소</th>
-							<th scope="col">결제</th>
+							<th scope="col"><div style="width: 50px;">장르</div></th>
+							<th scope="col"><div style="width: 200px;">강의명</div></th>
+							<th scope="col"><div style="width: 50px;">아티스트</div></th>
+							<th scope="col"><div style="width: 150px;">강의기간</div></th>
+							<th scope="col"><div style="width: 150px;">장소</div></th>
+							<th scope="col"><div style="width: 100px;">결제</div></th>
 						</tr>
 					</thead>
 					<tbody id="attendList">
 					</tbody>
 					<tr>
-						<td id="attendPaging" colspan="5"></td>
+						<td id="attendPaging" colspan="6"></td>
 					</tr>
 				</table>
 
 				<h4>인원 모집 중인 강의</h4>
-				<hr style="display: block; margin-top: 0.5em; margin-bottom: 0.5em; border-style: inset; border-width: 1px;">
 				<table class="table table-striped">
 					<thead>
 						<tr>
-							<th scope="col">장르</th>
-							<th scope="col">강의명</th>
-							<th scope="col">아티스트</th>
-							<th scope="col">강의기간</th>
-							<th scope="col">장소</th>
-							<th scope="col">상태</th>
+							<th scope="col"><div style="width: 50px;">장르</div></th>
+							<th scope="col"><div style="width: 200px;">강의명</div></th>
+							<th scope="col"><div style="width: 50px;">아티스트</div></th>
+							<th scope="col"><div style="width: 150px;">강의기간</div></th>
+							<th scope="col"><div style="width: 150px;">장소</div></th>
+							<th scope="col"><div style="width: 100px;">상태</div></th>
 						</tr>
 					</thead>
 					<tbody id="gatherList">
@@ -356,38 +374,36 @@ var myLectureFormA = function(){ // 강의 내역 페이지 요청 함수
 				</table>
 
 				<h4>요청 받은 강의</h4>
-				<hr style="display: block; margin-top: 0.5em; margin-bottom: 0.5em; border-style: inset; border-width: 1px;">
 				<table class="table table-striped">
 					<thead>
 						<tr>
-							<th scope="col">장르</th>
-							<th scope="col">강의명</th>
-							<th scope="col">강의기간</th>
-							<th scope="col">장소</th>
-							<th scope="col">최대 인원</th>
-							<th scope="col">강의 요청자</th>
-							<th scope="col">상태</th>
+							<th scope="col"><div style="width: 50px;">장르</div></th>
+							<th scope="col"><div style="width: 200px;">강의명</div></th>
+							<th scope="col"><div style="width: 150px;">강의기간</div></th>
+							<th scope="col"><div style="width: 150px;">장소</div></th>
+							<th scope="col"><div style="width: 30px;">최대 인원</div></th>
+							<th scope="col"><div style="width: 50px;">요청자</div></th>
+							<th scope="col"><div style="width: 100px;">상태</div></th>
 						</tr>
 					</thead>
 					<tbody id="requestList">
 					</tbody>
 					<tr>
-						<td id="requestPaging" colspan="6"></td>
+						<td id="requestPaging" colspan="7"></td>
 					</tr>
 				</table>
 
 				<h4>요청 수락한 강의</h4>
-				<hr style="display: block; margin-top: 0.5em; margin-bottom: 0.5em; border-style: inset; border-width: 1px;">
 				<table class="table table-striped">
 					<thead>
 						<tr>
-							<th scope="col">장르</th>
-							<th scope="col">강의명</th>
-							<th scope="col">강의기간</th>
-							<th scope="col">장소</th>
-							<th scope="col">현재 모집 인원</th>
-							<th scope="col">최대 인원</th>
-							<th scope="col">강의 요청자</th>
+							<th scope="col"><div style="width: 50px;">장르</div></th>
+							<th scope="col"><div style="width: 200px;">강의명</div></th>
+							<th scope="col"><div style="width: 150px;">강의기간</div></th>
+							<th scope="col"><div style="width: 150px;">장소</div></th>
+							<th scope="col"><div style="width: 30px;">모집인원</div></th>
+							<th scope="col"><div style="width: 30px;">최대인원</div></th>
+							<th scope="col"><div style="width: 50px;">요청자</div></th>
 						</tr>
 					</thead>
 					<tbody id="approveList">

@@ -17,6 +17,31 @@
 <link rel="stylesheet" href="css/jquery.lightbox-0.5.css">
 <link rel="stylesheet" href="css/custom-styles.css">
 
+<style type="text/css">
+h4{
+color: 	#2E8B57;
+font-weight: bold;
+/* background-color: grey; */
+}
+.table {
+border: 1px solid;
+}
+.table tr, th, td {
+border: 1px solid;
+}
+.table th > div {
+ 	text-align: center;
+}
+.table td > div {
+	text-align: center;
+    overflow:hidden;
+/* 	width: auto; */
+/* 	height: 50px; */
+/* 	text-overflow: ellipsis; */
+/* 	white-space: nowrap; */
+}
+</style>
+
 <!--[if lt IE 9]>
     <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <link rel="stylesheet" href="css/style-ie.css"/>
@@ -96,11 +121,11 @@ var mySellFormA = function(){
 					aTag = '<a href="selectOneArt.do?no=' + buyingList.no + '">';
 					aTagPay = '<a href="payResult.do?no=' + buyingList.no + '&orderNumber=' + buyingList.orderNumber + '&dif=1">';
 				}
-				str1 += '<td>'+ aTagPay + buyingList.orderNumber + '</a></td><td>' +  isCheck + '</td><td><span>' + aTag + 
-				imageUrl + '</a></span> &nbsp; <span>' + aTag + title + '</a></span></td><td>' +
-				artistID + '</td><td>' +  
-				buyingList.totalPrice + '</td><td>' + payMethod + '</td><td>' +
-				state + '</td><td>' + buyingList.payDate.substring(0, 10) + '</td>';
+				str1 += '<td><div>'+ aTagPay + buyingList.orderNumber + '</a></div></td><td><div>' +  isCheck + '</div></td><td><div><span>' + aTag + 
+				imageUrl + '</a></span> &nbsp; <span>' + aTag + title + '</a></span></div></td><td><div>' +
+				artistID + '</div></td><td><div>' +  
+				buyingList.totalPrice + '</div></td><td><div>' + payMethod + '</div></td><td><div>' +
+				state + '</div></td><td><div>' + buyingList.payDate.substring(0, 10) + '</div></td>';
 				str1 += '</tr>';
 				
 			}); // each
@@ -145,10 +170,10 @@ var mySellFormA = function(){
 					var sellingTag;
 					sellingTag = '<a href="selectOneArt.do?no=' + sellingList.no + '">';
 					
-					str2 += '<td>' + sellingList.no + '</td><td><span>' + sellingTag + 
+					str2 += '<td><div>' + sellingList.no + '</div></td><td><div><span>' + sellingTag + 
 					sellingImg + '</a></span> &nbsp; <span>' + sellingTag + sellingList.title + 
-					'</a></span></td><td>' + sellingList.price + '</td><td>' + 
-					sellingList.totalCount + '</td><td>' + sellingList.genre + '</td>';
+					'</a></span></div></td><td><div>' + sellingList.price + '</div></td><td><div>' + 
+					sellingList.totalCount + '</div></td><td><div>' + sellingList.genre + '</div></td>';
 					str2 += '</tr>';
 				}); // each
 				
@@ -206,12 +231,12 @@ var mySellFormA = function(){
 						stateButton = '구매확정';
 					}
 					
-					str3 += '<td>' + soldList.no + '</td><td><span>' + soldTag + 
+					str3 += '<td><div>' + soldList.no + '</div></td><td><div><span>' + soldTag + 
 						soldImg + '</a></span> &nbsp; <span>' + soldTag + soldList.title + 
-						'</a></span></td><td>' +
-						soldList.totalPrice + '</td><td>' + soldList.p_id + '</td><td>' +
-						soldState + '</td><td>' + soldList.payDate.substring(0, 10) +
-						'</td><td>' + stateButton + '</td>';
+						'</a></span></div></td><td><div>' +
+						soldList.totalPrice + '</div></td><td><div>' + soldList.p_id + '</div></td><td><div>' +
+						soldState + '</div></td><td><div>' + soldList.payDate.substring(0, 10) +
+						'</div></td><td><div>' + stateButton + '</div></td>';
 					str3 += '</tr>';
 				}); // each
 				$('#soldList').append(str3); // 판매된 작품목록- 테이블에 붙이기
@@ -293,14 +318,14 @@ var mySellFormA = function(){
 				<table class="table table-striped">
 					<thead class="thead-dark">
 						<tr>
-							<th scope="col">주문번호</th>
-							<th scope="col">구분</th>
-							<th scope="col">강의/작품명</th>
-							<th scope="col">아티스트</th>
-							<th scope="col">가격</th>
-							<th scope="col">결제방식</th>
-							<th scope="col">진행상태</th>
-							<th scope="col">결제일</th>
+							<th scope="col"><div style="width: 80px;">주문번호</div></th>
+							<th scope="col"><div style="width: 30px;">구분</div></th>
+							<th scope="col"><div style="width: 200px;">강의/작품명</div></th>
+							<th scope="col"><div style="width: 50px;">아티스트</div></th>
+							<th scope="col"><div style="width: 70px;">가격</div></th>
+							<th scope="col"><div style="width: 50px;">결제방식</div></th>
+							<th scope="col"><div style="width: 100px;">진행상태</div></th>
+							<th scope="col"><div style="width: 70px;">결제일</div></th>
 						</tr>
 					</thead>
 					<tbody id="buyingList">
@@ -314,11 +339,11 @@ var mySellFormA = function(){
 				<table class="table table-striped">
 					<thead class="thead-dark">
 						<tr>
-							<th scope="col">작품번호</th>
-							<th scope="col">작품명</th>
-							<th scope="col">가격</th>
-							<th scope="col">총 수량</th>
-							<th scope="col">장르</th>
+							<th scope="col"><div style="width: 70px;">작품번호</div></th>
+							<th scope="col"><div style="width: 200px;">작품명</div></th>
+							<th scope="col"><div style="width: 70px;">가격</div></th>
+							<th scope="col"><div style="width: 50px;">총 수량</div></th>
+							<th scope="col"><div style="width: 50px;">장르</div></th>
 						</tr>
 					</thead>
 					<tbody id="sellingList" align="center">
@@ -332,19 +357,19 @@ var mySellFormA = function(){
 				<table class="table table-striped">
 					<thead class="thead-dark">
 						<tr>
-						    <th scope="col">작품번호</th>
-							<th scope="col">작품명</th>
-							<th scope="col">가격</th>
-							<th scope="col">구매자</th>
-							<th scope="col">결제상태</th>
-							<th scope="col">결제일</th>
-							<th scope="col">배송상태 및 설정</th>
+							<th scope="col"><div style="width: 70px;">작품번호</div></th>
+							<th scope="col"><div style="width: 200px;">작품명</div></th>
+							<th scope="col"><div style="width: 70px;">가격</div></th>
+							<th scope="col"><div style="width: 50px;">구매자</div></th>
+							<th scope="col"><div style="width: 100px;">결제상태</div></th>
+							<th scope="col"><div style="width: 70px;">결제일</div></th>
+							<th scope="col"><div style="width: 100px;">배송상태/설정</div></th>
 						</tr>
 					</thead>
 					<tbody id="soldList" align="center">
 					</tbody>
 					<tr>
-						<td id="soldPaging" colspan="5" align="center"></td>
+						<td id="soldPaging" colspan="7" align="center"></td>
 					</tr>
 				</table>
 
