@@ -40,7 +40,7 @@ public interface memberService {
 
 	public	int	insertArt	(art art, MultipartFile file);
 
-	public	int	updateArt	(HashMap<String, Object> params);
+	public	int	updateArt	(art art, MultipartFile file);		// 수정 (09.11)
 	public	int	deleteArt	(int no, String id);
 	public	int	updateDelivery	(String orderNumber, int state);
 	
@@ -50,5 +50,4 @@ public interface memberService {
 	public int userAuth(String email) throws Exception; // 추가
 	public List<pay> selectPayByNo(HashMap<String, Integer> params); // 각 작품 혹은 강의의 no 로 결제 정보 가져오기
 	
-
 }

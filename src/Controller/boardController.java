@@ -64,6 +64,10 @@ public class boardController {
 	
 	@Autowired
 	private artistDao artistDao;
+<<<<<<< HEAD
+=======
+	
+>>>>>>> origin/master
 
 	@RequestMapping("artistForm.do")
 	public ModelAndView artistForm() {
@@ -294,12 +298,10 @@ public class boardController {
 
 		pay pay = new pay();
 		int no = Integer.parseInt(request.getParameter("no"));
-		int isCheck = Integer.parseInt(request.getParameter("isCheck"));
 		int amount = Integer.parseInt(request.getParameter("amount"));
-
+		
 		pay.setNo(no);
 		pay.setId(request.getParameter("customer_uid"));
-		pay.setIsCheck(isCheck);
 		pay.setAddr(request.getParameter("buyer_addr"));
 		pay.setPhone(request.getParameter("buyer_tel"));
 		pay.setName(request.getParameter("buyer_name"));
@@ -308,19 +310,21 @@ public class boardController {
 		pay.setState(1);
 		pay.setOrderNumber(request.getParameter("merchant_uid"));
 
-		System.out.println(pay);
-
 		int result = artService.insertArtPay(pay);
 
 		System.out.println("result : " + result);
 
-		if (result == 1) {
+		if (result == 1) {					// updateArt 쿼리 수정으로 인한 코드 변경 (09.11-종문)
+			art originalArt = new art();
+			originalArt = artService.selectOneArt(no);
 			art art = new art();
-			art = artService.selectOneArt(no);
-			HashMap<String, Object> params2 = new HashMap<String, Object>();
-			params2.put("totalCount", (art.getTotalCount() - 1));
-			params2.put("no", no);
-			memberService.updateArt(params2);
+			art.setSellCheck(-1);			// java에서 int형의 default값을 '0'으로 넘기는 것을 피하기 위해 '-1' 임의 세팅
+			art.setPrice(-1);
+			art.setIsCheck(-1);
+			art.setState(-1);
+			art.setTotalCount((originalArt.getTotalCount()-1));
+			art.setNo(no);
+			memberService.updateArt(art, null);
 		}
 
 		// DB입력 성공/실패 여부 확인 후 JSON으로 바꿔주고
@@ -369,7 +373,7 @@ public class boardController {
 		pay.setId(request.getParameter("customer_uid"));
 		// int isCheck = Integer.parseInt(request.getParameter("isCheck"));
 		// pay.setIsCheck(isCheck);
-		pay.setIsCheck(0);
+		pay.setIsCheck(1);
 		pay.setAddr(request.getParameter("buyer_addr"));
 		pay.setPhone(request.getParameter("buyer_tel"));
 		pay.setName(request.getParameter("buyer_name"));
@@ -379,8 +383,10 @@ public class boardController {
 		pay.setState(1);
 		pay.setOrderNumber(request.getParameter("merchant_uid"));
 
-		int result = artService.insertArtPay(pay);
-
+		int result = memberService.insertLecturePay(pay);
+		if(result==1) {	
+			memberService.updateApproveLec(no,6);
+		}
 		// DB입력 성공/실패 여부 확인 후 JSON으로 바꿔주고
 		// 다시 페이지로 전달
 		JSONObject jsonObj = new JSONObject();
@@ -510,13 +516,13 @@ public class boardController {
 		lecture.setPrice(price);
 		lectureService.insertLecture(lecture, ufile);
 
-		// 알림 소스 추가
-		// List<String> followerList = artistService.selectFollower(id);
-		// for (String str : followerList) { // following하는 아티스트가 강의 개설시, follower들에게 알림
-		// 보내기
-		// mainService.insertAlarm("writeLecture", str, id);
-		// }
-		// 알림 소스
+			//		알림 소스 (09.10 수정) 
+			HashMap<String, Object> params = new HashMap<>();
+			params.put("id", id);
+			List<String> followerList = artistDao.selectFollower(params);
+			for (String str : followerList) {			// following하는 아티스트가 글 작성시, follower들에게 알림 보내기
+				mainService.insertAlarm("writeLecture", str, id);
+			}
 
 		return "redirect:myLectureFormA0.do";
 	}

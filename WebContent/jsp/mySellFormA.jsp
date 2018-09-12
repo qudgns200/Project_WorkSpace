@@ -72,7 +72,10 @@ var mySellFormA = function(){
 				if(buyingList.payMethod==1){payMethod = '카드결제';}
 				else{payMethod = '카카오페이';}
 				if(buyingList.state==0){state = '미결제';}
-				if(buyingList.state==1){state = '배송 준비중';}
+				if(buyingList.state==1){
+					if(buyingList.isCheck==1){ state = '결제완료'; }
+					else{ state = '배송 준비중'; }
+					}
 				if(buyingList.state==3){state = '배송중';}
 				if(buyingList.state==4){
 				state = '<a href="updateDelivery.do?state=5&orderNumber='+ buyingList.orderNumber +'">구매 확정</a>';

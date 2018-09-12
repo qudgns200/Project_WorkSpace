@@ -1,20 +1,23 @@
 
 $(function() {
 	
-	var thisIt = $("thisIt").val();
+	var thisIt = $("#thisIt").val();
 	var approval_url = "";
 	var fail_url = "";
 	var cancel_url= "";
 	var ajaxUrl = "";
 	
+	
 	if(thisIt=='art') {
 		approval_url = "http://localhost:8080/Project/kakaoApproval.do?no=" + $('#no').val();
 	    fail_url = "http://localhost:8080/Project/artPayForm.do?no=" + $('#no').val();
 	    cancel_url = "http://localhost:8080/Project/artDetail.do?no=" + $('#no').val();
+	    isCheck="0";
 	} else {
 		approval_url = "http://localhost:8080/Project/kakaoApproval.do?no=" + $('#no').val();
 	    fail_url = "http://localhost:8080/Project/lecutrePayForm.do?no=" + $('#no').val();
 	    cancel_url = "http://localhost:8080/Project/lectureDetail.do?no=" + $('#no').val();
+	    isCheck="1";
 	}
 	
 	
@@ -34,7 +37,7 @@ $(function() {
 		    "approval_url" : approval_url,
 		    "fail_url" : fail_url,
 		    "cancel_url" : cancel_url,
-		    "isCheck" : $('#isCheck').val()
+		    "isCheck" : isCheck
 	}	
 
 		$.ajax({

@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>art 결제 페이지</title>
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -75,7 +75,7 @@
 
         <div class="span7 contact"><!--Begin page content column-->
 
-            <h2>lecture 결제</h2>
+            <h2>Art 결제</h2>
 
             <div class="alert alert-success">
                 Well done! You successfully read this important alert message. 
@@ -117,7 +117,7 @@
                 <input type="hidden" id="buyer_name" value='${member.name }'/>
                 <input type="hidden" id="no" value='${art.no }'/>
                 <input type="hidden" id="artist" value='${art.id }'/>
-                <input type="hidden" id="isCheck" value='0'/>
+                <input type="hidden" id="isCheck" value='${art.isCheck }''/>
                 <input type="hidden" id="thisIt" value='art'/>
                 <a class="btn _tt-uc btn-primary-inverse btn-lg btn-block" id="payment">카드결제</a>
                 <a class="btn _tt-uc btn-primary-inverse btn-lg btn-block" id="kakaoPayment">카카오페이</a>

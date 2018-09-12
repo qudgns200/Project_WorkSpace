@@ -2,16 +2,19 @@
 
 $(function(){
 	
-	var thisIt = $("thisIt").val();
+	var thisIt = $("#thisIt").val();
 	var ajax_Url="";
 	var return_Url="";
+	var isCheck="";
 	
 	if(thisIt=='art') {
 		ajax_Url = "artPay.do";
 		return_Url = "artPayForm.do?no=" + $('#no').val();
+		isCheck="0";
 	} else {
 		ajax_Url = "lecturePay.do";
 		return_Url = "lecturePayForm.do?no=" + $('#no').val()
+		isCheck="1";
 	}
 	
 	
@@ -31,7 +34,7 @@ $(function(){
 		    "buyer_name" : $('#buyer_name').val(),
 		    "buyer_tel" : $('#buyer_tel').val(),
 		    "buyer_addr" : $('#buyer_addr').val(),
-		    "isCheck" : $('#isCheck').val()
+		    "isCheck" : isCheck
 	}
 
 	<!-- 아임포트 실행 테스트 -->
@@ -54,7 +57,6 @@ $(function(){
 		            data: param,
 		            type: 'POST',
 		            success: function(result) {
-		            	alert(result.result)
 		                	 location.href="mySellFormA0.do";
 		             }
 		          });
