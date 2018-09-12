@@ -17,6 +17,7 @@ public class attendants {
 	public void setId(String id) {
 		this.id = id;
 	}
+	
 	@Override
 	public String toString() {
 		return "attendants [no=" + no + ", id=" + id + "]";
