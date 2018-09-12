@@ -7,6 +7,7 @@ import java.util.List;
 import Model.attendants;
 import Model.lecture;
 import Model.lectureComment;
+import Model.pay;
 
 public interface lectureDao {
 
