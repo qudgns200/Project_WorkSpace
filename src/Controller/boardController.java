@@ -64,10 +64,6 @@ public class boardController {
 	
 	@Autowired
 	private artistDao artistDao;
-<<<<<<< HEAD
-=======
-	
->>>>>>> origin/master
 
 	@RequestMapping("artistForm.do")
 	public ModelAndView artistForm() {

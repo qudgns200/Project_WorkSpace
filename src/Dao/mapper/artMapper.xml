@@ -6,7 +6,6 @@
 <mapper namespace="Dao.artDao">
 	
 	<select id="searchArt" parameterType="java.util.HashMap" resultType="art">
-<<<<<<< HEAD
    select * from art a join member m using(id) 
    <where>
    m.isCheck = 2 and a.isCheck = 1 
@@ -28,29 +27,6 @@
    </where>
    order by artDate desc limit ${skip}, ${qty}
    </select>
-=======
-	select * from art a join member m using(id) 
-	<where>
-	m.isCheck = 2 and a.isCheck = 1 
-	<if test="title!=null and content==null">
-	and title like '%${searchWord}%' 
-	</if>
-	<if test="content!=null and title==null">
-	or a.content like '%${searchWord}%' 
-	</if>
-	<if test="nickname!=null">
-	or nickname like '%${searchWord}%'
-	</if>
-	<if test="title!=null and content!=null">
-	or (title like '%${searchWord}%' or a.content like '%${searchWord}%')
-	</if>	 
-	<if test="genre!=''">
-	and genre = '${genre}'
-	</if>
-	</where>
-	order by artDate desc limit ${skip}, ${qty}
-	</select>
->>>>>>> origin/master
 
 	<select id="selectTopArt" parameterType="String" resultType="art">
 	select *, count(no) from art a join likes using(no) where genre = #{genre} and a.isCheck = 1

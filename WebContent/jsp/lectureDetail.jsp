@@ -91,7 +91,7 @@ $(function(){
         <div class="span12 gallery-single">
             <div class="row">
             <div class="span6">
-			<img src="download.do?no=${lecture.no }&lecture=a" style="width: 500px; height: 530px; margin-left: 50px; margin-top: 30px;">
+			<img src="download.do?no=${lecture.no }&lecture=a" style="display:block; margin-left:auto; margin-right:auto;">
             </div>
                 <div class="span6">
                     <h2>${lecture.title }</h2> 		<!-- 강의 제목 출력  -->

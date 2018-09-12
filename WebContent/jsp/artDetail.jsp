@@ -101,9 +101,9 @@ function moveUrl(num) {
 
 		<form id="form" action="artPayForm.do" method = "post">
             <div class="row">
-                <div class="span6">
-				<img src="download.do?no=${art.no }">
-                </div>
+	            <div class="span6">
+	  			<img src="download.do?no=${art.no }" style="display:block; margin-left:auto; margin-right:auto;">
+				</div>
                 <div class="span6">
                     <h2>${art.title }</h2> 		<!-- 작품 제목 출력  -->
                     <p class="lead"></p>
