@@ -95,12 +95,10 @@ $(document).ready(function () {
         <!-- Headline Text
         ================================================== -->
         <div class="span4">
-        	<h3> 아티스트들의 사이버 갤러리 <br />
-            작업실에 오신 것을 환영합니다.</h3>
-            <p class="lead">심혈을 기울여 만든 작품이 사람들에게 주목받으면 이 자리에 걸릴거야. 여기에 걸릴 때까지 포기하지 말고 빡세게 매진하라고.</p>
-            <p>이 주에 소개될 테마는 'Love Violet'입니다. 2018 올해의 컬러로 지정된 'Ultra Violet'처럼 바이올렛 색으로 이루어진 작품 중 선정된 작품들입니다. 작가의 페이지에 축하메세지 남겨주세요. </p>
-        	
-            <a href="#"><i class="icon-plus-sign"></i>Read More</a> 
+        	<h3>WELCOME WorkSpace<br>작업실에 오신 것을 환영합니다.</h3>
+ 				<p class="lead">작업실은<br>아티스트들을 위한 소셜 커머스입니다.</p>
+				<p>아티스트는 개인 페이지에 작품 사진을 업로드할 수 있고<br>사용자는 아티스트 작품을 감상하고 구매까지 할 수 있습니다.</p>
+				<p>아티스트는 자신의 강의를 개설할 수 있고<br>사용자는 강의를 신청하고 결제까지 할 수 있습니다.</p>        	
         </div>
     </div><!-- End Headline -->
     
@@ -122,12 +120,21 @@ $(document).ready(function () {
                     <li  class="span3 gallery-item" data-id="id-1" data-type="illustration">
                         <span class="gallery-hover-4col hidden-phone hidden-tablet">
                             <span class="gallery-icons">
-                                <a href="img/gallery/gallery-img-1-full.jpg" class="item-zoom-link lightbox" title="Custom Illustration" data-rel="prettyPhoto"></a>
-                                <a href="gallery-single.htm" class="item-details-link"></a>
+                            <c:if test="${id == O.id }">
+                                <a href="artistMyPage.do" class="item-zoom-link lightbox" title="Custom Illustration" data-rel="prettyPhoto"></a>
+                            </c:if>
+                            <c:if test="${id != O.id }">
+                            	<a href="artistPage.do?id=${O.id }" class="item-zoom-link lightbox" title="Custom Illustration" data-rel="prettyPhoto"></a>
+                            </c:if>
                             </span>
                         </span>
-                        <a href="gallery-single.htm"><img src="download.do?id=${O.id }&profile=a"></a>
-                        <span class="project-details"><a href="gallery-single.htm">${O.nickname }</a>For an international ad campaign.</span>
+                        <img src="download.do?id=${O.id }&profile=a" style="width: 300px; height: 220px;"></a>
+                        <c:if test="${id == O.id }">
+                        <span class="project-details"><a href="artistMyPage.do">${O.nickname }</a></span>
+                        </c:if>
+                        <c:if test="${id != O.id }">
+                        <span class="project-details"><a href="artistPage.do?id=${O.id }">${O.nickname }</a></span>
+                        </c:if>
                     </li>
 				</c:forEach>    
                 </ul>
@@ -152,12 +159,21 @@ $(document).ready(function () {
                     <li class="span3 gallery-item" data-id="id-5" data-type="web illustration">
                         <span class="gallery-hover-4col hidden-phone hidden-tablet">
                             <span class="gallery-icons">
-                                <a href="img/gallery/gallery-img-5-full.jpg" class="item-zoom-link lightbox" title="Custom Illustration" data-rel="prettyPhoto"></a>
-                                <a href="artistDetail.html" class="item-details-link"></a>
+                            <c:if test="${id == T.id }">
+                                <a href="artistMyPage.do" class="item-zoom-link lightbox" title="Custom Illustration" data-rel="prettyPhoto"></a>
+                            </c:if>
+                            <c:if test="${id != T.id }">
+                            	<a href="artistPage.do?id=${T.id }" class="item-zoom-link lightbox" title="Custom Illustration" data-rel="prettyPhoto"></a>
+                            </c:if>
                             </span>
                         </span>
-                        <a href="gallery-single.htm"><img src="download.do?id=${T.id }&profile=a" alt="Gallery"></a>
-                        <span class="project-details"><a href="artistDetail.html">${T.nickname }</a>Classic retro style illustration.</span>
+                        <img src="download.do?id=${T.id }&profile=a" alt="Gallery" style="width: 300px; height: 220px;"></a>
+                        <c:if test="${id == T.id }">
+                        <span class="project-details"><a href="artistMyPage.do">${T.nickname }</a></span>
+                        </c:if>
+                        <c:if test="${id != T.id }">
+                        <span class="project-details"><a href="artistPage.do?id=${T.id }">${T.nickname }</a></span>
+                        </c:if>
                     </li>
 				</c:forEach>                 
                 </ul>
@@ -180,12 +196,11 @@ $(document).ready(function () {
                     <li class="span3 gallery-item" data-id="id-9" data-type="design">
                         <span class="gallery-hover-4col hidden-phone hidden-tablet">
                             <span class="gallery-icons">
-                                <a href="img/gallery/gallery-img-9-full.jpg" class="item-zoom-link lightbox" title="Custom Illustration" data-rel="prettyPhoto"></a>
-                                <a href="gallery-single.htm" class="item-details-link"></a>
+                            	<a href="selectOneArt.do?no=${Th.no }" class="item-zoom-link lightbox" title="Custom Illustration" data-rel="prettyPhoto"></a>
                             </span>
                         </span>
-                        <a href="gallery-single.htm"><img src="download.do?no=${Th.no }" alt="Gallery"></a>
-                        <span class="project-details"><a href="gallery-single.htm">${Th.title }</a>${Th.nickname }</span>
+                        <img src="download.do?no=${Th.no }" alt="Gallery" style="width: 300px; height: 220px;"></a>
+                        <span class="project-details"><a href="selectOneArt.do?no=${Th.no }">${Th.title }</a>${Th.nickname }</span>
                     </li>
                 </c:forEach>
                 </ul>
@@ -208,12 +223,11 @@ $(document).ready(function () {
                     <li class="span3 gallery-item" data-id="id-9" data-type="design">
                         <span class="gallery-hover-4col hidden-phone hidden-tablet">
                             <span class="gallery-icons">
-                                <a href="img/gallery/gallery-img-9-full.jpg" class="item-zoom-link lightbox" title="Custom Illustration" data-rel="prettyPhoto"></a>
-                                <a href="gallery-single.htm" class="item-details-link"></a>
+                                <a href="selectOneArt.do?no=${F.no }" class="item-zoom-link lightbox" title="Custom Illustration" data-rel="prettyPhoto"></a>
                             </span>
                         </span>
-                        <a href="gallery-single.htm"><img src="download.do?no=${F.no }" alt="Gallery"></a>
-                        <span class="project-details"><a href="gallery-single.htm">${F.title }</a>${F.nickname }</span>
+                        <img src="download.do?no=${F.no }" alt="Gallery" style="width: 300px; height: 220px;"></a>
+                        <span class="project-details"><a href="selectOneArt.do?no=${F.no }">${F.title }</a>${F.nickname }</span>
                     </li>
                 </c:forEach>
                 </ul>

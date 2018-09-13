@@ -78,8 +78,8 @@ public class memberServiceImpl implements memberService {
 	public int insertMember(member member, MultipartFile Profile, MultipartFile File) throws Exception {
 		// TODO Auto-generated method stub
 		System.out.println("서비스80");
-//		String path = "C:/Project/Project/image/";
-		String path = "C:/Users/cho/workspace/Project/image/";
+		String path = "C:/Project/Project/image/";
+//		String path = "C:/Users/cho/workspace/Project/image/";
 		
 		File dir = new File(path);
 	
@@ -181,7 +181,7 @@ public class memberServiceImpl implements memberService {
 	@Override
 	public int deleteMember(String id) {
 		// TODO Auto-generated method stub
-		return 0;
+		return memberDao.deleteMember(id);
 	}
 
 	@Override
@@ -280,9 +280,25 @@ public class memberServiceImpl implements memberService {
 	}
 
 	@Override
-	public int updateArt(HashMap<String, Object> params) {
-		// TODO Auto-generated method stub
-		return memberDao.updateArt(params);
+	public int updateArt(art art, MultipartFile file) {
+		
+		String path = "C:/Project/Project/WebContent/resources/Thumnail/artImage/";
+
+		File dir = new File(path);
+		if(!dir.exists())
+			dir.mkdirs(); //지정 경로에 폴더가 없을 시 폴더 생성 요청
+		
+		String fileName=new Date().getTime() + "_" + file.getOriginalFilename();
+		
+		File attachFile = new File(path + fileName);
+		try {
+			file.transferTo(attachFile);
+			art.setFile(fileName);
+		} catch (IllegalStateException | IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return memberDao.updateArt(art);
 	}
 
 	@Override

@@ -210,14 +210,17 @@ public class kakaoController {
 			int result;
 			if(isCheck == 0) {
 				result = artService.insertArtPay(pay);
-				if(result==1) {
+				if(result==1) {							// updateArt 쿼리 수정으로 인한 코드 변경 (09.11-종문)
+					art originalArt = new art();
+					originalArt = artService.selectOneArt(no);
 					art art = new art();
-					art = artService.selectOneArt(no);
-					HashMap<String, Object> params2 = new HashMap<String, Object>();
-					params2.put("totalCount", (art.getTotalCount()-1));
-					params2.put("no", no);
-					
-					memberService.updateArt(params2);
+					art.setSellCheck(-1);			// java에서 int형의 default값을 '0'으로 넘기는 것을 피하기 위해 '-1' 임의 세팅
+					art.setPrice(-1);
+					art.setIsCheck(-1);
+					art.setState(-1);
+					art.setTotalCount((originalArt.getTotalCount()-1));
+					art.setNo(no);
+					memberService.updateArt(art, null);
 				}
 			} else {
 				result = memberService.insertLecturePay(pay);

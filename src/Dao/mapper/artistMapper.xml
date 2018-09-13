@@ -14,7 +14,7 @@
   	</if>
   	;
   </select>
-  <select id="selectFollowing" parameterType="String" resultType="String">
+  <select id="selectFollowing" parameterType="java.util.HashMap" resultType="String">
   	select following from follow where id=#{id} and following is not null
   	<if test="skip != null and qty != null">
   	limit #{skip}, #{qty};
@@ -26,11 +26,14 @@
   <insert id="insertLikes" parameterType="likes">
   	insert into likes values(#{no},#{id},#{isCheck});
   </insert>
-  <select id="selectLikesArt" parameterType="String" resultType="art">
-  	select * from art a join likes l using(no) where l.id=#{id} and l.isCheck=0 order by artDate desc limit 5;
+  <select id="selectLikesArt" parameterType="java.util.HashMap" resultType="art">
+  	select * from art a join likes l using(no) where l.id=#{id} and l.isCheck=0 order by artDate desc limit 0, #{qty};
   </select>
-  <select id="selectLikesLecture" parameterType="String" resultType="lecture">
-  	select * from lecture join likes l using(no) where l.id=#{id} and l.isCheck=1 order by writeDate desc limit 5;
+  <select id="selectLikesLecture" parameterType="java.util.HashMap" resultType="lecture">
+  	select * from lecture join likes l using(no) where l.id=#{id} and l.isCheck=1 order by writeDate desc 
+  	<if test="skip != null and qty != null">
+  	limit #{skip}, #{qty};
+  	</if>
   </select>
   <delete id="deleteLikesArt" parameterType="likes">
   	delete from likes where no=#{no} and id=#{id} and isCheck=0;
@@ -91,6 +94,14 @@
   
   <select id="getFollowingCount" parameterType="java.util.HashMap" resultType="int">
   	select count(*) from follow where id = #{id} and following is not null;
+  </select>
+  
+  <select id="getLikesArtCount" parameterType="java.util.HashMap" resultType="int">
+  	select count(*) from art a join likes l using(no) where l.id=#{id} and l.isCheck=0; 
+  </select>
+  
+  <select id="getLikesLectureCount" parameterType="java.util.HashMap" resultType="int">
+  	select count(*) from lecture join likes l using(no) where l.id=#{id} and l.isCheck=1; 
   </select>
   
   </mapper>

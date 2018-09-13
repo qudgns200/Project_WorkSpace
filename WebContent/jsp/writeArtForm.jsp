@@ -209,8 +209,8 @@
 <!-- 					자유게시판 시작 부분 -->
 
 					<div class="input-prepend" id="freeBoard">
-						<span class="add-on"><i class="icon-picture"></i></span> 
-						<input class="span6" id="focusedInput" name="title" type="text" size="16" placeholder="제목을 입력하세요.">
+			<span class="add-on"><i class="icon-picture"></i></span> 
+			<input class="span6" id="focusedInput" name="boardTitle" type="text" size="16" placeholder="제목을 입력하세요.">
 					</div>
 
 <!-- 					자유게시판 부분 끝 -->

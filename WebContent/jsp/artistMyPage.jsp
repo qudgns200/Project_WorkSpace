@@ -32,8 +32,44 @@
 <script src="js/bootstrap.js"></script>
 <script src="js/jquery.flexslider.js"></script>
 <script src="js/jquery.custom.js"></script>
-</head>
 
+<script type="text/javascript">
+function followerCount() {
+	$.ajax({
+		type : 'get',
+		url : 'followerCount.do',
+		data : {'id' : $('#id').val()},
+		dataType : 'json',
+		success : function(data) {
+			$('#followerCount').text(data.followerCount);
+		},
+		error : function(xhr, status, error) {
+			alert("카운트 오류");
+		}
+	});
+}
+
+function followingCount() {
+	$.ajax({
+		type : 'get',
+		url : 'followingCount.do',
+		data : {'id' : $('#id').val()},
+		dataType : 'json',
+		success : function(data) {
+			$('#followingCount').text(data.followingCount);
+		},
+		error : function(xhr, status, error) {
+			alert("카운트 오류");
+		}
+	});
+}
+
+$(document).ready(function() {
+	followerCount();
+	followingCount();
+})
+</script>
+</head>
 <body>
 <!-- Page Content
     ================================================== --> 
@@ -63,12 +99,12 @@
                     </blockquote>
 					
 					<button class="btn btn-small btn-inverse" type="button" onclick="location.href='writeArtForm.do'">게시글 등록</button>
-                    <button class="btn btn-small btn-inverse" type="button" onclick="location.href='mySellFormA0.do'">관리페이지</button>
-                    <button class="btn btn-small btn-inverse" type="button">프로필 수정</button>
-                    <button class="btn btn-small btn-inverse" type="button">회원탈퇴</button><br>
+                    <button class="btn btn-small btn-inverse" type="button" onclick="location.href='mySellFormA0.do'">관리페이지</button><p>
 
-                    <h5>게시글 : ${artCount }&nbsp;&nbsp;&nbsp;<a href="followerList.do?follower=${id }">팔로워 : num</a>&nbsp;&nbsp;&nbsp;
-                    <a href="followingList.do?following=${id }">팔로잉 : num</a>&nbsp;&nbsp;&nbsp;<a>좋아요 :num</a></h5>
+                    <div style="font-size: 15pt">게시글 : ${artCount }&nbsp;&nbsp;&nbsp;
+                    <a href="followerList.do?follower=${id }">팔로워</a>&nbsp;<span id="followerCount"></span>&nbsp;&nbsp;&nbsp;
+                    <a href="followingList.do?following=${id }">팔로잉</a>&nbsp;<span id="followingCount"></span>&nbsp;&nbsp;&nbsp;
+                    <a href="likesList.do?likesID=${id }">좋아요 목록</a></div>
                 </div>
             </div>
 
@@ -99,6 +135,6 @@
     
 	<!-- 	Footer section -->
 	<%@include file="footer.jsp" %>
-    
+    <input type="hidden" id="id" value="${id }">
 </body>
 </html>

@@ -5,7 +5,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title>피드</title>
+<title>좋아요</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <!--  CSS 
@@ -83,8 +83,8 @@ $(document).ready(function () {
     <div class="row gallery-row"><!-- Begin Gallery Row --> 
       
     	<div class="span12"><!-- First Container Gallery Row -->
-            <h5 class="title-bg">feed
-                <small>피드</small>
+            <h5 class="title-bg">likes
+                <small>좋아요</small>
             </h5>
     	
         <!-- Gallery Thumbnails
@@ -108,7 +108,7 @@ $(document).ready(function () {
                 <ul id="ul"></ul>
             </div>
             <h5 class="title-bg" align="center">
-                <a href="feed.do?check=1" id="more"><small>더 보기</small></a>
+                <a href="likesList.do?likesID=${likesID }&check=1" id="more"><small>더 보기</small></a>
             </h5>
         </div>
     </div><!-- End Gallery Row -->

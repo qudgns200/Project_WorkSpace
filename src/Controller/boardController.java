@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import Dao.artistDao;
 import Model.art;
 import Model.artComment;
 import Model.attendants;
@@ -60,6 +61,9 @@ public class boardController {
 
 	@Autowired
 	private mainService mainService;
+	
+	@Autowired
+	private artistDao artistDao;
 
 	@RequestMapping("artistForm.do")
 	public ModelAndView artistForm() {
@@ -184,12 +188,15 @@ public class boardController {
 		// comment 객체 : 해당 작품에 달린 댓글들
 		String id = (String) session.getAttribute("id");
 		art art = new art();
+		HashMap<String, Object> params = new HashMap<>();
+		
+		params.put("id", id);
 
 		art = artService.selectOneArt(no);
 		model.addAttribute(art);
 		model.addAttribute("currentId", id);
 		model.addAttribute("deleteText", deleteText);
-		model.addAttribute("likesCheck", artistService.selectLikesArt(id));
+		model.addAttribute("likesCheck", artistService.selectLikesArt(params));
 
 		if (id.equals(art.getId()))
 			model.addAttribute("sameId", 1);
@@ -303,13 +310,17 @@ public class boardController {
 
 		System.out.println("result : " + result);
 
-		if (result == 1) {
+		if (result == 1) {					// updateArt 쿼리 수정으로 인한 코드 변경 (09.11-종문)
+			art originalArt = new art();
+			originalArt = artService.selectOneArt(no);
 			art art = new art();
-			art = artService.selectOneArt(no);
-			HashMap<String, Object> params2 = new HashMap<String, Object>();
-			params2.put("totalCount", (art.getTotalCount() - 1));
-			params2.put("no", no);
-			memberService.updateArt(params2);
+			art.setSellCheck(-1);			// java에서 int형의 default값을 '0'으로 넘기는 것을 피하기 위해 '-1' 임의 세팅
+			art.setPrice(-1);
+			art.setIsCheck(-1);
+			art.setState(-1);
+			art.setTotalCount((originalArt.getTotalCount()-1));
+			art.setNo(no);
+			memberService.updateArt(art, null);
 		}
 
 		// DB입력 성공/실패 여부 확인 후 JSON으로 바꿔주고
@@ -503,13 +514,13 @@ public class boardController {
 		lecture.setPrice(price);
 		lectureService.insertLecture(lecture, ufile);
 
-		// 알림 소스 추가
-		// List<String> followerList = artistService.selectFollower(id);
-		// for (String str : followerList) { // following하는 아티스트가 강의 개설시, follower들에게 알림
-		// 보내기
-		// mainService.insertAlarm("writeLecture", str, id);
-		// }
-		// 알림 소스
+			//		알림 소스 (09.10 수정) 
+			HashMap<String, Object> params = new HashMap<>();
+			params.put("id", id);
+			List<String> followerList = artistDao.selectFollower(params);
+			for (String str : followerList) {			// following하는 아티스트가 글 작성시, follower들에게 알림 보내기
+				mainService.insertAlarm("writeLecture", str, id);
+			}
 
 		return "redirect:myLectureFormA0.do";
 	}

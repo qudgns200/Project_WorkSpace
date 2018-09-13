@@ -7,13 +7,13 @@ import org.springframework.web.multipart.MultipartFile;
 
 public class art {
 
-	private int no;
+	private int no; 
 	private String title;
 	private String genre;
 	private String content;
-	private int sellCheck;
-	private int price;
-	private int isCheck;
+	private int sellCheck; 
+	private int price; 
+	private int isCheck; 
 	private String id;
 	private Date artDate;
 	private int state;

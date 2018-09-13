@@ -165,8 +165,7 @@
 
 			<div class="span8 contact">
 				<!--Begin page form column-->
-				<form action="writeArt.do" name="writeArt" id="contact-form" enctype=multipart/form-data method="post">
-
+				<form action="updateArt.do" name="writeArt" id="contact-form" enctype=multipart/form-data method="post">
 
 <!-- 					작품 등록 시작 부분 -->
 					<div class="input-prepend" id="artBoard">
@@ -211,9 +210,9 @@
 
 <!-- 					자유게시판 시작 부분 -->
 
-					<div class="input-prepend" id="freeBoard">
-						<span class="add-on"><i class="icon-picture"></i></span> 
-						<input class="span6" id="focusedInput" name="title" type="text" size="16" placeholder="제목을 입력하세요.">
+		<div class="input-prepend" id="freeBoard">
+<span class="add-on"><i class="icon-picture"></i></span> 
+<input class="span6" id="focusedInput" name="boardTitle" type="text" size="16" placeholder="제목을 입력하세요." value="${art.title }">
 					</div>
 
 <!-- 					자유게시판 부분 끝 -->
@@ -246,7 +245,8 @@
 
 							<input type="button" class="btn btn-warning pull-right" value="취소">
 							<input type="hidden" id="isCheck" name="isCheck" value="1">
-							<input type="submit" id="savebutton" class="btn btn-success pull-right" value="전송">
+							<input type="hidden" name="no" value="${art.no }">
+							<input type="submit" id="savebutton" class="btn btn-success pull-right" value="수정">
 						</div>					
 					</div>
 				</form>

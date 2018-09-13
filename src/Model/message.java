@@ -9,6 +9,7 @@ public class message {
 	private String content;
 	private Date time;
 	private String file;
+	private String timeStr; // 추가
 
 	public String getIsTo() {
 		return isTo;
@@ -40,9 +41,15 @@ public class message {
 	public void setFile(String file) {
 		this.file = file;
 	}
+	public String getTimeStr() {
+		return timeStr;
+	}
+	public void setTimeStr(String timeStr) {
+		this.timeStr = timeStr;
+	}
 	@Override
 	public String toString() {
-		return "message [isTo=" + isTo + ", isFrom=" + isFrom + ", content=" + content + ", time=" + time + ", file=" + file
-				+ "]";
+		return "message [isTo=" + isTo + ", isFrom=" + isFrom + ", content=" + content + ", time=" + time + ", file="
+				+ file + ", timeStr=" + timeStr + "]";
 	}
 }

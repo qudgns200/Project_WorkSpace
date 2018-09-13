@@ -40,7 +40,7 @@ public interface memberService {
 
 	public	int	insertArt	(art art, MultipartFile file);
 
-	public	int	updateArt	(HashMap<String, Object> params);
+	public	int	updateArt	(art art, MultipartFile file);		// 수정 (09.11)
 	public	int	deleteArt	(int no, String id);
 	public	int	updateDelivery	(String orderNumber, int state);
 	

@@ -43,7 +43,7 @@
 		or 1 = 1
 		</if>
 		and content is not null
-		and (isCheck = 3 || isCheck = 4)
+		and isCheck = 3
 		limit #{skip}, #{qty};
 	</select>
 	
@@ -69,7 +69,7 @@
 	</select>
 	
 	<delete id="deleteMember" parameterType="String">
-		delete from member where id={id};
+		delete from member where id=#{id};
 	</delete>
 
 	<update id="blackList" parameterType="String">
@@ -85,7 +85,7 @@
 	</update>
 
 	<update id="updateMember" parameterType="member">
-	
+		update member set pw=#{pw}, phone=#{phone}, addr=#{addr}, email=#{email}, nickname=#{nickname} where id=#{id};
 	</update>
 	
 	<select id="selectMyAttendLec" parameterType="java.util.HashMap" resultType="java.util.HashMap">
@@ -122,13 +122,21 @@
 		select * from art where id=#{id} order by artDate desc
 	</select>
 	
-	<update id="updateArt" parameterType="java.util.HashMap">
-		<if test="totalCount!=null">
-			update art set totalCount=#{totalCount} where no=#{no};
-		</if>
-		<if test="totalCount==null">
-			update art set title=#{title}, file=#{file}, content=#{content} where no=#{no};
-		</if>
+<!-- 	09.11 수정  -->
+	<update id="updateArt" parameterType="art">
+	update art 
+	<set>
+	<if test="isCheck!=-1">isCheck=#{isCheck}, </if>
+	<if test="id!=null">id=#{id}, </if>
+	<if test="title!=null">title=#{title}, </if>
+	<if test="content!=null">content=#{content}, </if>
+	<if test="genre!=null">genre=#{genre}, </if>
+	<if test="sellCheck!=-1">sellCheck=#{sellCheck}, </if>
+	<if test="price!=-1">price=#{price}, </if>
+	<if test="totalCount!=-1">totalCount=#{totalCount}, </if>
+	<if test="state!=-1">state=#{state}</if>
+	</set>
+	where no=#{no}
 	</update>
 
 	<delete id="deleteArt" parameterType="java.util.HashMap">
@@ -152,14 +160,14 @@
 		and p.isCheck =0 and a.id = #{id} order by payDate desc
 		limit ${skipSold}, ${qty}
 	</select>
-<!-- 	수 정 -->
+<!-- 수 정 (09.12)-->
 	<select id="selectBuyingArt" parameterType="java.util.HashMap" resultType="java.util.HashMap">
 	select pay.no, pay.isCheck, art.title as 'artTitle', lecture.title as 'lecTitle',
 	art.id as 'artID', lecture.artistID as 'lecID', art.price as 'artPrice', lecture.price as 'lecPrice', totalPrice,
 	payMethod, pay.state, payDate, orderNumber
 	from pay join art join lecture 
 	on (pay.no=art.no and pay.isCheck=0) or (pay.no=lecture.no and pay.isCheck=1) 
-	where pay.id = #{id} group by pay.no order by payDate desc limit ${skipBuy}, ${qty} 
+	where pay.id = #{id} group by orderNumber order by payDate desc limit ${skipBuy}, ${qty} 
 	</select>
 
 	<update id="updateDelivery" parameterType="pay">

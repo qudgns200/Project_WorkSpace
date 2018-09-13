@@ -54,9 +54,8 @@
 			success : function(data) {
 				$('#messageData').remove();
 				var str = '<ul class="dropdown-menu scrollable-menu" role="menu" id="messageData">' +
-					'<div><h6 style="text-align:center; color:yellow"><a href="#" id="search">메시지 보내기</a></h6></div>';
+					'<div><h6><a href="#" id="search" style="text-align:center; color:yellow">메시지 보내기</a></h6></div>';
 				$.each(data.messageList, function(index, message) {
-// 					if (index < 6) {
 						if ($("#session").val() === message.isTo) {
 							str += '<li><a href="#" class="isFrom">' + message.isFrom + '</a>'
 								+ '&nbsp;&nbsp; <button class="delete">삭제</button></li>';
@@ -72,10 +71,8 @@
 									+ '&nbsp;&nbsp; <button class="delete">삭제</button></li>';
 							}
 						}
-// 					}
-// 					else return false;
 				}) // each의 끝
-				str += '<div><a style="text-align:center; color:white" href="messageList.do">더 보기</a></div>' + '</ul>';
+				str += '</ul>';
 				$('#messageList').append(str);
 			} // success의 끝
 		}) // ajax의 끝
@@ -97,15 +94,15 @@
 		});
 
 		$("#messageList").on("click", ".isFrom", function() {
-			var width = 800,
-				height = 500;
+			var width = 400,
+				height = 900;
 			var left = (screen.availWidth - width) / 2;
 			var top = (screen.availHeight - height) / 2;
 			var specs = "width=" + width;
 			specs += ",height=" + height;
 			specs += ",left=" + left;
 			specs += ",top=" + top;
-
+			
 			window.open("logMessagePage.do?isFrom=" + $(this).text(), "팝업", specs);
 		});
 
@@ -142,6 +139,11 @@
 			window.open("followingList.do?following=" + $("#id").val(), "메시지 보내기", specs);
 		});
 		
+		$("#delete").click(function() {
+			var pw = prompt("비밀번호를 입력하세요.");
+			
+			location.href="deleteMember.do?pwd=" + pw;
+		});
 	});
 
 	var selectAlarm = function(){
@@ -162,7 +164,7 @@
 					if(alarmList.type=="maxPeople"){msg='의 인원 모집이 완료됐습니다.';}
 					if(index < 7){
 						str += '<li><a style="color:white;">' + alarmList.isFrom + msg + '&emsp;&emsp;<span onmouseup="updateAlarm('+
-								alarmList.no + ')">?&ensp;읽음</span></a></li>';
+								alarmList.no + ')">✔&ensp;읽음</span></a></li>';
 					}
 					else return false;
 				}) // each의 끝
@@ -268,13 +270,10 @@
 						<ul class="dropdown-menu">
 							<li><a href="myLectureFormA0.do">강의 내역 조회</a></li>
 							<li><a href="mySellFormA0.do">주문 내역 조회</a></li>
-							<li><a href="#">개인 정보 수정</a></li>
-							<li><a href="#">회원 탈퇴</a></li>
+							<li><a href="javascript:;" id="delete">회원 탈퇴</a></li>
 						</ul></li>
 					<li class="dropdown" id="message"><a href="#"
 						data-tooltip-text="메시지" id="messageList" style="font-weight: bold">메시지
-							<span id="messageCount" style="color: Fuchsia; font-weight: bold">0</span>
-							개
 					</a> <input type="hidden" id="session"
 						value="<%=session.getAttribute("id")%>"></li>
 					<li class="dropdown" id="alarm"><a href="#"
