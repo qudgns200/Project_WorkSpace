@@ -79,6 +79,11 @@ public class memberServiceImpl implements memberService {
 		// TODO Auto-generated method stub
 		System.out.println("서비스80");
 		String path = "C:/Project/Project/image/";
+<<<<<<< HEAD
+=======
+//		String path = "C:/Users/cho/workspace/Project/image/";
+		
+>>>>>>> origin/master
 		File dir = new File(path);
 	
 		if(!dir.exists()) {
@@ -179,7 +184,7 @@ public class memberServiceImpl implements memberService {
 	@Override
 	public int deleteMember(String id) {
 		// TODO Auto-generated method stub
-		return 0;
+		return memberDao.deleteMember(id);
 	}
 
 	@Override

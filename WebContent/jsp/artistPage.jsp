@@ -34,17 +34,50 @@
 <script src="js/jquery.custom.js"></script>
 
 <script type="text/javascript">
+function followerCount() {
+	$.ajax({
+		type : 'get',
+		url : 'followerCount.do',
+		data : {'id' : $('#artistID').val()},
+		dataType : 'json',
+		success : function(data) {
+			$('#followerCount').text(data.followerCount);
+		},
+		error : function(xhr, status, error) {
+			alert("카운트 오류");
+		}
+	});
+}
+
+function followingCount() {
+	$.ajax({
+		type : 'get',
+		url : 'followingCount.do',
+		data : {'id' : $('#artistID').val()},
+		dataType : 'json',
+		success : function(data) {
+			$('#followingCount').text(data.followingCount);
+		},
+		error : function(xhr, status, error) {
+			alert("카운트 오류");
+		}
+	});
+}
+
 $(document).ready(function() {
+	followerCount();
+	followingCount();
+	
 	$("#isFrom").click(function() {
-		var width = 800,
-		height = 500;
+		var width = 400,
+			height = 900;
 		var left = (screen.availWidth - width) / 2;
 		var top = (screen.availHeight - height) / 2;
 		var specs = "width=" + width;
 		specs += ",height=" + height;
 		specs += ",left=" + left;
 		specs += ",top=" + top;
-
+		
 		window.open("logMessagePage.do?isFrom=" + $(this).val(), "팝업", specs);
 	});
 });
@@ -104,8 +137,8 @@ $(document).ready(function() {
                     id="isFrom" value="${artistID }">메시지</button><br>
                     
                     <h5>게시글 : ${artCount }&nbsp;&nbsp;&nbsp;
-                    <a href="followerList.do?follower=${artistID }">팔로워 : num</a>&nbsp;&nbsp;&nbsp;
-                    <a href="followingList.do?following=${artistID }">팔로잉 : num</a>&nbsp;&nbsp;&nbsp;
+                    <a href="followerList.do?follower=${artistID }">팔로워</a>&nbsp;<span id="followerCount"></span>&nbsp;&nbsp;&nbsp;
+                    <a href="followingList.do?following=${artistID }">팔로잉</a>&nbsp;<span id="followingCount"></span>&nbsp;&nbsp;&nbsp;
                 </div>
             </div>
 
@@ -137,6 +170,6 @@ $(document).ready(function() {
    
 	<!-- 	Footer section -->
 	<%@include file="footer.jsp" %>
-    
+    <input type="hidden" id="artistID" value="${artistID }">
 </body>
 </html>

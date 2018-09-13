@@ -56,7 +56,7 @@ $( function() {
 		monthNames: ['1','2','3','4','5','6','7','8','9','10','11','12'],
 		monthNamesShort: ['1','2','3','4','5','6','7','8','9','10','11','12'],
 		minDate: '-100Y',
-		maxDate: '-7Y+3M+21D',
+		maxDate: '-7Y+3M+18D',
 		closeText: '닫기'
 	});
 });
@@ -75,10 +75,14 @@ $(document).ready(function() {
 	$('#guest').click(function() { // 사용자 회원가입 폼
 		$('#guestDetail').show();
 		$('#artistDetail').hide();
-		$('.id').val('');
+		$('input[name=id]').val('');
 		$('.idCheck').html('');
-		$('.nickname').val('');
+		$('input[name=nickname]').val('');
 		$('.nicknameCheck').html('');
+		$('input[name=pw]').val('');
+		$('.pwd').html('');
+		$('input[name=pwCheck]').val('');
+		$('.pwdCheck').html('');
 	});
 	$('#artist').click(function() { // 아티스트 회원가입 폼
 		$('#guestDetail').hide();
@@ -87,6 +91,10 @@ $(document).ready(function() {
 		$('.idCheck').html('');
 		$('.nickname').val('');
 		$('.nicknameCheck').html('');
+		$('input[name=pw]').val('');
+		$('.pwd').html('');
+		$('input[name=pwCheck]').val('');
+		$('.pwdCheck').html('');
 	});
 	
 	$('input[name=id]').blur(function() { // ID 중복검사
@@ -99,10 +107,10 @@ $(document).ready(function() {
 			success : function(data) {
 				if(data.idCheck) {
 					$('.idCheck').css('color', 'black');
-					$('.idCheck').html('사용할 수 있는 아이디입니다.');
+					$('.idCheck').html('<b>사용할 수 있는 아이디입니다.</b>');
 				} else {
 					$('.idCheck').css('color', 'red');
-					$('.idCheck').html('사용할 수 없는 아이디입니다.');
+					$('.idCheck').html('<b>사용할 수 없는 아이디입니다.</b>');
 					$(me).focus();
 				}
 			},
@@ -113,8 +121,20 @@ $(document).ready(function() {
 			}
 		});
 	});
-	$('.pw').blur(function() {
+	$('input[name=pw]').keyup(function() {
+		var check = /(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[!@#$%^&*()]).{8,}/;
+		var index = $('input[name=pw]').index(this);
 		
+		$('.pwd').html(check.test($(this).val()) ? 
+				"<b>사용가능한 비밀번호입니다.</b>" : "<b style='color:red;'>숫자,특수문자,소문자,대문자를 조합한 8자리 이상의 비밀번호를 입력하세요.</b>");
+		$('.pwdCheck').html($(this).val() === $('input[name=pwCheck]').eq(index).val() ? 
+				"<b>비밀번호가 일치합니다.</b>" : "<b style='color:red;'>비밀번호가 일치하지 않습니다.</b>");
+	});
+	$('input[name=pwCheck]').keyup(function() {
+		var index = $('input[name=pwCheck]').index(this);
+		
+		$('.pwdCheck').html($('input[name=pw]').eq(index).val() === $(this).val() 
+				? "<b>비밀번호가 일치합니다.</b>" : "<b style='color:red;'>비밀번호가 일치하지 않습니다.</b>");
 	});
 // 	$('#name').blur(function() {
 		
@@ -180,10 +200,10 @@ $(document).ready(function() {
 			success : function(data) {
 				if(data.nicknameCheck) {
 					$('.nicknameCheck').css('color', 'black');
-					$('.nicknameCheck').html('사용할 수 있는 닉네임입니다.');
+					$('.nicknameCheck').html('<b>사용할 수 있는 닉네임입니다.</b>');
 				} else {
 					$('.nicknameCheck').css('color', 'red');
-					$('.nicknameCheck').html('사용할 수 없는 닉네임입니다.');
+					$('.nicknameCheck').html('<b>사용할 수 없는 닉네임입니다.</b>');
 					$(me).focus();
 				}
 			},
@@ -253,7 +273,7 @@ $(document).ready(function() {
 				<br>
 			</div>
 
-			<div id="guestDetail">일반 회원가입 페이지입니다..
+			<div id="guestDetail"><h3 align="left">일반 사용자 회원가입 페이지</h3>
 			<form action="join.do" method="post" id="guestForm">
 			<div class="span4 contact">
 				<!--Begin page content column-->
@@ -268,11 +288,13 @@ $(document).ready(function() {
 							<span class="add-on"><i class="icon-check"></i></span> 
 							<input class="span6" name="pw" type="password" size="16" placeholder="비밀번호를 입력해주세요.">
 						</div>
+						<span class="pwd"></span>
 
 						<div class="input-prepend">
 							<span class="add-on"><i class="icon-check"></i></span> 
 							<input class="span6" name="pwCheck" type="password" size="16" placeholder="비밀번호를 한번 더 입력해주세요.">
 						</div>
+						<span class="pwdCheck"></span>
 
 						<div class="input-prepend">
 							<span class="add-on"><i class="icon-pencil"></i></span> 
@@ -401,7 +423,7 @@ $(document).ready(function() {
 		
 
 
-			<div id="artistDetail">아티스트 회원가입 페이지입니다.
+			<div id="artistDetail"><h3 align="left">아티스트 회원가입 페이지</h3>
 			<form action="join.do" method="post" enctype="multipart/form-data" id="artistForm">
 			<div class="span4 contact">
 				<!--Begin page content column-->
@@ -418,11 +440,13 @@ $(document).ready(function() {
 							<span class="add-on"><i class="icon-check"></i></span> 
 							<input class="span6" name="pw" type="password" size="16" placeholder="비밀번호를 입력해주세요.">
 						</div>
+						<span class="pwd"></span>
 
 						<div class="input-prepend">
 							<span class="add-on"><i class="icon-check"></i></span> 
 							<input class="span6" name="pwCheck" type="password" size="16" placeholder="비밀번호를 한번 더 입력해주세요.">
 						</div>
+						<span class="pwdCheck"></span>
 
 						<div class="input-prepend">
 							<span class="add-on"><i class="icon-pencil"></i></span> 

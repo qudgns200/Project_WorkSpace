@@ -94,15 +94,15 @@
 		});
 
 		$("#messageList").on("click", ".isFrom", function() {
-			var width = 800,
-				height = 500;
+			var width = 400,
+				height = 900;
 			var left = (screen.availWidth - width) / 2;
 			var top = (screen.availHeight - height) / 2;
 			var specs = "width=" + width;
 			specs += ",height=" + height;
 			specs += ",left=" + left;
 			specs += ",top=" + top;
-
+			
 			window.open("logMessagePage.do?isFrom=" + $(this).text(), "팝업", specs);
 		});
 
@@ -139,6 +139,11 @@
 			window.open("followingList.do?following=" + $("#id").val(), "메시지 보내기", specs);
 		});
 		
+		$("#delete").click(function() {
+			var pw = prompt("비밀번호를 입력하세요.");
+			
+			location.href="deleteMember.do?pwd=" + pw;
+		});
 	});
 
 	var selectAlarm = function(){
@@ -266,13 +271,10 @@
 						<ul class="dropdown-menu">
 							<li><a href="myLectureFormA0.do">강의 내역 조회</a></li>
 							<li><a href="mySellFormA0.do">주문 내역 조회</a></li>
-							<li><a href="#">개인 정보 수정</a></li>
-							<li><a href="#">회원 탈퇴</a></li>
+							<li><a href="javascript:;" id="delete">회원 탈퇴</a></li>
 						</ul></li>
 					<li class="dropdown" id="message"><a href="#"
 						data-tooltip-text="메시지" id="messageList" style="font-weight: bold">메시지
-							<span id="messageCount" style="color: Fuchsia; font-weight: bold">0</span>
-							개
 					</a> <input type="hidden" id="session"
 						value="<%=session.getAttribute("id")%>"></li>
 					<li class="dropdown" id="alarm"><a href="#"

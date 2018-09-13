@@ -57,7 +57,7 @@ function getList() {
 			$('#memberPaging').html('');
 			$.each(data.follower.followerList, function(i, follower) {
 				$('#tbody').append("<tr>"
-								+ "<td><a href='#' id='all'>" + follower + "</a></td>"
+								+ "<td><a href='#' class='all'>" + follower + "</a></td>"
 								+ "</tr>");
 			});
 			var htmlStr = '';
@@ -93,6 +93,14 @@ function goPage(pageNum) {
 
 $(document).ready(function() {
 	getList();
+	
+// 	$(document).on("click", ".all", function() {
+// 		if($(this).text() != $('#id').val()) {
+// 			location.href="artistPage.do?id=" + $(this).text();
+// 		} else {
+// 			location.href="artistMyPage.do";
+// 		}
+// 	});
 });
 </script>
 </head>
@@ -124,14 +132,14 @@ $(document).ready(function() {
 								<h3>팔로워 목록</h3>
 								<div class="table-responsive">
 									<hr>
-									<div class="fixed-table-container">
+									<div class="fixed-table-container" align="center">
 										<div class="fixed-table-body">
 											<!-- <div class="table-responsive">-->
 											<table id="mytable" class="table table-bordred table-striped">
-												<thead align="center">
+												<thead>
 													<th>ID</th>
 												</thead>
-												<tbody id="tbody" align="center"></tbody>
+												<tbody id="tbody"></tbody>
 											</table>
 										</div>
 									</div>
@@ -160,6 +168,7 @@ $(document).ready(function() {
 		<%@include file="footer.jsp"%>
 
 		<form>
+			<input type="hidden" id="id" value="${id }">
 			<input type="hidden" id="page" value="1">
 			<input type="hidden" id="follower" value="${follower }">
 		</form>

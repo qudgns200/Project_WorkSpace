@@ -30,7 +30,7 @@
 	</select>
 	
 	<insert id="sendMessage" parameterType="message">
-		insert into message values(#{isTo},#{isFrom},#{content},default,#{file});
+		insert into message values(#{isTo},#{isFrom},#{content},default, 0);
 	</insert>
 	
 	<select id="messageList" parameterType="String" resultType="message">

@@ -15,9 +15,20 @@ function logMessage() {
 		data : {'isFrom' : $('#isFrom').val()},
 		dataType : 'json',
 		success : function(data) {
-			$("#table").html('');
+			$("#div").html('');
 			$.each(data.logMessage, function(index, message) {
-				$("#table").append("<tr><td>" + message.isTo + " : " + message.content + " --- " + message.time + "</td></tr>");
+				if($("#id").val() !== message.isTo) {
+					$("#div").append("<div class='td' style='color : blue;'><b>" + message.isTo + " : " + message.content + "</b></div>");
+				} else {
+					$("#div").append("<div class='td' align='right'><b>" + message.content + "</b></div>");
+				}
+			});
+			$.each(data.list, function(index, l) {
+				if($("#id").val() !== data.logMessage.isTo) {
+					$('.td').eq(index).append("<br>" + l);
+				} else {
+					$('.td').eq(index).append("<br>" + l);
+				}
 			});
 		},
 		error : function(xhr, status, error) {
@@ -42,26 +53,28 @@ function logMessage() {
 				dataType : 'json',
 				success : function(data) {
 					$('#content').val('');
-					if (data.result) {
-						$.each(data.logMessage, function(index, message) {
-							$("#table").append("<tr><td>" + message.isTo + " : " + message.content + " --- " + message.time + "</td></tr>");
-						});
-					}
 				},
 				error : function(xhr, status, error) {
 					alert("전송오류");
 				}
 			});
 		});
+		
+		$('#content').keydown(function(e) {
+			if(e.keyCode == 13) {
+				$("#btn").click();
+			}
+		})
 	});
 </script>
 </head>
 <body>
-	<table id="table"></table>
+	<div id="div"></div>
 	<form id="form">
+	<input type="hidden" value="${id }" id="id">
 		<input type="hidden" value="${isFrom }" id="isFrom">
-		<textarea rows="10" cols="100" id="content"></textarea>
-		<input type="button" value="전송" id="btn">
+		<div align="center"><textarea rows="5" cols="50" id="content" style="width:85%;"></textarea>
+		<input type="button" value="전송" id="btn"></div>
 	</form>
 </body>
 </html>
