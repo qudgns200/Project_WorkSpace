@@ -55,12 +55,15 @@ function getList() {
 		success : function(data) {
 			$('#tbody').html('');
 			$('#memberPaging').html('');
+			var htmlStr2 = "";
 			$.each(data.following.followingList, function(i, following) {
-				$('#tbody').append("<tr>"
-								+ "<td><a href='#' class='all'>" + following + "</a></td>"
-								+ "<td><button class='isFrom'>메시지</buttion></td>"
-								+ "</tr>");
+				htmlStr2 += "<tr><td><a href='#' class='all'>" + following + "</a></td>";
+				if($('#id').val() == $('#following').val()) {
+					htmlStr2 += "<td><button class='isFrom'>메시지</buttion></td>";
+				}
+				htmlStr2 += "</tr>";
 			});
+			$('#tbody').append(htmlStr2);
 			var htmlStr = '';
 			htmlStr += '<ul>';
 				if(data.following.start != 1) {
@@ -96,8 +99,8 @@ $(document).ready(function() {
 	getList();
 	
 	$(document).on("click", ".isFrom", function() {
-		var width = 800,
-		height = 500;
+		var width = 400,
+			height = 900;
 		var left = (screen.availWidth - width) / 2;
 		var top = (screen.availHeight - height) / 2;
 		var specs = "width=" + width;
@@ -107,6 +110,14 @@ $(document).ready(function() {
 		
 		window.open("logMessagePage.do?isFrom=" + $('.all').eq($(".isFrom").index(this)).text(), "팝업", specs);
 	});
+	
+// 	$(document).on("click", ".all", function() {
+// 		if($(this).text() != $('#id').val()) {
+// 			location.href="artistPage.do?id=" + $(this).text();
+// 		} else {
+// 			location.href="artistMyPage.do";
+// 		}
+// 	});
 });
 </script>
 </head>
@@ -139,14 +150,15 @@ $(document).ready(function() {
 								<div class="table-responsive">
 									<hr>
 
-									<div class="fixed-table-container">
+									<div class="fixed-table-container" align="center">
 										<div class="fixed-table-body">
 											<!-- <div class="table-responsive">-->
-											<table id="mytable" class="table table-bordred table-striped">
-												<thead align="center">
+											<table id="mytable" class="table table-bordred table-striped"
+											style="margin-left: auto; margin-right: auto;">
+												<thead>
 													<th>ID</th>
 												</thead>
-												<tbody id="tbody" align="center"></tbody>
+												<tbody id="tbody"></tbody>
 											</table>
 										</div>
 									</div>
@@ -175,6 +187,7 @@ $(document).ready(function() {
 		<%@include file="footer.jsp"%>
 
 		<form>
+			<input type="hidden" id="id" value="${id }">
 			<input type="hidden" id="page" value="1">
 			<input type="hidden" id="following" value="${following }">
 		</form>

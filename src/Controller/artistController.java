@@ -271,11 +271,7 @@ public class artistController {
 		
 		return null;
 	}
-<<<<<<< HEAD
-
-=======
 	
->>>>>>> origin/master
 	@RequestMapping("followingList.do")
 	   public String followingList(HttpServletRequest req, HttpServletResponse resp, String following, Model model) 
 	         throws IOException {
@@ -471,6 +467,36 @@ public class artistController {
 	public String updateApproveLec(int no, int state) {
 		memberService.updateApproveLec(no, state);
 		return "redirect:myLectureFormA0.do";
+	}
+	
+	@RequestMapping("followerCount")
+	public void followerCount(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+		String id = req.getParameter("id");
+		JSONObject jsonObject = new JSONObject();
+		HashMap<String, Object> params = new HashMap<>();
+		
+		params.put("id", id);
+		
+		jsonObject.put("followerCount", artistDao.getFollowerCount(params));
+		
+		resp.setContentType("text/html; charset=UTF-8");
+		PrintWriter pw = resp.getWriter();
+		pw.println(jsonObject);
+	}
+	
+	@RequestMapping("followingCount")
+	public void followingCount(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+		String id = req.getParameter("id");
+		JSONObject jsonObject = new JSONObject();
+		HashMap<String, Object> params = new HashMap<>();
+		
+		params.put("id", id);
+		
+		jsonObject.put("followingCount", artistDao.getFollowingCount(params));
+		
+		resp.setContentType("text/html; charset=UTF-8");
+		PrintWriter pw = resp.getWriter();
+		pw.println(jsonObject);
 	}
 
 } // public class의 끝

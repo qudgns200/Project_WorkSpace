@@ -101,7 +101,7 @@ $(document).ready(function () {
                             </span>
                         </span>
                         <img src="download.do?no=${l.no }" style="width: 300px; height: 220px;"></a>
-                        <span class="project-details"><a href="gallery-single.htm">${l.title }</a>${l.nickname }</span>
+                        <span class="project-details"><a href="selectOneArt.do?no=${l.no }">${l.title }</a>${l.nickname }</span>
                     </li>
 				</c:forEach>    
                 </ul>

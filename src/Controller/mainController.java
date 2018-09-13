@@ -5,8 +5,10 @@ import java.io.PrintWriter;
 import java.rmi.ServerException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -65,20 +67,16 @@ public class mainController {
 				@RequestParam(value="uProfile", required=false) MultipartFile uProfile, 
 				@RequestParam(value="uFile", required=false) MultipartFile uFile,
 				@RequestParam(value="birth", required=false) String datepicker, HttpServletResponse resp) throws Exception {
-			System.out.println("70 : " + datepicker);
 			System.out.println(uProfile);
 			System.out.println(uFile);
 			Date birth = null;
 			if(datepicker != null) {
-				System.out.println("73");
 				birth = new SimpleDateFormat("MM/dd/yyyy").parse(datepicker);
-			} 
-			System.out.println("79");
+			}
 			member.setBirth(birth);
 			System.out.println(birth);
 			
 			if(memberService.insertMember(member, uProfile, uFile) == 1) {
-				System.out.println("83");
 				resp.setContentType("text/html; charset=UTF-8");
 				PrintWriter pw = resp.getWriter();
 				pw.println("<script>alert('회원가입이 성공하였습니다. 로그인은 이메일 인증 후 사용가능합니다.'); location.href='main.do';</script>");
@@ -556,11 +554,22 @@ public class mainController {
 		JSONObject jsonObject = new JSONObject();
 		String isTo = (String) session.getAttribute("id");
 		String isFrom = req.getParameter("isFrom");
+		List<message> msg = new ArrayList<>();
+		List<String> list = new ArrayList<>();
 		
 		message message = new message();
 		message.setIsTo(isTo);
 		message.setIsFrom(isFrom);
 		
+		msg = mainService.logMessage(message);
+		for(int i = 0; i < msg.size(); i++) {
+			Date from = msg.get(i).getTime();
+			SimpleDateFormat transFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			String to = transFormat.format(from);
+			list.add(to);
+		}
+		
+		jsonObject.put("list", list);
 		jsonObject.put("logMessage", mainService.logMessage(message));
 		
 		resp.setContentType("text/html; charset=UTF-8");
@@ -618,6 +627,28 @@ public class mainController {
 		JSONObject jsonObj = new JSONObject();
 		jsonObj.put("alarmList", mainService.selectAlarm(alarm));
 		pw.println(jsonObj);
+	}
+	
+	@RequestMapping("deleteMember.do")
+	public String deleteMember(String pwd, HttpSession session, HttpServletResponse resp) throws IOException {
+		String id = (String) session.getAttribute("id");
+		member member = memberService.selectOneMember(id);
+		
+		if(member.getPw().equals(pwd)) {
+			memberService.deleteMember(id);
+			session.invalidate();
+			resp.setContentType("text/html; charset=UTF-8");
+			PrintWriter pw = resp.getWriter();
+			pw.println("<script>alert('회원탈퇴 성공'); location.href='main.do';</script>");
+			pw.flush();
+			return null;
+		} else {
+			resp.setContentType("text/html; charset=UTF-8");
+			PrintWriter pw = resp.getWriter();
+			pw.println("<script>alert('회원탈퇴 실패'); location.href='main.do';</script>");
+			pw.flush();
+			return null;
+		}
 	}
 } // public class의 끝.
 

@@ -98,11 +98,7 @@ $(document).ready(function() {
                     <!-- Begin sidebar column -->
 
                     <!--Navigation-->
-
-                    <ul class="post-category-list">                        
-                        <li><a href="applyArtist.jsp"><i class="icon-plus-sign"></i>아티스트 상세정보</a></li>
-                    </ul>
-                    <br>
+                    
                     <div class="alert alert-block">아티스트 상세정보 페이지입니다.</div>
 
                 </div>
@@ -160,7 +156,7 @@ $(document).ready(function() {
                             <div class="input-prepend">
                                 <span class="add-on"><i class=" icon-edit"></i>소개글</span><br>
                             </div>
-                            <textarea class="span7" id="content" name="${member.content }" type="text" readonly="readonly"></textarea>
+                            <textarea class="span7" id="content" readonly="readonly">${member.content }</textarea>
                             <div class="row">
                                 <div class="span7">
                                     <input type="button" id="refuse" class="btn btn-warning pull-right" value="아티스트 거절"> 
