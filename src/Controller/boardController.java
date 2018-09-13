@@ -471,11 +471,13 @@ public class boardController {
 		if (request.getParameter("artistID") == null) {
 			lecture.setState(1);
 			lecture.setArtistID(id);
+			lecture.setGuestID(null);
 		} else {
 			lecture.setState(3);
 			lecture.setArtistID(request.getParameter("artistID"));
+			lecture.setGuestID(id);
 		}
-		lecture.setGuestID(id);
+		
 
 		lecture.setNumberPeople(0);
 		SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd"); // String으로 넘어오기 때문에 형 변환!
