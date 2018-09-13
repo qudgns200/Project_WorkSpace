@@ -32,7 +32,7 @@
 <script src="js/bootstrap.js"></script>
 <script src="js/jquery.custom.js"></script>
 <script type="text/javascript">
-	var result = ${pay.totalPrice } / ${art.price }
+var result = ${pay.totalPrice } / ${art.price }
 $(document).ready(function(){
 	$('#quan').text(result);
 });

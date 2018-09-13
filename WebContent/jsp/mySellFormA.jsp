@@ -62,6 +62,11 @@ border: 1px solid;
 <script src="js/bootstrap.js"></script>
 <script src="js/jquery.custom.js"></script>
 <script type="text/javascript">
+function addComma(num){
+	var regexp = /\B(?=(\d{3})+(?!\d))/g;
+	return num.toString().replace(regexp, ',');
+}
+
 $(document).ready(function(){
 	mySellFormA();	
 });
@@ -124,7 +129,7 @@ var mySellFormA = function(){
 				str1 += '<td><div>'+ aTagPay + buyingList.orderNumber + '</a></div></td><td><div>' +  isCheck + '</div></td><td><div><span>' + aTag + 
 				imageUrl + '</a></span> &nbsp; <span>' + aTag + title + '</a></span></div></td><td><div>' +
 				artistID + '</div></td><td><div>' +  
-				buyingList.totalPrice + '</div></td><td><div>' + payMethod + '</div></td><td><div>' +
+				addComma(buyingList.totalPrice) + '</div></td><td><div>' + payMethod + '</div></td><td><div>' +
 				state + '</div></td><td><div>' + buyingList.payDate.substring(0, 10) + '</div></td>';
 				str1 += '</tr>';
 				
@@ -172,7 +177,7 @@ var mySellFormA = function(){
 					
 					str2 += '<td><div>' + sellingList.no + '</div></td><td><div><span>' + sellingTag + 
 					sellingImg + '</a></span> &nbsp; <span>' + sellingTag + sellingList.title + 
-					'</a></span></div></td><td><div>' + sellingList.price + '</div></td><td><div>' + 
+					'</a></span></div></td><td><div>' + addComma(sellingList.price) + '</div></td><td><div>' + 
 					sellingList.totalCount + '</div></td><td><div>' + sellingList.genre + '</div></td>';
 					str2 += '</tr>';
 				}); // each
@@ -234,7 +239,7 @@ var mySellFormA = function(){
 					str3 += '<td><div>' + soldList.no + '</div></td><td><div><span>' + soldTag + 
 						soldImg + '</a></span> &nbsp; <span>' + soldTag + soldList.title + 
 						'</a></span></div></td><td><div>' +
-						soldList.totalPrice + '</div></td><td><div>' + soldList.p_id + '</div></td><td><div>' +
+						addComma(soldList.totalPrice) + '</div></td><td><div>' + soldList.p_id + '</div></td><td><div>' +
 						soldState + '</div></td><td><div>' + soldList.payDate.substring(0, 10) +
 						'</div></td><td><div>' + stateButton + '</div></td>';
 					str3 += '</tr>';
@@ -314,16 +319,15 @@ var mySellFormA = function(){
 <!-- 					read this important alert message.</div> -->
 
 				<h4>주문 내역</h4>
-	<hr style="display: block; margin-top: 0.5em; margin-bottom: 0.5em; border-style: inset; border-width: 1px;">
 				<table class="table table-striped">
 					<thead class="thead-dark">
 						<tr>
-							<th scope="col"><div style="width: 80px;">주문번호</div></th>
+							<th scope="col"><div style="width: 150px;">주문번호</div></th>
 							<th scope="col"><div style="width: 30px;">구분</div></th>
 							<th scope="col"><div style="width: 200px;">강의/작품명</div></th>
 							<th scope="col"><div style="width: 50px;">아티스트</div></th>
 							<th scope="col"><div style="width: 70px;">가격</div></th>
-							<th scope="col"><div style="width: 50px;">결제방식</div></th>
+							<th scope="col"><div style="width: 70px;">결제방식</div></th>
 							<th scope="col"><div style="width: 100px;">진행상태</div></th>
 							<th scope="col"><div style="width: 70px;">결제일</div></th>
 						</tr>
@@ -335,15 +339,14 @@ var mySellFormA = function(){
 					</tr>
 				</table>
 				<h4>판매 중인 작품</h4>
-	<hr style="display: block; margin-top: 0.5em; margin-bottom: 0.5em; border-style: inset; border-width: 1px;">			
 				<table class="table table-striped">
 					<thead class="thead-dark">
 						<tr>
-							<th scope="col"><div style="width: 70px;">작품번호</div></th>
-							<th scope="col"><div style="width: 200px;">작품명</div></th>
-							<th scope="col"><div style="width: 70px;">가격</div></th>
-							<th scope="col"><div style="width: 50px;">총 수량</div></th>
-							<th scope="col"><div style="width: 50px;">장르</div></th>
+							<th scope="col"><div style="width: 60px;">작품번호</div></th>
+							<th scope="col"><div style="width: 340px;">작품명</div></th>
+							<th scope="col"><div style="width: 127px;">가격</div></th>
+							<th scope="col"><div style="width: 60px;">총 수량</div></th>
+							<th scope="col"><div style="width: 95px;">장르</div></th>
 						</tr>
 					</thead>
 					<tbody id="sellingList" align="center">
@@ -353,7 +356,6 @@ var mySellFormA = function(){
 					</tr>
 				</table>
 				<h4>판매된 작품</h4>
-	<hr style="display: block; margin-top: 0.5em; margin-bottom: 0.5em; border-style: inset; border-width: 1px;">			
 				<table class="table table-striped">
 					<thead class="thead-dark">
 						<tr>

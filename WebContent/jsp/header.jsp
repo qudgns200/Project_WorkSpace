@@ -163,6 +163,7 @@
 					}
 					else return false;
 				}) // each의 끝
+				alarmCount();
 				str += '<div><a style="text-align:center; color:white" href="alarmPage.do">더 보기</a></div>'+'</ul>';
 				$('#alarmList').append(str);
 			}	// success의 끝

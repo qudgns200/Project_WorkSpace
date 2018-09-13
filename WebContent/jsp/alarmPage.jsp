@@ -49,7 +49,12 @@ var nonReadAlarm = function(){
 			$('#nonReadAlarm').empty(); //출력결과 누적방지
 			var str = '<tr>';
 			$.each(data.alarmList, function(index, alarmList){
-				str += '<td>' + alarmList.type + '</td><td>' + alarmList.time + '</td><td>' +
+				var msg = '';
+				if(alarmList.type=="writeArt"){msg='님이 새 게시물을 작성했습니다.';}
+				if(alarmList.type=="writeLecture"){msg='님이 새 강의를 개설했습니다.';}
+				if(alarmList.type=="artComment"){msg='님이 댓글을 달았습니다.';}
+				if(alarmList.type=="maxPeople"){msg='의 인원 모집이 완료됐습니다.';}
+				str += '<td>' + alarmList.isFrom + msg + '</td><td>' + alarmList.time.substring(0, 19) + '</td><td>' +
 						'<a class="btn btn-info" onclick="funUpdate('+ alarmList.no + ')">읽음</a>' +
 						'<a class="btn btn-warning" onclick="funDelete(' + alarmList.no + ')">삭제</a></td>';
 				str += '</tr>';
@@ -69,7 +74,12 @@ var readAlarm = function(){
 			$('#readAlarm').empty(); //출력결과 누적방지
 			var str = '<tr>';
 			$.each(data.alarmList, function(index, alarmList){
-				str += '<td>' + alarmList.type + '</td><td>' + alarmList.time + '</td><td>' +
+				var msg = '';
+				if(alarmList.type=="writeArt"){msg='님이 새 게시물을 작성했습니다.';}
+				if(alarmList.type=="writeLecture"){msg='님이 새 강의를 개설했습니다.';}
+				if(alarmList.type=="artComment"){msg='님이 댓글을 달았습니다.';}
+				if(alarmList.type=="maxPeople"){msg='의 인원 모집이 완료됐습니다.';}
+				str += '<td>' + alarmList.isFrom + msg + '</td><td>' + alarmList.time.substring(0, 19) + '</td><td>' +
 						'<a class="btn btn-warning" onclick="funDelete(' + alarmList.no + ')">삭제</a></td>';
 				str += '</tr>';
 			}) // each의 끝
@@ -142,8 +152,14 @@ var funDelete = function(no){  			// 삭제 클릭시 데이터 지우고, 목�
 						<c:forEach items="${alarmList }" var="alarm">
 						<c:if test="${alarm.readCheck==1 }">
 							<tr>
-							<td>${alarm.type }</td>
-							<td>${alarm.time }</td>
+							<td>
+							${alarm.isFrom }
+							<c:if test="${alarm.type=='writeArt' }">님이 새 게시물을 작성했습니다.</c:if>
+							<c:if test="${alarm.type=='writeLecture' }">님이 새 강의를 개설했습니다.</c:if>
+							<c:if test="${alarm.type=='artComment' }">님이 댓글을 달았습니다.</c:if>
+							<c:if test="${alarm.type=='maxPeople' }">의 인원 모집이 완료됐습니다.</c:if>
+							</td>
+							<td><fmt:formatDate pattern="yyyy-MM-dd hh:mm:ss" value="${alarm.time }"/></td>
 							<td><a class="btn btn-info" onclick="funUpdate(${alarm.no})">읽음</a>
 							<a class="btn btn-warning" onclick="funDelete(${alarm.no})">삭제</a></td>							
 							</tr>
@@ -166,8 +182,14 @@ var funDelete = function(no){  			// 삭제 클릭시 데이터 지우고, 목�
 					<c:forEach items="${alarmList }" var="alarm">
 						<c:if test="${alarm.readCheck==2 }">
 							<tr>
-							<td>${alarm.type }</td>
-							<td>${alarm.time }</td>
+							<td>
+							${alarm.isFrom }
+							<c:if test="${alarm.type=='writeArt' }">님이 새 게시물을 작성했습니다.</c:if>
+							<c:if test="${alarm.type=='writeLecture' }">님이 새 강의를 개설했습니다.</c:if>
+							<c:if test="${alarm.type=='artComment' }">님이 댓글을 달았습니다.</c:if>
+							<c:if test="${alarm.type=='maxPeople' }">의 인원 모집이 완료됐습니다.</c:if>
+							</td>
+							<td><fmt:formatDate pattern="yyyy-MM-dd hh:mm:ss" value="${alarm.time }"/></td>
 							<td><a class="btn btn-warning" onclick="funDelete(${alarm.no})">삭제</a></td>
 							</tr>
 						</c:if>

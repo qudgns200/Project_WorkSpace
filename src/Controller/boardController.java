@@ -526,13 +526,11 @@ public class boardController {
 	@RequestMapping("selectOneLecture.do") // 강의 상세페이지로 이동
 	public String selectOneLecture(@RequestParam int no, Model model, HttpSession session,
 			@RequestParam(required = false) Integer msg) {
-		String id = (String) session.getAttribute("id");
 		lecture lecture = lectureService.selectOneLecture(no);
 		model.addAttribute(lecture);
 		if (msg != null) {
 			model.addAttribute("msg", msg);
 		}
-		model.addAttribute("currentId", id);
 		return "lectureDetail";
 	}
 

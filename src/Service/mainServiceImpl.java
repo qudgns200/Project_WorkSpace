@@ -129,7 +129,7 @@ public class mainServiceImpl implements mainService{
 	}
 
 	@Override
-	public List<alarm> selectAlarm(alarm alarm) {
+	public List<HashMap<String, Object>> selectAlarm(alarm alarm) {
 		return mainDao.selectAlarm(alarm);
 	}
 

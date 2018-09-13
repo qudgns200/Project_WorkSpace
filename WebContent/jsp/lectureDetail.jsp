@@ -75,7 +75,7 @@ $(function(){
 </head>
 
 <body>
-<input type="hidden" id="currentId" value="${currentId }">
+<input type="hidden" id="currentId" value="${id }">
 	<div class="color-bar-1"></div>
     <div class="color-bar-2 color-bg"></div>
     <div class="container main-container">
@@ -137,7 +137,7 @@ $(function(){
 </li>
      </ul>
 <!-- 모집 중일 때만 신청 버튼 생성 -->
-     <c:if test="${lecture.state == 1 } && ${currentId != lecture.artistID  }"  > 
+     <c:if test="${lecture.state == 1 && id != lecture.artistID }"  > 
         <div id="modalButton">
         	<a href="#myModal" role="button" class="btn btn-inverse" data-toggle="modal">강의 신청</a>
         </div>
@@ -160,13 +160,13 @@ $(function(){
 <!--  신청 모달 사용 끗!!! -->
 
 <!-- 글 작성자가 수정하기 위한 버튼 -->
-     <c:if test="${currentId == lecture.guestID  }"  > 
+     <c:if test="${id == lecture.guestID || id == lecture.artistID }"  > 
        		<button class="btn btn-inverse" onclick="location.href='updateLectureForm.do?no=${lecture.no}'">수정</button>
      </c:if>
 <!--  수정 모달 사용 끗!!! --> 
 
 <!-- 글 작성자가 강의 삭제하기 위한 모달 -->
-     <c:if test="${currentId == lecture.guestID  }"  > 
+     <c:if test="${id == lecture.guestID || id == lecture.artistID }"  > 
         <div id="modalDeleteButton">
         	<a href="#myModalDelete" role="button" class="btn btn-inverse" data-toggle="modal">삭제</a>
         </div>

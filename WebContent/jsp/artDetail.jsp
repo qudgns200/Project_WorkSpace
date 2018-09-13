@@ -110,7 +110,7 @@ function moveUrl(num) {
 												<!-- 작품 정보 출력 -->
                     <ul class="project-info">
                         <li><h6>Date :</h6> <fmt:formatDate pattern="yyyy-MM-dd" value="${art.artDate}"/></li>
-                        <li><h6>Price :</h6> ${art.price }</li>
+                        <li><h6>Price :</h6> <span id="artPrice">${art.price }</span></li>
                         <li><h6>Artist :</h6> ${art.id }</li>
                         <li><h6>Genre :</h6> ${art.genre }</li>
                     </ul>

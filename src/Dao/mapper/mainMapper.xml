@@ -57,7 +57,7 @@
 	delete from alarm where no = #{no}
 	</delete>
 	
-	<select id="selectAlarm" parameterType="alarm" resultType="alarm">
+	<select id="selectAlarm" parameterType="alarm" resultType="java.util.HashMap">
 	select * from alarm where isTo = #{isTo} 
 	<if test="readCheck!=0">and readCheck = #{readCheck}</if>
 	 order by time desc

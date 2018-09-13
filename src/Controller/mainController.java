@@ -619,6 +619,8 @@ public class mainController {
 		jsonObj.put("alarmList", mainService.selectAlarm(alarm));
 		pw.println(jsonObj);
 	}
+	
+	
 } // public class의 끝.
 
 //	@RequestMapping("isCheckMember.do")

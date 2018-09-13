@@ -24,7 +24,7 @@ public interface mainDao {
 	public int	insertAlarm(HashMap<String, Object>params);		// 수정
 	public int	updateAlarm(int no);
 	public int	deleteAlarm(int no);
-	public List<alarm>	selectAlarm(alarm alarm);
+	public List<HashMap<String, Object>> selectAlarm(alarm alarm);
 	public int alarmCount(String isTo);	
 
 	

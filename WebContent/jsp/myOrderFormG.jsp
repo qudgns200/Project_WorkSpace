@@ -62,6 +62,12 @@ border: 1px solid;
 <script src="js/bootstrap.js"></script>
 <script src="js/jquery.custom.js"></script>
 <script type="text/javascript">
+
+function addComma(num){
+	var regexp = /\B(?=(\d{3})+(?!\d))/g;
+	return num.toString().replace(regexp, ',');
+}
+
 $(document).ready(function(){
 myOrderFormG();	
 });
@@ -82,8 +88,6 @@ var myOrderFormG = function(){
 				var isCheck;
 				var title;
 				var artistID;
-				var payDate = buyingList.payDate;
-				var payDateFmt = payDate.substring(0, 10);
 				var imageUrl;
 				var aTag;
 				var aTagPay;
@@ -119,8 +123,8 @@ var myOrderFormG = function(){
 				str1 += '<td><div>' + aTagPay + buyingList.orderNumber + '</a></div></td><td><div>' +  isCheck + '</div></td><td><div><span>' + aTag + 
 				imageUrl + '</a></span> &nbsp; <span>' + aTag + title + '</a></span></div></td><td><div>' +
 				artistID + '</div></td><td><div>' +  
-				buyingList.totalPrice + '</div></td><td><div>' + payMethod + '</div></td><td><div>' +
-				state + '</div></td><td><div>' + payDateFmt + '</div></td>';
+				addComma(buyingList.totalPrice) + '</div></td><td><div>' + payMethod + '</div></td><td><div>' +
+				state + '</div></td><td><div>' + buyingList.payDate.substring(0, 10) + '</div></td>';
 				str1 += '</tr>';
 			}); // each
 			$('#buyingList').append(str1); // 구매 목록- 테이블에 붙이기

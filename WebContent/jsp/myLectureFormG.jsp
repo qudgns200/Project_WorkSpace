@@ -242,7 +242,6 @@ var myLectureFormG = function(){ // 강의 내역 페이지 요청 함수
 
 			<h3 class="title-bg" style="margin-top: 0px;">강의 내역 조회</h3>
 				<h4>신청한 강의</h4>
-				<hr style="display: block; margin-top: 0.5em; margin-bottom: 0.5em; border-style: inset; border-width: 1px;">
 				<table class="table table-striped">
 					<thead>
 						<tr>
@@ -257,12 +256,11 @@ var myLectureFormG = function(){ // 강의 내역 페이지 요청 함수
 					<tbody id="attendList">
 					</tbody>
 					<tr>
-						<td id="attendPaging" colspan="5"></td>
+						<td id="attendPaging" colspan="6"></td>
 					</tr>
 				</table>
 
 				<h4>인원 모집 중인 강의</h4>
-				<hr style="display: block; margin-top: 0.5em; margin-bottom: 0.5em; border-style: inset; border-width: 1px;">
 				<table class="table table-striped">
 					<thead>
 						<tr>
