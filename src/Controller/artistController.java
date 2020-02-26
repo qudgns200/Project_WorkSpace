@@ -271,11 +271,7 @@ public class artistController {
 		
 		return null;
 	}
-<<<<<<< HEAD
 
-=======
-	
->>>>>>> origin/master
 	@RequestMapping("followingList.do")
 	   public String followingList(HttpServletRequest req, HttpServletResponse resp, String following, Model model) 
 	         throws IOException {
@@ -449,6 +445,7 @@ public class artistController {
 	@RequestMapping("mySellFormA0.do")
 	public String mySellFormA0(HttpSession session) {
 		String id = (String) session.getAttribute("id");
+		
 		if (memberService.selectOneMember(id).getIsCheck() == 2) {
 			return "mySellFormA";
 		} else {

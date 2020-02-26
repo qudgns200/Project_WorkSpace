@@ -32,16 +32,16 @@ public class memberServiceImpl implements memberService {
 
 	@Autowired
 	private artDao artDao;
-	
+
 	@Autowired
 	private lectureDao lectureDao;
-	
+
 	@Autowired
 	private mainService mainService;
-	
+
 	@Autowired
 	private JavaMailSender mailSender;
-	
+
 	@Override
 	public member selectOneMember(String id) {
 		return memberDao.selectOneMember(id);
@@ -52,15 +52,15 @@ public class memberServiceImpl implements memberService {
 		// TODO Auto-generated method stub
 		return memberDao.selectOneNickname(nickname);
 	}
-	
+
 	@Override
 	public int login(String id, String pw) {
 		// TODO Auto-generated method stub
 		member member = memberDao.selectOneMember(id);
-		
-		if(member != null) {
-			if(pw.equals(member.getPw())) {
-				if(member.getAuthStatus() == 1) {
+
+		if (member != null) {
+			if (pw.equals(member.getPw())) {
+				if (member.getAuthStatus() == 1) {
 					return 1;
 				} else {
 					return 0;
@@ -72,25 +72,21 @@ public class memberServiceImpl implements memberService {
 			return 0;
 		}
 	}
-	
+
 	@Transactional
 	@Override
 	public int insertMember(member member, MultipartFile Profile, MultipartFile File) throws Exception {
 		// TODO Auto-generated method stub
 		System.out.println("서비스80");
 		String path = "C:/Project/Project/image/";
-<<<<<<< HEAD
-=======
-//		String path = "C:/Users/cho/workspace/Project/image/";
-		
->>>>>>> origin/master
+
 		File dir = new File(path);
-	
-		if(!dir.exists()) {
+
+		if (!dir.exists()) {
 			dir.mkdirs();
 		}
-		
-		if(Profile != null) {
+
+		if (Profile != null) {
 			String profileName = Profile.getOriginalFilename();
 			File attachProfile = new File(path + profileName);
 			try {
@@ -101,7 +97,7 @@ public class memberServiceImpl implements memberService {
 			}
 			member.setProfile(profileName);
 		}
-		if(File != null) {
+		if (File != null) {
 			String fileName = File.getOriginalFilename();
 			File attachFile = new File(path + fileName);
 			try {
@@ -117,14 +113,15 @@ public class memberServiceImpl implements memberService {
 				&& member.getPhone() != "" && member.getAddr() != "" && member.getEmail() != ""
 				&& member.getNickname() != "" && member.getBirth() != null) {
 			String key = new TempKey().getKey(50, false); // 인증키 생성
-			
+
 			member.setAuthCode(key);
 			memberDao.insertMember(member);
 
 			MailHandler sendMail = new MailHandler(mailSender);
 			sendMail.setSubject("[작업실 서비스 이메일 인증]");
-			sendMail.setText(
-					new StringBuffer().append("<h1>메일인증</h1>").append("<a href='http://localhost:8080/Project/emailConfirm.do?email=").append(member.getEmail()).append("&key=").append(key).append("' target='_blenk'>이메일 인증 확인</a>").toString());
+			sendMail.setText(new StringBuffer().append("<h1>메일인증</h1>")
+					.append("<a href='http://localhost:8080/Project/emailConfirm.do?email=").append(member.getEmail())
+					.append("&key=").append(key).append("' target='_blenk'>이메일 인증 확인</a>").toString());
 			sendMail.setFrom("jo27233@gmail.com", "조영규");
 			sendMail.setTo(member.getEmail());
 			sendMail.send();
@@ -137,13 +134,13 @@ public class memberServiceImpl implements memberService {
 	@Override
 	public List<member> searchMember(String keyWord, String searchWord, int isCheck) {
 		// TODO Auto-generated method stub
-		
+
 		HashMap<String, Object> params = new HashMap<String, Object>();
-		
+
 		params.put("column", keyWord);
 		params.put("text", searchWord);
 		params.put("isCheck", isCheck);
-		
+
 		return memberDao.searchMember(params);
 	}
 
@@ -151,16 +148,16 @@ public class memberServiceImpl implements memberService {
 	public HashMap<String, Object> searchApproveArtist(HashMap<String, Object> params, int page) {
 		// TODO Auto-generated method stub
 		HashMap<String, Object> result = new HashMap<>();
-		
+
 		result.put("current", page);
 		result.put("start", mainService.getStartPage(page));
 		result.put("end", mainService.getEndPage(page));
 		result.put("last", mainService.getArtistLastPage(params));
-		
+
 		params.put("skip", mainService.getSkip(page, 10));
 		params.put("qty", 10);
 		result.put("memberList", memberDao.searchApproveArtist(params));
-		
+
 		return result;
 	}
 
@@ -168,12 +165,13 @@ public class memberServiceImpl implements memberService {
 	public HashMap<String, Object> selectAllMember(HashMap<String, Object> params, int page) {
 		// TODO Auto-generated method stub
 		HashMap<String, Object> result = new HashMap<>();
-		
+
 		result.put("current", page);
 		result.put("start", mainService.getStartPage(page));
 		result.put("end", mainService.getEndPage(page));
-		result.put("last", mainService.getMemberLastPage(params));;
-		
+		result.put("last", mainService.getMemberLastPage(params));
+		;
+
 		params.put("skip", mainService.getSkip(page, 10));
 		params.put("qty", 10);
 		result.put("memberList", memberDao.selectAllMember(params));
@@ -230,9 +228,10 @@ public class memberServiceImpl implements memberService {
 		HashMap<String, Object> result = new HashMap<>();
 		params.put("skipG", mainService.getSkip(pageG, 5));
 		params.put("qty", 5);
-		if (memberDao.selectOneMember(id).getIsCheck()==2) {
+		if (memberDao.selectOneMember(id).getIsCheck() == 2) {
 			params.put("artistID", id);
-		}if (memberDao.selectOneMember(id).getIsCheck()==3) {
+		}
+		if (memberDao.selectOneMember(id).getIsCheck() == 3) {
 			params.put("guestID", id);
 		}
 		result.put("currentG", pageG);
@@ -242,7 +241,7 @@ public class memberServiceImpl implements memberService {
 		result.put("gatherList", memberDao.selectGatherLec(params));
 		return result;
 	}
-	
+
 	@Override
 	public HashMap<String, Object> selectRequestLec(String id, int pageR, HashMap<String, Object> params) {
 		HashMap<String, Object> result = new HashMap<>();
@@ -256,7 +255,7 @@ public class memberServiceImpl implements memberService {
 		result.put("requestList", memberDao.selectRequestLec(params));
 		return result;
 	}
-	
+
 	@Override
 	public HashMap<String, Object> selectApproveLec(String id, int pageAp, HashMap<String, Object> params) {
 		HashMap<String, Object> result = new HashMap<>();
@@ -270,7 +269,7 @@ public class memberServiceImpl implements memberService {
 		result.put("approveList", memberDao.selectApproveLec(params));
 		return result;
 	}
-	
+
 	@Override
 	public int insertLecturePay(pay pay) {
 		// TODO Auto-generated method stub
@@ -279,27 +278,29 @@ public class memberServiceImpl implements memberService {
 
 	@Override
 	public List<art> selectArtistArt(String id) {
-			return memberDao.selectArtistArt(id);	
+		return memberDao.selectArtistArt(id);
 	}
 
 	@Override
 	public int updateArt(art art, MultipartFile file) {
-		
-		String path = "C:/Project/Project/WebContent/resources/Thumnail/artImage/";
 
-		File dir = new File(path);
-		if(!dir.exists())
-			dir.mkdirs(); //지정 경로에 폴더가 없을 시 폴더 생성 요청
-		
-		String fileName=new Date().getTime() + "_" + file.getOriginalFilename();
-		
-		File attachFile = new File(path + fileName);
-		try {
-			file.transferTo(attachFile);
-			art.setFile(fileName);
-		} catch (IllegalStateException | IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		if (file != null) {
+			String path = "C:/Project/Project/WebContent/resources/Thumnail/artImage/";
+
+			File dir = new File(path);
+			if (!dir.exists())
+				dir.mkdirs(); // 지정 경로에 폴더가 없을 시 폴더 생성 요청
+
+			String fileName = new Date().getTime() + "_" + file.getOriginalFilename();
+
+			File attachFile = new File(path + fileName);
+			try {
+				file.transferTo(attachFile);
+				art.setFile(fileName);
+			} catch (IllegalStateException | IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		return memberDao.updateArt(art);
 	}
@@ -307,7 +308,7 @@ public class memberServiceImpl implements memberService {
 	@Override
 	public int deleteArt(int no, String id) {
 		// TODO Auto-generated method stub
-		HashMap<String, Object> params =  new HashMap<String, Object>();
+		HashMap<String, Object> params = new HashMap<String, Object>();
 		params.put("no", no);
 		params.put("id", id);
 		return memberDao.deleteArt(params);
@@ -323,16 +324,16 @@ public class memberServiceImpl implements memberService {
 
 	@Override
 	public HashMap<String, Object> selectBuyingArt(String id, int page, HashMap<String, Object> params) {
-			HashMap<String, Object> result = new HashMap<>();
-			params.put("skipBuy", mainService.getSkip(page, 5));
-			params.put("qty", 5);
-			params.put("id", id);
-			result.put("currentBuy", page);
-			result.put("startBuy", mainService.getStartPage(page));
-			result.put("endBuy", mainService.getEndPage(page));
-			result.put("lastBuy", mainService.getBuyingArtLastPage(id));
-			result.put("buyingList", memberDao.selectBuyingArt(params));
-			return result;
+		HashMap<String, Object> result = new HashMap<>();
+		params.put("skipBuy", mainService.getSkip(page, 5));
+		params.put("qty", 5);
+		params.put("id", id);
+		result.put("currentBuy", page);
+		result.put("startBuy", mainService.getStartPage(page));
+		result.put("endBuy", mainService.getEndPage(page));
+		result.put("lastBuy", mainService.getBuyingArtLastPage(id));
+		result.put("buyingList", memberDao.selectBuyingArt(params));
+		return result;
 	}
 
 	@Override
@@ -374,11 +375,11 @@ public class memberServiceImpl implements memberService {
 		String path = "C:/Project/Project/WebContent/resources/Thumnail/artImage/";
 
 		File dir = new File(path);
-		if(!dir.exists())
-			dir.mkdirs(); //지정 경로에 폴더가 없을 시 폴더 생성 요청
-		
-		String fileName=new Date().getTime() + "_" + file.getOriginalFilename();
-		
+		if (!dir.exists())
+			dir.mkdirs(); // 지정 경로에 폴더가 없을 시 폴더 생성 요청
+
+		String fileName = new Date().getTime() + "_" + file.getOriginalFilename();
+
 		File attachFile = new File(path + fileName);
 		try {
 			file.transferTo(attachFile);
@@ -394,23 +395,23 @@ public class memberServiceImpl implements memberService {
 	public File getAttachFile(HashMap<String, Object> params) {
 		String fileName;
 		String path;
-		if (params.get("id")!=null) {
-			member member = memberDao.selectOneMember((String)params.get("id"));
-			if (params.get("profile")!=null) {
-			fileName = member.getProfile();	
-			}else {
-			fileName = member.getFile();
+		if (params.get("id") != null) {
+			member member = memberDao.selectOneMember((String) params.get("id"));
+			if (params.get("profile") != null) {
+				fileName = member.getProfile();
+			} else {
+				fileName = member.getFile();
 			}
 			path = "C:/Project/Project/image/";
-		}else {
-			if (params.get("lecture")!=null) {
-			lecture lecture = lectureDao.selectOneLecture((int)params.get("no"));
-			fileName = lecture.getFile();
-			path = "C:/Project/Project/WebContent/resources/Thumnail/lectureImage/";
-			}else {
-			art art = artDao.selectOneArt((int)params.get("no"));
-			fileName = art.getFile();
-			path = "C:/Project/Project/WebContent/resources/Thumnail/artImage/";
+		} else {
+			if (params.get("lecture") != null) {
+				lecture lecture = lectureDao.selectOneLecture((int) params.get("no"));
+				fileName = lecture.getFile();
+				path = "C:/Project/Project/WebContent/resources/Thumnail/lectureImage/";
+			} else {
+				art art = artDao.selectOneArt((int) params.get("no"));
+				fileName = art.getFile();
+				path = "C:/Project/Project/WebContent/resources/Thumnail/artImage/";
 			}
 		}
 		return new File(path + fileName);
@@ -429,7 +430,7 @@ public class memberServiceImpl implements memberService {
 		// TODO Auto-generated method stub
 		return memberDao.selectPayByNo(params);
 	}
-	
+
 	@Override
 	public int userAuth(String email) throws Exception {
 		return memberDao.userAuth(email);

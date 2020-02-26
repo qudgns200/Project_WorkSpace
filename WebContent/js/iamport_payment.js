@@ -57,7 +57,7 @@ $(function(){
 		            data: param,
 		            type: 'POST',
 		            success: function(result) {
-		                	 location.href="mySellFormA0.do";
+		                	 location.href="http://localhost:8080/Project/mySellFormA0.do";
 		             }
 		          });
 				}

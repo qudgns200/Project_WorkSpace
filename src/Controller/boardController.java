@@ -308,8 +308,6 @@ public class boardController {
 
 		int result = artService.insertArtPay(pay);
 
-		System.out.println("result : " + result);
-
 		if (result == 1) {					// updateArt 쿼리 수정으로 인한 코드 변경 (09.11-종문)
 			art originalArt = new art();
 			originalArt = artService.selectOneArt(no);
@@ -475,11 +473,10 @@ public class boardController {
 	@RequestMapping("addLecture.do") // lecture 테이블에 insert 요청
 	public String addLecture(HttpServletRequest request, @RequestParam MultipartFile ufile, HttpSession session) {
 
-		System.out.println(request.getParameter("artistID"));
-
 		String id = (String) session.getAttribute("id");
 		lecture lecture = new lecture();
-		if (request.getParameter("artistID") == null) {
+		
+		if (request.getParameter("artistID").isEmpty()) {
 			lecture.setState(1);
 			lecture.setArtistID(id);
 			lecture.setGuestID(null);
